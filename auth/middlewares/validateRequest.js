@@ -2,6 +2,7 @@ var jwt = require('jsonwebtoken');
 var validateUser = require('../routes/auth').validateUser;
 var db = require('../models/db');
 var User = require('../models/User');
+var errorHandler = require('../../lib/errorHandler').handler;
 
 module.exports = function(req, res, next) {
     // When performing a cross domain request, you will recieve
@@ -35,14 +36,7 @@ module.exports = function(req, res, next) {
             // Test if the token's owner is a valid user is DB
             db.getUserFromDb(decoded.username, function(err,dbUser){
             if (err){
-                console.log("Error validating user - Code: "+err);
-                res.status(500);
-
-                  res.send({
-                    "status": 500,
-                    "message": "Internal server error"
-                  });
-
+                errorHandler(err,res);
                 return;
             }
             if (dbUser) {

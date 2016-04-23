@@ -35,7 +35,9 @@ var db = {
 
 
     }else{
-      return fn(new error("User doesn't exist !"), null);
+      var err = new Error("User doesn't exist !");
+      err.http_code = 401;
+      return fn(err,null);
     }
   });
 
@@ -47,12 +49,16 @@ var db = {
     client.connect(function(err) {
       if(err) {
         console.error('Could not connect to postgres', err);
-        return fn(500,null);
+        var err = new Error("Could not connect to postgres");
+        err.http_code = 500;
+        return fn(err,null);
       }
       client.query("SELECT * FROM USERS WHERE USERNAME = '"+username+"'", function(err, result) {
         if(err) {
           console.error('Error running query', err);
-          return fn(400,null);
+          var err = new Error("Error running query");
+          err.http_code = 400;
+          return fn(err,null);
         }
         client.end();
         return fn(null,result.rows[0] !== undefined);

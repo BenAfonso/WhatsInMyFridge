@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-var auth = require('./auth');
 var items = require('./items');
 var lists = require('./lists');
 var users = require('./users');
@@ -22,10 +21,12 @@ router.post('/api/v1/items', items.addItem);
 router.get('/api/v1/item/:id', items.getItem);
 router.put('/api/v1/item/:id', items.modifyItem);
 router.delete('/api/v1/item/:id', items.deleteItem);
+router.put('/api/v1/item/:id/stock', items.modifyStock);
 
 // Lists
 router.get('/api/v1/lists', lists.getLists);
 router.post('/api/v1/lists', lists.addList);
+router.get('/api/v1/list/:id', lists.getList);
 router.put('/api/v1/list/:id', lists.modifyList);
 router.delete('/api/v1/list/:id', lists.deleteList);
 router.post('/api/v1/list/:id', lists.addItem);

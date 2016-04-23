@@ -9,7 +9,6 @@ var auth = {
     login: function(req, res) {
         var username = req.body.username || '';
         var password = req.body.password || '';
-        console.log(username);
         if (username == '' || password == '') {
             res.status(401);
             res.json({
@@ -36,7 +35,7 @@ var auth = {
 
     authenticate: function(username, password, fn)
     {
-        console.log("Authenticating %s:%s", username, password)
+        console.log("Authenticating user %s", username)
         // Recherche d'un utilisateur avec ce nom
         db.userExists(username, function(err,res){
             if (err) {
@@ -75,7 +74,6 @@ var auth = {
       var username = req.body.username;
       var password = req.body.password;
       hash(password, function(err, salt, hash){
-        console.log("Test1");
         if (err)
           errorHandler(err,res);
         else{
