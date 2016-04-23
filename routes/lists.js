@@ -95,20 +95,49 @@ var lists = {
 
   modifyList: function(req, res) {
     // Parse args
-    // Query to add a recipe
-    // Send result 200
-    res.status(200).send({
-      "status": 200,
-      "message": "List modified"
-    });
+    var listid = req.params.id;
+    var newName = req.body.listName;
+    var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
+    if (newName){
+      var query = "UPDATE LISTS SET listName = '"+newName+"' \
+      WHERE idList = '"+listid+"' AND idUser = '"+user_id+"' RETURNING idList, listName";
+      db.query(query, function(err,list){
+        console.log(err);
+        if (err)
+          errorHandler(err, res);
+        else{
+          // The item got deleted
+          if (list[0])
+          {
+            var list = new List(list[0].idlist, list[0].listname);
+            // Send result 200
+            res.status(200).send({
+              "status": 200,
+              "message": "List successfully modfied",
+              "oldList": list
+            });
+          }else{ // The item didn't exist or wasn't the token owner's
+            var err = new Error("List not found !");
+            err.http_code = 404;
+            errorHandler(err,res);
+          }
+
+        }
+      });
+
+    }else{
+      var err = new Error("Bad query ! (Missing 'listName')");
+      err.http_code = 400;
+      errorHandler(err,res);
+    }
+
   },
 
   deleteList: function(req, res){
     // Parse request
     var listId = req.params.id;
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    // Check if it's user's recipe !
-    //
+
     // Query to delete list
 
     var query = "DELETE FROM LISTS WHERE IDLIST = '"+listId+"' AND IDUSER = '"+user_id+"' RETURNING IDLIST, LISTNAME";
@@ -127,7 +156,7 @@ var lists = {
             "message": "List successfully deleted",
             "oldList": list
           });
-        }else{ // The item didn't exist
+        }else{ // The item didn't exist or wasn't the token owner's
           var err = new Error("List not found !");
           err.http_code = 404;
           errorHandler(err,res);
