@@ -69,7 +69,7 @@ var lists = {
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
 
     if (listName == undefined){
-      var err = new Error("Bad request");
+      var err = new Error("Bad query (Missing 'listName' in body)");
       err.http_code = 400;
       errorHandler(err,res);
       return;

@@ -40,7 +40,9 @@ router.delete('/api/v1/categorie/:id', categories.deleteCategory);
 
 // Recipes
 router.get('/api/v1/recipes', recipes.getRecipes);
+router.get('/api/v1/recipe/:id', recipes.getRecipe);
 router.post('/api/v1/recipes', recipes.addRecipe);
+router.put('/api/v1/recipe/:id', recipes.modifyRecipe);
 router.post('/api/v1/recipe/:id', recipes.addItemToRecipe);
 router.delete('/api/v1/recipe/:id', recipes.deleteRecipe);
 router.delete('/api/v1/recipe/:recipe_id/item/:item_id', recipes.deleteItemInRecipe);
