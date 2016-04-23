@@ -31,7 +31,7 @@ var categories = {
     });
   },
 
-  deleteItem: function(req,res){
+  deleteCategory: function(req,res){
     // Parse request
     var id = req.params.id;
     // Query here

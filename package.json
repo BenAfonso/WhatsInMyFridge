@@ -23,6 +23,7 @@
     "express": "^4.13.4",
     "express-router": "0.0.1",
     "jsonwebtoken": "^5.7.0",
+    "jwt-simple": "^0.5.0",
     "morgan": "^1.7.0",
     "path": "^0.12.7",
     "pg": "^4.5.3"

@@ -11,11 +11,6 @@ var recipes = require('./recipes')
 
 
 
-/*
-*   Routes that can be accessed by any one
-*/
-router.post('/login', auth.login);
-router.post('/register', auth.createUser);
 
 /*
 *   Routes that can be accessed only by authenticated users
@@ -55,7 +50,7 @@ router.put('/api/v1/recipe/:recipe_id/item/:item_id', recipes.modifyItemInRecipe
 */
 
 // Users
-router.get('/api/v1/admin/users', users.getUsers);
+//router.get('/api/v1/admin/users', users.getUsers);
 
 
 module.exports = router;

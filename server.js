@@ -34,9 +34,9 @@ app.all('/*', function(req, res, next) {
 // The others should be avoided
 
 
-app.all('/api/v1/*', [require('./middlewares/validateRequest')]);
+app.all('/api/v1/*', [require('./auth/middlewares/validateRequest')]);
 app.use('/', require('./routes'));
-
+app.use('/', require('./auth/routes'));
 
 // If no route is matched, send a 404
 

@@ -1,8 +1,12 @@
+CREATE DOMAIN role_domain VARCHAR(6) CHECK( VALUE IN ('user','admin') );
+
 CREATE TABLE Users (
   idUser SERIAL PRIMARY KEY,
   username VARCHAR(30) NOT NULL CONSTRAINT unique_username UNIQUE,
   password TEXT NOT NULL,
-  salt TEXT NOT NULL
+  salt TEXT NOT NULL,
+  role role_domain NOT NULL DEFAULT 'user'
+
 );
 
 CREATE TABLE Items (
