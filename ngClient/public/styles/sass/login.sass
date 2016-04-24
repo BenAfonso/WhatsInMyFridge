@@ -10,39 +10,62 @@ $submit-color: #e86d57
   top: 0px
   left: 0px
   z-index: 1000
-  background-color: $background-color
+  background-image: url('/img/bg.png')
   background-size: cover
   background-repeat:no-repeat
 
+
+
+
   .container
     position: relative
-    top: 50%
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: center
+    align-items: center
+    height: 580px
+    max-width: 500px
+    min-width: 500px
+    background-image: url('/img/frigologo2.png')
+    background-size: contain
+    background-repeat: no-repeat
+    vertical-align: middle
+    margin-top: 50vh
     transform: translateY(-50%)
 
-    .image
-      img
-        height: 400px
+    #input
+      position: absolute
+      left: 130px
+    #placeholder
+      font-weight: bold
+      color: white
+    #usernameInput
+      @extend #input
+      top: 250px
 
-    .rightform
-      #miniTitle
-        font-size: 30px
-        color: $mini-title-color
-      #usernameInput
-        width: 100%
+    #usernamePlaceholder
+      @extend #usernameInput,#placeholder
+      top: 230px
+
+    #passwordInput
+      @extend #input
+      bottom: 197px
+
+    #passwordPlaceholder
+      @extend #passwordInput,#placeholder
+      bottom: 231px
+
+    #signup
+      @extend #input
+      color: white
+      text-decoration: underline
+      font-weight: bold
+      bottom: 120px
 
 
-      #passwordInput
-        @extend #usernameInput
-
-      #placeholder
-        color: white
-        font-weight: bold
-
-      #submit
-        background-color: $submit-color
-        color: white
-        font-weight: bold
-        height: 40px
-        width: 150px
-        font-size: 20px
-        margin-top: 20px
+    #submit
+      @extend #input
+      left: auto
+      font-weight: bold
+      bottom: 120px
