@@ -53,6 +53,6 @@ app.use(function(req, res, next){
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function() {
+var server = app.listen(app.get('port'), "0.0.0.0", function() {
     console.log('Server listening on port ' + server.address().port)
 });

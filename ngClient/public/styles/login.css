@@ -23,28 +23,38 @@
     vertical-align: middle;
     margin-top: 50vh;
     transform: translateY(-50%); }
-    .login .container #input, .login .container #usernameInput, .login .container #usernamePlaceholder, .login .container #passwordInput, .login .container #passwordPlaceholder, .login .container #signup, .login .container #submit {
+    .login .container #input, .login .container #usernameInput, .login .container #usernamePlaceholder, .login .container #passwordInput, .login .container #passwordPlaceholder, .login .container #password2Input, .login .container #password2Placeholder, .login .container #signup, .login .container #login, .login .container #submit, .login .container #submitRegister {
       position: absolute;
       left: 130px; }
-    .login .container #placeholder, .login .container #usernamePlaceholder, .login .container #passwordPlaceholder {
+    .login .container #placeholder, .login .container #usernamePlaceholder, .login .container #passwordPlaceholder, .login .container #password2Placeholder {
       font-weight: bold;
       color: white; }
     .login .container #usernameInput, .login .container #usernamePlaceholder {
       top: 250px; }
     .login .container #usernamePlaceholder {
       top: 230px; }
-    .login .container #passwordInput, .login .container #passwordPlaceholder {
+    .login .container #passwordInput, .login .container #passwordPlaceholder, .login .container #password2Input, .login .container #password2Placeholder {
       bottom: 197px; }
     .login .container #passwordPlaceholder {
       bottom: 231px; }
-    .login .container #signup {
+    .login .container #password2Input {
+      bottom: 120px; }
+    .login .container #password2Placeholder {
+      bottom: 154px; }
+    .login .container #signup, .login .container #login {
       color: white;
       text-decoration: underline;
       font-weight: bold;
       bottom: 120px; }
-    .login .container #submit {
+    .login .container #submit, .login .container #submitRegister {
       left: auto;
       font-weight: bold;
       bottom: 120px; }
+    .login .container #submitRegister {
+      bottom: 50px;
+      right: 150px; }
+    .login .container #login {
+      bottom: 55px;
+      left: 102px; }
 
 /*# sourceMappingURL=login.css.map */

@@ -4,6 +4,7 @@ myApp.constant('restlink','http://31.32.127.70:3000/');
 
 myApp.config(function($routeProvider, $httpProvider) {
 
+  $httpProvider.interceptors.push('TokenInterceptor');
 
   $routeProvider
     .when('/login',{
@@ -20,7 +21,7 @@ myApp.config(function($routeProvider, $httpProvider) {
       }
     }).when('/monfrigo', {
       templateUrl: 'partials/frigo/frigo.html',
-      controller: 'RegisterCtrl',
+      controller: 'FrigoCtrl',
       access: {
         requiredLogin: true
       }

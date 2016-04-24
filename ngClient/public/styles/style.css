@@ -1,4 +1,7 @@
 @charset "UTF-8";
+body {
+  background-image: url("/img/bg.png"); }
+
 /*****************************************
  *           Responsive Menu
  **************************************** */
@@ -8,7 +11,7 @@
   width: 100%;
   height: 60px;
   line-height: 60px;
-  background: #18c7e7;
+  background: url("/img/menu.png");
   color: white; }
   #header .container {
     position: relative;
@@ -90,5 +93,81 @@
     transform: translateY(0px);
     -moz-transform: translateY(0px);
     -webkit-transform: perspective(600) rotate3d(0, 0, 0, 0); } }
+/*****************************************
+ *              Left Menu
+ **************************************** */
+.leftmenu {
+  z-index: 2;
+  position: fixed;
+  left: 0;
+  height: 100%;
+  background-image: url("/img/menugauche.png"); }
+
+.responsive-offset {
+  margin-left: 15%; }
+
+#pushRight {
+  padding-right: 250px; }
+
+@media (max-width: 1024px) {
+  .leftmenu {
+    z-index: 2;
+    position: relative;
+    left: 0;
+    width: 0;
+    height: 0;
+    background-color: red; }
+
+  .responsive-offset {
+    margin-left: 0; } }
+/*****************************************
+ *               Item style
+ **************************************** */
+.itembox {
+  padding: 10px;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center; }
+
+.item {
+  background-image: url("/img/itembox2.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  min-height: 200px;
+  padding-top: 8px;
+  padding-right: 8px;
+  padding-left: 8px; }
+  .item img {
+    height: 133px;
+    width: 160px; }
+  .item #placeholder {
+    position: absolute;
+    margin-left: 5px; }
+    .item #placeholder #itemName {
+      color: white;
+      font-weight: bold; }
+    .item #placeholder #itemQuantity {
+      margin-left: 40px;
+      font-weight: bold; }
+
+/*****************************************
+ *               Footer
+ **************************************** */
+#footer {
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background: url("/img/menu.png");
+  color: white; }
+  #footer .right {
+    position: absolute;
+    right: 0;
+    margin-right: 40px; }
 
 /*# sourceMappingURL=style.css.map */
