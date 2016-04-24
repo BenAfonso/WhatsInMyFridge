@@ -1,0 +1,33 @@
+.login {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  background-color: #0cb1a2;
+  background-size: cover; }
+  .login .container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); }
+    .login .container .image img {
+      height: 400px; }
+    .login .container .rightform #miniTitle {
+      font-size: 30px;
+      color: #ffffff; }
+    .login .container .rightform #usernameInput, .login .container .rightform #passwordInput {
+      width: 100%; }
+    .login .container .rightform #placeholder {
+      color: white;
+      font-weight: bold; }
+    .login .container .rightform #submit {
+      background-color: #e86d57;
+      color: white;
+      font-weight: bold;
+      height: 40px;
+      width: 150px;
+      font-size: 20px;
+      margin-top: 20px; }
+
+/*# sourceMappingURL=login.css.map */

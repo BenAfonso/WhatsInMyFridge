@@ -1,3 +1,3 @@
 module.exports = {
-  url : "postgres://fridge:fridge123@192.168.1.7:5432/whatsinmyfridge"
+  url : "postgres://fridge:fridge123@31.32.127.70:5432/whatsinmyfridge"
 }

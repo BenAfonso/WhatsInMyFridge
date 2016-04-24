@@ -65,6 +65,10 @@ var auth = {
                   });
                 }
           });
+        }else{
+          var err = new Error("User not found");
+          err.http_code = 404;
+          return fn(err);
         }
       });
     },

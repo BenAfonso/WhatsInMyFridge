@@ -1,0 +1,26 @@
+<link href="styles/login.css" rel="stylesheet">
+<div class="login">
+
+  <div class="container">
+    <div class="row">
+      <div class="image six columns">
+        <img src="http://icons.iconarchive.com/icons/iconka/saint-whiskers/256/cat-fridge-icon.png">
+      </div>
+      <div class="rightform six columns">
+        <form id="loginForm" ng-submit="login()">
+          <div id="miniTitle">What's in my Fridge</div>
+          <div id="signuplink" ng-click="go('/login')">Log in</div>
+          <div id="placeholder">Nom d'utilisateur</div>
+          <input id="usernameInput" type="text" placeholder="Username" ng-model="username">
+          <div id="placeholder">Mot de passe</div>
+          <input id="passwordInput" type="password" placeholder="Password" ng-model="password">
+          <div id="placeholder">Mot de passe</div>
+          <input id="passwordInput" type="password" placeholder="Password" ng-model="password">
+          <button id="submit" class="button-primary">Go !</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>

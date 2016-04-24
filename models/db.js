@@ -44,7 +44,6 @@ var query = function(req, fn) {
 
       }
       // Success -> callback 'null' error + result
-      console.log("[+] Requête effectuée avec succès.")
       fn(null,result.rows);
 
     });

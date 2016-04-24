@@ -1,6 +1,6 @@
 var User = require('./User');
 var pg = require('pg');
-var conString = require('../config/config').url;
+var conString = require('../../config/database').url;
 var db = {
   /**
   * Returns an object with associated methods

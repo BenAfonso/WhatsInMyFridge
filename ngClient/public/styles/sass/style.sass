@@ -1,0 +1,113 @@
+/*****************************************
+ *           Responsive Menu
+ *****************************************/
+
+$menu-color: #18c7e7
+$menu-dropdown-color: #129ab3
+$menu-dropdown-borders-color: #ffffff
+$menu-item-background-color: #e86d57
+
+
+
+#header
+  z-index: 2
+  position: fixed
+  width: 100%
+  height: 60px
+  line-height: 60px
+  background: $menu-color
+  color: white
+
+  .container
+    position: relative
+    margin: 0 auto
+    width: 100%
+    max-width: 2440px
+    font-family: helvetica, sans-serif
+
+  .logo
+    position: absolute
+    top: 0
+    left: 3%
+    text-transform: uppercase
+    img
+      height: 50px
+      vertical-align: middle
+      margin-right: 10px
+    #title
+      font-size: 30px
+      vertical-align: middle
+      font-weight: bold
+
+
+#nav
+  position: absolute
+  right: 0
+  ul
+    li
+      float: left
+      list-style-type: none
+      a
+        display: block
+        color: white
+        text-decoration: none
+        padding: 0 10px
+        &:hover
+          background-color: $menu-item-background-color
+
+
+// Push items under menu bar
+.push
+  padding-bottom: 60px
+
+
+@media (max-width: 599px)
+  #header
+    .container
+      width: 100%
+    h1
+      left: 3%
+
+
+  #nav
+    width: 100%
+    top: 60px
+    &:before
+      content: '\2630'
+      display: block
+      position: absolute
+      right: 3%
+      top: -50px
+      line-height: 40px
+      cursor: pointer
+
+    ul
+      background: $menu-dropdown-color
+      width: 100%
+      li
+        float: none
+        list-style-type: none
+        a
+          border-top: 1px solid $menu-dropdown-borders-color
+          &:hover
+            background-color: $menu-dropdown-color
+
+
+
+
+  // Transition
+  #nav ul
+    transition: 350ms
+    -moz-transition: 350ms
+    -webkit-transition: 350ms
+    transform: perspective(600) rotate3d(0,0,0,0)
+    -moz-transform: perspective(600) rotate3d(0,0,0,0)
+    -webkit-transform: perspective(600) rotate3d(1,0,0,-90deg)
+    transform-origin: 50% 0
+    -moz-transform-origin: 50% 0
+    -webkit-transform-origin: 50% 0
+
+  #nav.open ul
+    transform: translateY(0px)
+    -moz-transform: translateY(0px)
+    -webkit-transform:  perspective(600) rotate3d(0,0,0,0)
