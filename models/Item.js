@@ -1,11 +1,15 @@
-function Item(idItem, itemName, Category, quantity, list){
+function Item(idItem, itemName, Category, quantity, list, img){
   if (quantity == null){
     quantity = undefined;
   }
+  if (img == null){
+    img = undefined;
+  }
   this.idItem = idItem,
   this.itemName = itemName,
+  this.img = img;
   this.quantity = quantity,
-  this.Category = Category,
+  this.category = Category,
   this.list = list;
   this.links = [ {
         "rel": "self",

@@ -1,5 +1,6 @@
 var db = require('../models/db');
 var errorHandler = require('../lib/errorHandler').handler;
+var queryBuilder = require('../lib/queryBuilder').queryBuilder;
 var tokenAnalyzer = require('../lib/TokenAnalyzer');
 var Item = require('../models/Item');
 var List = require('../models/List');
@@ -9,7 +10,7 @@ var items = {
   getItems: function(req,res) {
     // Filters List, Category,
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    var query = "SELECT ITEMS.IDITEM, ITEMS.ITEMNAME, STOCKS.QUANTITY, LISTS.IDLIST, \
+    var query = "SELECT ITEMS.IDITEM, ITEMS.ITEMNAME, ITEMS.IMG, STOCKS.QUANTITY, LISTS.IDLIST, \
                   LISTS.LISTNAME, CATEGORIES.IDCATEGORY, CATEGORIES.CATEGORYNAME \
                   FROM ITEMS \
                   LEFT JOIN CATEGORIES ON ITEMS.IDCATEGORY = CATEGORIES.IDCATEGORY AND CATEGORIES.IDUSER = "+user_id+"\
@@ -42,8 +43,9 @@ var items = {
           var category = {};
           if (items[i].idcategory)
             var category = new Category(items[i].idcategory,items[i].categoryname);
+          if (items[i].idlist)
             var list = new List(items[i].idlist, items[i].listname);
-          items[i] = new Item(items[i].iditem,items[i].itemname,category,items[i].quantity,list);
+          items[i] = new Item(items[i].iditem,items[i].itemname,category,items[i].quantity,list,items[i].img);
 
 
 
@@ -61,6 +63,7 @@ var items = {
   addItem: function(req,res) {
     // Parse args
     var itemName = req.body.itemName;
+    var img = req.body.img;
     if (itemName == undefined){
       var err = new Error("Bad query");
       err.http_code = 400;
@@ -71,33 +74,41 @@ var items = {
     // Get token wherever it's located (in req.body or in req.query (URI) or in authorization headers where it's meant to be
     var token = tokenAnalyzer.grabToken(req);
     var user_id = tokenAnalyzer.getUserId(token);
-    if (idCategory)
-      var query = "INSERT INTO ITEMS (itemName,idCategory,idUser) \
-                    VALUES ('"+itemName+"','"+idCategory+"','"+user_id+"') \
-                    RETURNING iditem, itemName,idCategory, \
-                    (SELECT CategoryName FROM CATEGORIES WHERE idCategory='"+idCategory+"')"
-    else
-      var query = "INSERT INTO ITEMS (itemName,idUser) \
-                    VALUES ('"+itemName+"','"+user_id+"') \
-                    RETURNING iditem, itemName"
 
-    // Query to add an item
-    db.query(query, function(err,item){
-      console.log(err);
-      if (err)
-        errorHandler(err, res);
-      else{
-          // Send a 201 (created)
-          var category = new Category(item[0].idcategory, item[0].categoryname);
-          var item = new Item(item[0].iditem, item[0].itemname, category);
+    var params = ['idUser','itemName'];
+    var values = ["'"+user_id+"'","'"+itemName+"'"];
+    var returning = ['idItem','itemName','img'];
 
-          res.status(201).send({
-            "status": 201,
-            "message": "Item added",
-            "item": item
-          });
-      }
+    if (idCategory){
+      params.push('idCategory');
+      values.push(idCategory);
+      returning.push("idCategory","SELECT categoryname FROM CATEGORIES WHERE idCategory = '"+idCategory+"'");
+    }
+    if (img){
+      params.push('img');
+      values.push("'"+img+"'");
+    }
+
+    queryBuilder('INSERT',params,'ITEMS',undefined,values,returning, function(err,query){
+      // Query to add an item
+      db.query(query, function(err,item){
+        console.log(err);
+        if (err)
+          errorHandler(err, res);
+        else{
+            // Send a 201 (created)
+            var category = new Category(item[0].idcategory, item[0].categoryname);
+            var item = new Item(item[0].iditem, item[0].itemname, category, undefined, undefined, item[0].img);
+
+            res.status(201).send({
+              "status": 201,
+              "message": "Item added",
+              "item": item
+            });
+        }
+      });
     });
+
 
   },
 
@@ -105,7 +116,7 @@ var items = {
     // ADD FILTERS HERE
     var idItem = req.params.id
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    query = "SELECT ITEMS.IDITEM,ITEMS.IDCATEGORY,CATEGORYNAME,ITEMNAME,QUANTITY \
+    query = "SELECT ITEMS.IDITEM,ITEMS.IDCATEGORY,IMG, CATEGORYNAME,ITEMNAME,QUANTITY \
              FROM (ITEMS LEFT JOIN STOCKS ON STOCKS.IDITEM = ITEMS.IDITEM) \
                   LEFT JOIN CATEGORIES ON ITEMS.IDCATEGORY = CATEGORIES.IDCATEGORY \
              WHERE ITEMS.IDUSER = "+user_id+" AND ITEMS.IDITEM = '"+idItem+"'";
@@ -119,7 +130,7 @@ var items = {
           if (item[0]){
             // Send a 200 (created)
             var category = new Category(item[0].idcategory, item[0].categoryname);
-            var itemObj = new Item(item[0].iditem, item[0].itemname, category, item[0].quantity);
+            var itemObj = new Item(item[0].iditem, item[0].itemname, category, item[0].quantity, undefined, item[0].img);
 
             res.status(200).send({
               "status": 200,
