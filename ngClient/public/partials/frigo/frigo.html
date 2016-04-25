@@ -3,7 +3,13 @@
   <div class="wrapper">
     <div id="sidebar" ng-class="{'visible' : leftMenu}">
         <ul>
-          <li><a href="#">Ajouter un item</a></li>
+          <li><a ng-click="toggleAddMenu()">Ajouter un item</a></li>
+          <ul ng-show="addItemMenu">
+            <li ng-click="toggleAddMenu()">Nom de l'item</li>
+            <li><input type="text"></input></li>
+            <li>Image</li>
+            <li><input type="text"></input></li>
+          </ul>
           <li><a href="#">Link 2</a></li>
           <li><a href="#">Link 3</a></li>
           <li><a href="#">Link 4</a></li>

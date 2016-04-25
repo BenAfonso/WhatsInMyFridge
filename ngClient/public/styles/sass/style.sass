@@ -1,10 +1,15 @@
+*
+  margin: 0
+  padding: 0
+
 body
   background-image: url('/img/bg.png')
-  position: fixed
+  position: relative
   width: 100%
   margin: 0 auto
   padding: 0px
   height: 100%
+  clear: both
 
 /*****************************************
  *           Responsive Menu
@@ -17,7 +22,16 @@ $menu-dropdown-borders-color: #ffffff
 $menu-item-background-color: #e86d57
 $left-menu-background: url('/img/menugauche.png')
 
+.content
+  position: relative
+  padding-top: 60px
 
+.container
+  position: relative
+  margin: 0 auto
+  width: 100%
+  max-width: 2440px
+  font-family: helvetica, sans-serif
 
 #header
   z-index: 2
@@ -27,13 +41,6 @@ $left-menu-background: url('/img/menugauche.png')
   line-height: 60px
   background: $menu-color
   color: white
-
-  .container
-    position: relative
-    margin: 0 auto
-    width: 100%
-    max-width: 2440px
-    font-family: helvetica, sans-serif
 
   .logo
     position: absolute
@@ -127,9 +134,17 @@ $left-menu-background: url('/img/menugauche.png')
  *              	Sidebar
  *****************************************/
 
+
+
+.wrapper
+  margin: 0
+  position: relative
+  height: 100%
+  overflow: hidden
+
 #sidebar
   display: block
-  position: relative
+  position: absolute
   left: -200px
   top: 0px
   transition: left 0.3s linear
@@ -187,12 +202,13 @@ $left-menu-background: url('/img/menugauche.png')
   transition: left 0.3s linear
 
 #content
-  width: 100%
+  width: auto
   height: 100%
   position: absolute
   left: 60px
-  padding: 15px
   transition: left 0.3s linear
+
+
 
 #content.visible
   left: 260px
@@ -210,6 +226,7 @@ $left-menu-background: url('/img/menugauche.png')
   padding: 10px
   display: flex
   position: relative
+
 
 
 .item
@@ -239,7 +256,6 @@ $left-menu-background: url('/img/menugauche.png')
       float: right
       margin-left: 40px
       font-weight: bold
-
 
 /*****************************************
  *               Footer
