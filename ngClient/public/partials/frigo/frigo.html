@@ -1,15 +1,32 @@
-<h3>Mon frigo</h3>
 <link rel="stylesheet" href="http://yui.yahooapis.com/combo?pure/0.6.0/base-min.css&pure/0.6.0/grids-min.css&pure/0.6.0/grids-responsive-min.css">
 
-<div class="container">
-  <div class="pure-g">
-    <div ng-repeat="item in items" class="pure-u-1-2 pure-u-md-8-24 pure-u-lg-6-24">
-        <div class="itembox"><div class="item"><img src="http://i2.cdscdn.com/pdt2/c/6/4/1/700x700/sanmsd6c64/rw/sandisk-micro-sd-64-go.jpg"></img>
-          <div id="placeholder">
-            <span id="itemName">{{item.itemName}}</span>
-            <span id="itemQuantity">100</span>
+  <div class="wrapper">
+    <div id="sidebar" ng-class="{'visible' : leftMenu}">
+        <ul>
+          <li><a href="#">Ajouter un item</a></li>
+          <li><a href="#">Link 2</a></li>
+          <li><a href="#">Link 3</a></li>
+          <li><a href="#">Link 4</a></li>
+        </ul>
+        <div id="left-pull">
+          <div id="sidebar-btn" ng-click="toggleLeftMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
-        </div></div>
+        </div>
+
     </div>
+    <div id="content" ng-class="{'visible' : leftMenu}">
+      <div class="pure-g">
+        <div ng-repeat="item in items" class="pure-u-1 pure-u-md-6-24 pure-u-lg-5-24">
+          <div class="itembox"><div class="item"><img src="http://i2.cdscdn.com/pdt2/c/6/4/1/700x700/sanmsd6c64/rw/sandisk-micro-sd-64-go.jpg"></img>
+            <div id="placeholder">
+              <span id="itemName">{{item.itemName}}</span>
+              <span id="itemQuantity">{{item.quantity}}</span>
+            </div>
+          </div></div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>

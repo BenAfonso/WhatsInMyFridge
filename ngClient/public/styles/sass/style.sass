@@ -1,5 +1,10 @@
 body
   background-image: url('/img/bg.png')
+  position: fixed
+  width: 100%
+  margin: 0 auto
+  padding: 0px
+  height: 100%
 
 /*****************************************
  *           Responsive Menu
@@ -10,6 +15,7 @@ $footer-color: $menu-color
 $menu-dropdown-color: #129ab3
 $menu-dropdown-borders-color: #ffffff
 $menu-item-background-color: #e86d57
+$left-menu-background: url('/img/menugauche.png')
 
 
 
@@ -118,31 +124,79 @@ $menu-item-background-color: #e86d57
 
 
 /*****************************************
- *              Left Menu
+ *              	Sidebar
  *****************************************/
 
-.leftmenu
-  z-index: 2
-  position: fixed
-  left: 0
+#sidebar
+  display: block
+  position: relative
+  left: -200px
+  top: 0px
+  transition: left 0.3s linear
+  float: left
+  background-image: $left-menu-background
   height: 100%
-  background-image: url('/img/menugauche.png')
+  ul
+    margin: 0px
+    padding: 0px
+    li
+      margin-bottom: 0px
+      list-style: none
+      a
+        background: $left-menu-background
+        color: white
+        font-weight: bold
+        width: 180px
+        padding: 10px
+        display: block
+        text-decoration: none
+        &:hover
+          background: #1c78e3
 
-.responsive-offset
-  margin-left: 15%
-#pushRight
-  padding-right: 250px
+#left-pull
+  display: inline-block
+  position: absolute
+  right: -60px
+  top: 0px
+  height: 100%
+  width: 60px
+  background: $menu-color
 
-@media (max-width: 1024px)
-  .leftmenu
-    z-index: 2
-    position: relative
-    left: 0
-    width: 0
-    height: 0
-    background-color: red
-  .responsive-offset
-    margin-left: 0
+#sidebar-btn
+  display: inline-block
+  vertical-align: middle
+  width: 20px
+  height: 15px
+  cursor: pointer
+  margin: 20px
+  top: 0px
+  right: -60px
+
+  span
+    height: 1px
+    background: #111
+    margin-bottom: 5px
+    display: block
+    &:nth-child(2)
+      width: 75%
+    &:nth-child(3)
+      width: 50%
+
+#sidebar.visible
+  left: 0px
+  transition: left 0.3s linear
+
+#content
+  width: 100%
+  height: 100%
+  position: absolute
+  left: 60px
+  padding: 15px
+  transition: left 0.3s linear
+
+#content.visible
+  left: 260px
+  transition: left 0.3s linear
 
 
 
@@ -156,10 +210,6 @@ $menu-item-background-color: #e86d57
   padding: 10px
   display: flex
   position: relative
-  flex-direction: row
-  flex-wrap: wrap
-  justify-content: center
-  align-items: center
 
 
 .item
@@ -179,12 +229,14 @@ $menu-item-background-color: #e86d57
   #placeholder
     position: absolute
     margin-left: 5px
+    width: 150px
 
     #itemName
       color: white
       font-weight: bold
 
     #itemQuantity
+      float: right
       margin-left: 40px
       font-weight: bold
 
