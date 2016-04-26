@@ -17,7 +17,7 @@ myApp.factory('AuthenticationFactory', function($window) {
 myApp.factory('UserAuthFactory', function($window, $location, $http, AuthenticationFactory) {
   return {
     login: function(username, password) {
-      return $http.post('http://localhost:3000/login', {
+      return $http.post(APILINK+'/login', {
         username: username,
         password: password
       });
@@ -39,6 +39,12 @@ myApp.factory('UserAuthFactory', function($window, $location, $http, Authenticat
         $location.path("/login");
       }
 
+    },
+    register: function(username, password) {
+      return $http.post(APILINK+'/register', {
+        username: username,
+        password: password
+      });
     }
   }
 });

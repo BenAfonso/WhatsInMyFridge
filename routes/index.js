@@ -35,8 +35,8 @@ router.delete('/api/v1/list/:list_id/item/:item_id', lists.deleteItem);
 // Categories
 router.get('/api/v1/categories', categories.getCategories);
 router.post('/api/v1/categories', categories.addCategory);
-router.put('/api/v1/categorie/:id', categories.modifyCategory);
-router.delete('/api/v1/categorie/:id', categories.deleteCategory);
+router.put('/api/v1/category/:id', categories.modifyCategory);
+router.delete('/api/v1/category/:id', categories.deleteCategory);
 
 // Recipes
 router.get('/api/v1/recipes', recipes.getRecipes);

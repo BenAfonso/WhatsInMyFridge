@@ -124,7 +124,7 @@ body {
   top: 0px;
   transition: left 0.3s linear;
   float: left;
-  background-image: url("/img/menugauche.png");
+  background-color: #0ba2bd;
   height: 100%; }
   #sidebar ul {
     margin: 0px;
@@ -133,7 +133,7 @@ body {
       margin-bottom: 0px;
       list-style: none; }
       #sidebar ul li a {
-        background: url("/img/menugauche.png");
+        background: #0ba2bd;
         color: white;
         font-weight: bold;
         width: 180px;
@@ -141,7 +141,7 @@ body {
         display: block;
         text-decoration: none; }
         #sidebar ul li a:hover {
-          background: #1c78e3; }
+          background: #e86d57; }
 
 #left-pull {
   display: inline-block;
@@ -187,11 +187,16 @@ body {
   transition: left 0.3s linear; }
 
 /*****************************************
- *               Item style
+ *               Items style
  **************************************** */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding: 40px; }
+
 .itembox {
   padding: 10px;
-  display: flex;
   position: relative; }
 
 .item {

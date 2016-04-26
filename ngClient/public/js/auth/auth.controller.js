@@ -34,17 +34,17 @@ myApp.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactor
   }
 ]);
 
-myApp.controller("RegisterCtrl", ['$scope','$http','$location',
-    function($scope,$http,$location){
+myApp.controller("RegisterCtrl", ['$scope','$window','$location','UserAuthFactory','AuthenticationFactory',
+    function($scope,$window,$location,UserAuthFactory,AuthenticationFactory){
         $scope.register = function(){
             if ($scope.password==$scope.password2){
-                return $http.post(restlink+'/register', {
-                  username: $scope.username,
-                  password: $scope.password,
-              }).success(function(){
-                 alert("Votre compte a bien été créé !");
-                 $location.path('/');
-              });
+                UserAuthFactory.register($scope.username, $scope.password).success(function(){
+                  alert("Votre compte a bien été créé, vous allez être redirigé !");
+
+                });
+
+
+                // Errors handling TODO
 
             }
             else{

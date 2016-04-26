@@ -11,9 +11,7 @@ body
   height: 100%
   clear: both
 
-/*****************************************
- *           Responsive Menu
- *****************************************/
+
 
 $menu-color: url('/img/menu.png')
 $footer-color: $menu-color
@@ -21,6 +19,12 @@ $menu-dropdown-color: #129ab3
 $menu-dropdown-borders-color: #ffffff
 $menu-item-background-color: #e86d57
 $left-menu-background: url('/img/menugauche.png')
+$sidebar-color: #0ba2bd
+$left-menu-buttons-hover: #e86d57
+
+/*****************************************
+ *           Responsive Menu
+ *****************************************/
 
 .content
   position: relative
@@ -149,7 +153,7 @@ $left-menu-background: url('/img/menugauche.png')
   top: 0px
   transition: left 0.3s linear
   float: left
-  background-image: $left-menu-background
+  background-color: $sidebar-color
   height: 100%
   ul
     margin: 0px
@@ -158,7 +162,7 @@ $left-menu-background: url('/img/menugauche.png')
       margin-bottom: 0px
       list-style: none
       a
-        background: $left-menu-background
+        background: $sidebar-color
         color: white
         font-weight: bold
         width: 180px
@@ -166,7 +170,7 @@ $left-menu-background: url('/img/menugauche.png')
         display: block
         text-decoration: none
         &:hover
-          background: #1c78e3
+          background: $left-menu-buttons-hover
 
 #left-pull
   display: inline-block
@@ -217,17 +221,20 @@ $left-menu-background: url('/img/menugauche.png')
 
 
 /*****************************************
- *               Item style
+ *               Items style
  *****************************************/
 
 
 
+.flex-container
+  display: flex
+  flex-wrap: wrap
+  flex-direction: row
+  padding: 40px
+
 .itembox
   padding: 10px
-  display: flex
   position: relative
-
-
 
 .item
   background-image: url('/img/itembox2.png')
