@@ -89,6 +89,10 @@ myApp.controller("MainCtrl", ['$scope','$http','$location','UserAuthFactory',
         $scope.toggleNav = function(){
           $scope.navstate = !$scope.navstate
         }
+
+        $scope.closeNav = function(){
+          $scope.navstate = false
+        }
         $scope.isOpenedNav = function(){
           return $scope.navstate;
         }
