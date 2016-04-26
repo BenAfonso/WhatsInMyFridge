@@ -14,7 +14,7 @@ myApp.factory('AuthenticationFactory', function($window) {
   return auth;
 });
 
-myApp.factory('UserAuthFactory', function($window, $location, $http, AuthenticationFactory) {
+myApp.factory('UserAuthFactory', function($window, APILINK, $location, $http, AuthenticationFactory) {
   return {
     login: function(username, password) {
       return $http.post(APILINK+'/login', {
