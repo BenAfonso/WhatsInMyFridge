@@ -1,7 +1,10 @@
 <div id="header">
   <div class="container">
     <div class="logo"><img src="http://icons.iconarchive.com/icons/iconka/saint-whiskers/256/cat-fridge-icon.png"><span id="title">WIMF</span></div>
-    <nav id="nav" ng-class="{'open' : isOpenedNav()}" ng-click="toggleNav()">
+    <div id="openNav" ng-click="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="nav" ng-class="{'open' : isOpenedNav()}">
       <ul>
         <li><a ng-click="logout()">Logout</a></li>
         <li><a href="#/">Accueil</a></li>

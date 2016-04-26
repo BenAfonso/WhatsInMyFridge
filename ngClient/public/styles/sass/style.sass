@@ -93,14 +93,8 @@ $left-menu-buttons-hover: #e86d57
   #nav
     width: 100%
     top: 60px
-    &:before
-      content: '\2630'
-      display: block
-      position: absolute
-      right: 3%
-      top: -50px
-      line-height: 40px
-      cursor: pointer
+
+
 
     ul
       background: $menu-dropdown-color
@@ -112,8 +106,6 @@ $left-menu-buttons-hover: #e86d57
           border-top: 1px solid $menu-dropdown-borders-color
           &:hover
             background-color: $menu-dropdown-color
-
-
 
 
   // Transition
@@ -133,6 +125,23 @@ $left-menu-buttons-hover: #e86d57
     -moz-transform: translateY(0px)
     -webkit-transform:  perspective(600) rotate3d(0,0,0,0)
 
+// Menubar button
+#openNav
+  position: absolute
+  display: inline-block
+  width: 20px
+  height: 15px
+  vertical-align: middle
+  margin: 20px
+  top: 0px
+  right: 0px
+  cursor: pointer
+  span
+    height: 3px
+    right: 0px
+    background: #111
+    margin-bottom: 5px
+    display: block
 
 /*****************************************
  *              	Sidebar

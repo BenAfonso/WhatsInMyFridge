@@ -76,6 +76,8 @@ myApp.run(function($rootScope, $window, $location, AuthenticationFactory) {
 
 myApp.controller("MainCtrl", ['$scope','$http','$location','UserAuthFactory',
     function($scope,$http,$location,UserAuthFactory){
+
+        $scope.navstate = false
         $scope.logout=function(){
           UserAuthFactory.logout();
         }
@@ -85,8 +87,7 @@ myApp.controller("MainCtrl", ['$scope','$http','$location','UserAuthFactory',
         }
 
         $scope.toggleNav = function(){
-          if ($scope.isOpenedNav()) $scope.navstate = false;
-          else $scope.navstate = true;
+          $scope.navstate = !$scope.navstate
         }
         $scope.isOpenedNav = function(){
           return $scope.navstate;
