@@ -2,7 +2,7 @@ myApp.factory('CategoriesFactory', function($window, $location, $http, Authentic
   var _CategoriesFactory = {}
 
   _CategoriesFactory.getCategories = function() {
-      return $http.get(APILINK+'/api/v1/categories').success(function(data){
+      return $http.get('http://localhost:3000/api/v1/categories').success(function(data){
         return (data.categories);
       }).success(function(data){
         console.log(data.status+': '+data.message);
@@ -14,7 +14,7 @@ myApp.factory('CategoriesFactory', function($window, $location, $http, Authentic
 
   _CategoriesFactory.modifyCategory = function(id, categoryName) {
 
-    return $http.put(APILINK+'/api/v1/category/'+id, {
+    return $http.put('http://localhost:3000/api/v1/category/'+id, {
       CategoryName: categoryName
     }).success(function(data){
       console.log(data.status+': '+data.message);
@@ -25,7 +25,7 @@ myApp.factory('CategoriesFactory', function($window, $location, $http, Authentic
 
 
   _CategoriesFactory.deleteCategory = function(id) {
-    return $http.delete(APILINK+'/api/v1/category/'+id).success(function(data){
+    return $http.delete('http://localhost:3000/api/v1/category/'+id).success(function(data){
       console.log(data);
     }).success(function(data){
       console.log(data.status+': '+data.message);
@@ -35,7 +35,7 @@ myApp.factory('CategoriesFactory', function($window, $location, $http, Authentic
   }
 
   _CategoriesFactory.addCategory = function(categoryName){
-    return $http.post(APILINK+'/api/v1/categories', {
+    return $http.post('http://localhost:3000/api/v1/categories', {
         categoryName: categoryName
     }).success(function(data){
       console.log(data.status+': '+data.message);

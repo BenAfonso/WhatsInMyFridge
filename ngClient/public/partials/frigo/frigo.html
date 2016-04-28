@@ -1,47 +1,63 @@
+<div id="sidebar-menu" ng-class="{'visible' : leftMenu}">
+    <ul>
+      <li><ul>
+      <li>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="searchBar" ng-model="searchBar">
+          <label class="mdl-textfield__label" for="searchBar">Rechercher...</label>
+        </div>
+      </li></ul></li>
 
-  <div class="wrapper">
-    <div id="sidebar" ng-class="{'visible' : leftMenu}">
-        <ul>
-          <li><ul><li><input type="text" placeholder="Rechercher quelquechose" ng-model="searchbar"></input></li></ul></li>
-
-          <li><a ng-click="toggleAddMenu()">Ajouter un item</a></li>
-          <ul ng-show="addItemMenu">
-            <li>Nom de l'item</li>
-            <li><input type="text" ng-model="itemName"></input></li>
-            <li>Image</li>
-            <li><input type="text" ng-model="img"></input></li>
-            <li><button id="addItem" ng-click="addItem()">Add item</button></li>
-          </ul>
-          <li><a ng-click="toggleFiltersMenu()">Filtrer</a></li>
-            <ul ng-show="showFiltersMenu">
-              <li>Des filtres</li>
-            </ul>
-          <li><a ng-click="toggleSortingMenu()">Trier</a></li>
-            <ul ng-show="showSortingMenu">
-              <li>Des tris</li>
-            </ul>
+      <li><a ng-click="toggleAddMenu()">Ajouter un item</a></li>
+      <ul ng-show="addItemMenu">
+        <li>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="itemName">
+            <label class="mdl-textfield__label" for="itemName">Nom</label>
+          </div>
+        </li>
+        <li>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="img">
+            <label class="mdl-textfield__label" for="img">Une petite image ?</label>
+          </div>
+        </li>
+        <li><button id="addItem" class="mdl-button mdl-js-button" ng-click="addItem()">Add item</button></li>
+      </ul>
+      <li><a ng-click="toggleFiltersMenu()">Filtrer</a></li>
+        <ul ng-show="showFiltersMenu">
+          <li>Des filtres</li>
         </ul>
-        <div id="left-pull">
+      <li><a ng-click="toggleSortingMenu()">Trier</a></li>
+        <ul ng-show="showSortingMenu">
+          <li>Des tris</li>
+        </ul>
+    </ul>
+
+        <div id="pull-bar">
           <div id="sidebar-btn" ng-click="toggleLeftMenu()">
             <span></span>
             <span></span>
             <span></span>
           </div>
         </div>
+  </div>
 
-    </div>
-    <div id="content" ng-class="{'visible' : leftMenu}">
-      <!-- Flex container containing items -->
-      <div class="flex-container">
-        <div ng-repeat="item in items" class="itembox">
-          <div class="item"><img src="http://www.flexheattransfervinyl.ca/images/catalogItems/noItemImage.gif"></img>
-            <div id="placeholder">
-              <span id="itemName">{{item.itemName}}</span>
-              <span id="itemQuantity">{{item.quantity}}</span>
-            </div>
-          </div>
+<div class="container" ng-class="{'visible' : leftMenu}">
+  <!-- Flex container containing items -->
+  <div class="flex-container">
+    <div ng-repeat="item in items" class="itembox">
+      <div class="item"><img src="http://www.flexheattransfervinyl.ca/images/catalogItems/noItemImage.gif"></img>
+        <div class="placeholder">
+          <span class="itemName">{{item.itemName}}</span>
+          <span class="itemQuantity">{{item.quantity}}</span>
         </div>
       </div>
-      <!-- / Flex container -->
+    </div>
+  </div>
+  <!-- / Flex container -->
+</div>
+
+
     </div>
   </div>

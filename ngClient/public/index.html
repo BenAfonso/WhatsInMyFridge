@@ -3,38 +3,49 @@
 <head>
   <title>WIMF!</title>
 
-  <link rel="stylesheet" href="http://yui.yahooapis.com/combo?pure/0.6.0/base-min.css&pure/0.6.0/grids-min.css&pure/0.6.0/grids-responsive-min.css">
+  <!--<link rel="stylesheet" href="http://yui.yahooapis.com/combo?pure/0.6.0/base-min.css&pure/0.6.0/grids-min.css&pure/0.6.0/grids-responsive-min.css">-->
    <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
-  <link href="styles/skeleton.css" rel="stylesheet">
+
+  <!-- bower:css -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="libs/material-design-lite/material.min.css">
+  <!-- endbower -->
+
+
   <link href="styles/normalize.css" rel="stylesheet">
-  <link href="styles/style.css" rel="stylesheet">
+  <link href="styles/style2.css" rel="stylesheet">
 
-  <script type="text/javascript" src="/node_modules/angular/angular.min.js"></script>
-  <script type="text/javascript" src="/node_modules/angular-route/angular-route.min.js"></script>
-  <script type="text/javascript" src="./js/app.js"></script>
 
-  <script type="text/javascript" src="./js/auth/auth.factory.js"></script>
-  <script type="text/javascript" src="./js/auth/auth.controller.js"></script>
-
-  <!-- Importing factories -->
-  <script type="text/javascript" src="./js/factories/items.factory.js"></script>
-  <script type="text/javascript" src="./js/factories/categories.factory.js"></script>
-  <script type="text/javascript" src="./js/factories/lists.factory.js"></script>
-  <script type="text/javascript" src="./js/factories/recipes.factory.js"></script>
-  <!-- Importing controllers -->
-  <script type="text/javascript" src="./js/frigo/frigo.controller.js"></script>
-  <script type="text/javascript" src="/js/home/home.controller.js"></script>
 
 </head>
 
 <body ng-controller="MainCtrl">
 
+<div class="wrap">
   <div ng-include="'partials/includes/header.html'"></div>
+  <div class="push"></div>
   <!--<div ng-include="'partials/includes/leftmenu.html'"></div>-->
   <div class="content" ng-view></div>
-
+</div>
   <!--<div ng-include="'partials/includes/footer.html'"></div>-->
 </body>
 
+<script type="text/javascript" src="/node_modules/angular/angular.min.js"></script>
+<script type="text/javascript" src="/node_modules/angular-route/angular-route.min.js"></script>
+<script type="text/javascript" src="./js/app.js"></script>
+<script type="text/javascript" src="./js/auth/auth.factory.js"></script>
+<script type="text/javascript" src="./js/auth/auth.controller.js"></script>
+
+<!-- Importing factories -->
+<script type="text/javascript" src="./js/factories/items.factory.js"></script>
+<script type="text/javascript" src="./js/factories/categories.factory.js"></script>
+<script type="text/javascript" src="./js/factories/lists.factory.js"></script>
+<script type="text/javascript" src="./js/factories/recipes.factory.js"></script>
+<!-- Importing controllers -->
+<script type="text/javascript" src="./js/frigo/frigo.controller.js"></script>
+<script type="text/javascript" src="/js/home/home.controller.js"></script>
+<!-- bower:js -->
+<script src="libs/material-design-lite/material.min.js"></script>
+<!-- endbower -->
 </html>
