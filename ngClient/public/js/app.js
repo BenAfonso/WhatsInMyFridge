@@ -1,6 +1,6 @@
 var myApp = angular.module('WIMF', ['ngRoute']);
 
-myApp.constant('APILINK','http://31.32.127.70:3000');
+myApp.constant('APILINK','http://localhost:3000');
 
 myApp.config(function($routeProvider, $httpProvider) {
 

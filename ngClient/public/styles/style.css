@@ -3,7 +3,7 @@
   padding: 0; }
 
 body {
-  background-image: url("/img/bg.png");
+  background: white;
   position: relative;
   width: 100%;
   margin: 0 auto;

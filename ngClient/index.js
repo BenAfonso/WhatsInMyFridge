@@ -10,7 +10,7 @@
 
     app.use('/node_modules', express.static(__dirname + '/node_modules/'));
     app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
-
+    app.use('/libs', express.static(__dirname + '/libs'));
     app.get('/home', function(res,res){
       res.sendFile(__dirname+'/public/login.html');
     });
