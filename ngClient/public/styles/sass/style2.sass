@@ -40,14 +40,14 @@ body
 .wrap
   @include container(24)
   height: 100%
-  overflow: hidden
 
 /*****************************************
  *           Responsive Header
  *****************************************/
 #header
   z-index: 2
-  position: relative
+  position: fixed
+  top: 0
   width: 100%
   height: 60px
   line-height: 60px
@@ -89,8 +89,8 @@ body
  *****************************************/
 .content
   @include container(24)
-  position: relative
-  height: 100%
+  height: calc(100% - 60px)
+  margin-top: 60px
   width: 100%
 
 /*****************************************
@@ -98,12 +98,9 @@ body
  *****************************************/
 
 #sidebar-menu
-  display: block
-  position: absolute
+  position: fixed
   left: -200px
-  top: 0px
   transition: left 0.1s linear
-  float: left
   background-color: $sidebar-color
   height: 100%
   width: 200px
@@ -154,20 +151,19 @@ body
       width: 50%
 
 #sidebar-menu.visible
+  z-index: 1
   left: 0px
   width: 200px
   transition: left 0.1s linear
 
-.container.visible
-  padding-left: 200px
 
 /*****************************************
  *           Big container
  *****************************************/
 .container
-  @include span(23 last)
-  padding-left: 60px
-  height: 100%
+  margin-left: 60px
+  height: calc(100vh - 60px)
+
 
 @mixin cf
   &:after
@@ -176,14 +172,16 @@ body
     clear: both
 
 .flex-container
-  padding: 20px
+  max-width: 196px
+  margin: 0 auto
   display: flex
   flex-wrap: wrap
   flex-direction: row
+  padding-top: 10px
 
 
 .itembox
-  padding: 10px
+  padding: 5px
 
 .item
   background-image: url('/img/itembox2.png')
@@ -207,7 +205,6 @@ body
       float: right
 
 @include breakpoint($computer)
-
 
 
 

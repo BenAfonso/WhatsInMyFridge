@@ -18,8 +18,7 @@ body {
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
-  height: 100%;
-  overflow: hidden; }
+  height: 100%; }
   .wrap:after {
     content: " ";
     display: block;
@@ -30,7 +29,8 @@ body {
  **************************************** */
 #header {
   z-index: 2;
-  position: relative;
+  position: fixed;
+  top: 0;
   width: 100%;
   height: 60px;
   line-height: 60px;
@@ -71,8 +71,8 @@ body {
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
-  position: relative;
-  height: 100%;
+  height: calc(100% - 60px);
+  margin-top: 60px;
   width: 100%; }
   .content:after {
     content: " ";
@@ -83,12 +83,9 @@ body {
  *           Left menu
  **************************************** */
 #sidebar-menu {
-  display: block;
-  position: absolute;
+  position: fixed;
   left: -200px;
-  top: 0px;
   transition: left 0.1s linear;
-  float: left;
   background-color: #0ba2bd;
   height: 100%;
   width: 200px; }
@@ -138,31 +135,28 @@ body {
       width: 50%; }
 
 #sidebar-menu.visible {
+  z-index: 1;
   left: 0px;
   width: 200px;
   transition: left 0.1s linear; }
-
-.container.visible {
-  padding-left: 200px; }
 
 /*****************************************
  *           Big container
  **************************************** */
 .container {
-  width: 95.79832%;
-  float: right;
-  margin-right: 0;
-  padding-left: 60px;
-  height: 100%; }
+  margin-left: 60px;
+  height: calc(100vh - 60px); }
 
 .flex-container {
-  padding: 20px;
+  max-width: 196px;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row; }
+  flex-direction: row;
+  padding-top: 10px; }
 
 .itembox {
-  padding: 10px; }
+  padding: 5px; }
 
 .item {
   background-image: url("/img/itembox2.png");
