@@ -3,12 +3,13 @@
 
   <div class="container">
     <div class="row">
-      <div class="image six columns">
+      <div id="fridge">
+        <img src="/img/frigologo2.png"/>
 
         <form ng-submit="login()">
-          <span id="usernamePlaceholder">Nom d'utilisateur</span>
+           <!--<span id="usernamePlaceholder">Nom d'utilisateur</span>-->
           <input id="usernameInput" type="text" ng-model="username"></input>
-          <span id="passwordPlaceholder">Mot de passe</span>
+          <!--<span id="passwordPlaceholder">Mot de passe</span>-->
           <input id="passwordInput" type="password" ng-model="password"></input>
           <span id="signup" ng-click="go('/register')">Sign up</span>
           <button id="submit" class="button-primary">Go !</button>

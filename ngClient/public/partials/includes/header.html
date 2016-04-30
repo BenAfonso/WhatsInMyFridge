@@ -4,12 +4,12 @@
       <span></span><span></span><span></span>
     </div>
     <nav id="nav" ng-click="closeNav()" ng-class="{'open' : isOpenedNav()}">
-    <!--  <ul>
-        <li><a ng-click="logout()">Logout</a></li>
-        <li><a href="#/">Accueil</a></li>
-        <li><a href="#/monfrigo">Mon Frigo</a></li>
+      <ul>
+        <li><a ng-click="go('/')">Accueil</a></li>
+        <li><a ng-click="go('/monfrigo')">Mon Frigo</a></li>
         <li><a href="#/mescourses">Mes Courses</a></li>
         <li><a href="#/mesrecettes">Mes Recettes</a></li>
-      </ul> -->
+        <li><a ng-click="logout()">Logout</a></li>
+      </ul>
     </nav>
 </div>

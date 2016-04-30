@@ -6,8 +6,8 @@
 $susy:(columns: 24,debug: (image: hide),global-box-sizing: border-box)
 
 // Variables
-$computer: 800px
-$tablet: 768px
+$computer: 970px
+$tablet: 730px
 $phone: 480px
 
 // Colors
@@ -39,7 +39,6 @@ body
 
 .wrap
   @include container(24)
-  height: 100%
 
 /*****************************************
  *           Responsive Header
@@ -68,21 +67,57 @@ body
       vertical-align: middle
       font-weight: bold
 
-  #nav
+  #openNav
     position: absolute
     right: 0
+    top: 0
+    width: 20px
+    height: 15px
+    margin: 20px
+    span
+      height: 3px
+      right: 0
+      background-color: #111
+      margin-bottom: 5px
+      display: block
+  #nav
+    width: calc(100% - 60px)
+    margin-top: 60px
+    height: 0px
+    float: right
     ul
+      background: $menu-dropdown-color
+      width: 100%
       li
-        line-height: 60px
-        float: left
+        float: none
         list-style-type: none
         a
-          display: block
           color: white
+          display: block
           text-decoration: none
-          padding: 0 10px
+          height: 40px
+          padding: 8px
           &:hover
             background-color: $menu-item-background-color
+  #nav ul
+    transition: 350ms
+    -moz-transition: 350ms
+    -webkit-transition: 350ms
+    transform: perspective(600) rotate3d(0,0,0,0)
+    -moz-transform: perspective(600) rotate3d(0,0,0,0)
+    -webkit-transform: perspective(600) rotate3d(1,0,0,-90deg)
+    transform-origin: 50% 0
+    -moz-transform-origin: 50% 0
+    -webkit-transform-origin: 50% 0
+    list-style-type: none
+  #nav.open
+    display: block
+    float: right
+    margin-top: 60px
+    ul
+      transform: translateY(0px)
+      -moz-transform: translateY(0px)
+      -webkit-transform:  perspective(600) rotate3d(0,0,0,0)
 
 /*****************************************
  *           Page content
@@ -91,7 +126,6 @@ body
   @include container(24)
   height: calc(100% - 60px)
   margin-top: 60px
-  width: 100%
 
 /*****************************************
  *           Left menu
@@ -126,11 +160,11 @@ body
   position: absolute
   right: -60px
   top: 0px
-  height: 100%
   width: 60px
   background: $menu
 
 #sidebar-btn
+  z-index: 2
   display: inline-block
   vertical-align: middle
   width: 20px
@@ -163,13 +197,6 @@ body
 .container
   margin-left: 60px
   height: calc(100vh - 60px)
-
-
-@mixin cf
-  &:after
-    content: " "
-    display: block
-    clear: both
 
 .flex-container
   max-width: 196px
@@ -204,10 +231,41 @@ body
     .itemQuantity
       float: right
 
-@include breakpoint($computer)
 
 
-
+@include breakpoint(500px)
+  .container
+    background-color: red
+  .flex-container
+    max-width: 400px
 
 @include breakpoint($tablet)
-  .wrap
+  .container
+    background-color: red
+  .flex-container
+    max-width: 600px
+
+@include breakpoint($computer)
+  .container
+    background-color: blue
+  .flex-container
+    margin-left: 20px
+    padding-top: 20px
+    max-width: 100%
+
+
+    #nav
+      position: absolute
+      right: 0
+      ul
+        li
+          line-height: 60px
+          float: left
+          list-style-type: none
+          a
+            display: block
+            color: white
+            text-decoration: none
+            padding: 0 10px
+            &:hover
+              background-color: $menu-item-background-color

@@ -1,6 +1,6 @@
 var myApp = angular.module('WIMF', ['ngRoute']);
 
-myApp.constant('APILINK','http://localhost:3000');
+myApp.constant('APILINK','http://192.168.1.74:3000');
 
 myApp.config(function($routeProvider, $httpProvider) {
 
@@ -83,6 +83,7 @@ myApp.controller("MainCtrl", ['$scope','$http','$location','UserAuthFactory',
         }
 
         $scope.go = function(path){
+          componentHandler.upgradeAllRegistered();
           $location.path(path);
         }
 

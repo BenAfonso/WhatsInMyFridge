@@ -4,7 +4,7 @@
   height: 100%;
   top: 0px;
   left: 0px;
-  z-index: 1000;
+  z-index: 1;
   background-image: url("/img/bg.png");
   background-size: cover; }
   .login .container {
@@ -14,29 +14,29 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    height: 580px;
-    max-width: 500px;
-    min-width: 500px;
-    background-image: url("/img/frigologo2.png");
+    margin: 0 auto;
     background-size: contain;
     background-repeat: no-repeat;
     vertical-align: middle;
     margin-top: 50vh;
     transform: translateY(-50%); }
-    .login .container #input, .login .container #usernameInput, .login .container #usernamePlaceholder, .login .container #passwordInput, .login .container #passwordPlaceholder, .login .container #password2Input, .login .container #password2Placeholder, .login .container #signup, .login .container #login, .login .container #submit, .login .container #submitRegister {
+    .login .container #fridge {
+      width: 90%;
+      margin: 0 auto; }
+      .login .container #fridge img {
+        max-width: 315px;
+        max-height: 355px;
+        width: 100%; }
+    .login .container #input, .login .container #usernameInput, .login .container #passwordInput, .login .container #password2Input, .login .container #password2Placeholder, .login .container #signup, .login .container #login, .login .container #submit, .login .container #submitRegister {
       position: absolute;
-      left: 130px; }
-    .login .container #placeholder, .login .container #usernamePlaceholder, .login .container #passwordPlaceholder, .login .container #password2Placeholder {
+      left: 100px; }
+    .login .container #placeholder, .login .container #password2Placeholder {
       font-weight: bold;
       color: white; }
-    .login .container #usernameInput, .login .container #usernamePlaceholder {
-      top: 250px; }
-    .login .container #usernamePlaceholder {
-      top: 230px; }
-    .login .container #passwordInput, .login .container #passwordPlaceholder, .login .container #password2Input, .login .container #password2Placeholder {
-      bottom: 197px; }
-    .login .container #passwordPlaceholder {
-      bottom: 231px; }
+    .login .container #usernameInput {
+      top: 263px; }
+    .login .container #passwordInput, .login .container #password2Input, .login .container #password2Placeholder {
+      bottom: 230px; }
     .login .container #password2Input {
       bottom: 120px; }
     .login .container #password2Placeholder {
@@ -45,16 +45,16 @@
       color: white;
       text-decoration: underline;
       font-weight: bold;
-      bottom: 120px; }
+      bottom: 145px; }
     .login .container #submit, .login .container #submitRegister {
-      left: auto;
+      left: 190px;
       font-weight: bold;
-      bottom: 120px; }
+      bottom: 142px; }
     .login .container #submitRegister {
       bottom: 50px;
       right: 150px; }
     .login .container #login {
-      bottom: 55px;
+      bottom: 175px;
       left: 102px; }
 
 /*# sourceMappingURL=login.css.map */
