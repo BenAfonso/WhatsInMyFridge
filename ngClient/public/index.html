@@ -3,16 +3,13 @@
 <head>
   <title>WIMF!</title>
 
-  <!--<link rel="stylesheet" href="http://yui.yahooapis.com/combo?pure/0.6.0/base-min.css&pure/0.6.0/grids-min.css&pure/0.6.0/grids-responsive-min.css">-->
    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
+   <!-- Material Design Lite Stylesheets -->
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="libs/material-design-lite/material.min.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   <link rel="stylesheet" href="libs/material-design-lite/material.min.css">
 
-
-
-  <link href="styles/normalize.css" rel="stylesheet">
+   <link href="styles/normalize.css" rel="stylesheet">
   <link href="styles/style2.css" rel="stylesheet">
 </head>
 
@@ -27,14 +24,16 @@
       <!--<div ng-include="'partials/includes/footer.html'"></div>-->
 </body>
 
+    <!-- Importing Angular and Routes -->
     <script type="text/javascript" src="/node_modules/angular/angular.min.js"></script>
     <script type="text/javascript" src="/node_modules/angular-route/angular-route.min.js"></script>
+    <!-- Loading the Angular App -->
     <script type="text/javascript" src="./js/app.js"></script>
-    <script type="text/javascript" src="./js/auth/auth.factory.js"></script>
-    <script type="text/javascript" src="./js/auth/auth.controller.js"></script>
 
+    <!-- LiveReload functionnality (dev only) -->
     <script src="//localhost:35729/livereload.js"></script>
     <!-- Importing factories -->
+    <script type="text/javascript" src="./js/auth/auth.factory.js"></script>
     <script type="text/javascript" src="./js/factories/items.factory.js"></script>
     <script type="text/javascript" src="./js/factories/categories.factory.js"></script>
     <script type="text/javascript" src="./js/factories/lists.factory.js"></script>
@@ -42,7 +41,13 @@
     <!-- Importing controllers -->
     <script type="text/javascript" src="./js/frigo/frigo.controller.js"></script>
     <script type="text/javascript" src="/js/home/home.controller.js"></script>
+    <script type="text/javascript" src="./js/auth/auth.controller.js"></script>
+    <!-- Importing directives -->
+    <script type="text/javascript" src="./js/directives/directives.js"></script>
 
+
+    <!-- Importing Material Design lite assets -->
     <script src="libs/material-design-lite/material.min.js"></script>
+    <script src="./js/DomtriggerMDL.js"></script>
 
 </html>

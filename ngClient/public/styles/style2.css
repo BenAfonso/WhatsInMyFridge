@@ -10,6 +10,9 @@
   margin: 0;
   padding: 0; }
 
+html {
+  min-width: 298px; }
+
 body {
   height: 100%;
   background-image: url("/img/bg.png"); }
@@ -17,7 +20,8 @@ body {
 .wrap {
   max-width: 100%;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  min-width: 298px; }
   .wrap:after {
     content: " ";
     display: block;
@@ -123,7 +127,8 @@ body {
   transition: left 0.1s linear;
   background-color: #0ba2bd;
   height: 100%;
-  width: 200px; }
+  width: 200px;
+  padding: 20px; }
   #sidebar-menu ul {
     margin: 0px;
     padding: 0px; }
@@ -190,11 +195,80 @@ body {
   flex-direction: row;
   padding-top: 10px; }
 
+/*****************************************
+ *           Add item button
+ **************************************** */
+.formContainer {
+  position: fixed;
+  bottom: 50px;
+  right: 30px; }
+
+.addButton {
+  position: absolute;
+  bottom: 0px;
+  right: 0px; }
+
+/*****************************************
+ *           Add Item form (animated)
+ **************************************** */
+.addForm {
+  position: static;
+  margin-right: 45px;
+  margin-bottom: 45px;
+  height: 0px;
+  width: 0px;
+  transition: width 0.2s ease-out;
+  transition: height 0.2s ease-out;
+  background-color: #4bcef7; }
+
+.addForm.displayed {
+  height: 190px;
+  width: 190px;
+  padding: 15px;
+  transition: width 0.2s ease-in;
+  transition: height 0.2s ease-in; }
+  .addForm.displayed #itemNameInput {
+    max-width: 110px;
+    position: absolute;
+    top: 0; }
+  .addForm.displayed #imgInput {
+    max-width: 110px;
+    position: absolute;
+    top: 40px; }
+  .addForm.displayed #addItem {
+    position: absolute;
+    bottom: 50px; }
+
+/*****************************************
+ *           Items
+ **************************************** */
 .itembox {
-  padding: 5px; }
+  padding: 5px;
+  position: relative; }
+
+.modifyItemBox {
+  display: none;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  min-width: 175px;
+  height: 195px;
+  background-color: #dd6b6b;
+  padding: 10px; }
+  .modifyItemBox .modifyInput {
+    width: 100%; }
+  .modifyItemBox .modifyInput__small {
+    width: 50%; }
+  .modifyItemBox #submitForm {
+    position: absolute;
+    bottom: 5px;
+    right: 5px; }
+
+.active {
+  display: block; }
 
 .item {
-  background-image: url("/img/itembox2.png");
+  background: url("/img/itembox2.png");
   background-repeat: no-repeat;
   background-size: contain;
   min-width: 160px;
@@ -203,6 +277,11 @@ body {
   .item img {
     height: 134px;
     width: 160px; }
+  .item .editItem {
+    z-index: 1;
+    position: absolute;
+    top: 13px;
+    right: 14px; }
   .item .placeholder {
     position: absolute;
     width: 160px;
@@ -213,21 +292,12 @@ body {
       float: right; }
 
 @media (min-width: 500px) {
-  .container {
-    background-color: red; }
-
   .flex-container {
     max-width: 400px; } }
 @media (min-width: 730px) {
-  .container {
-    background-color: red; }
-
   .flex-container {
     max-width: 600px; } }
 @media (min-width: 970px) {
-  .container {
-    background-color: blue; }
-
   .flex-container {
     margin-left: 20px;
     padding-top: 20px;

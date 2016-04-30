@@ -1,3 +1,6 @@
+#header {
+  display: none; }
+
 .login {
   position: fixed;
   width: 100%;
@@ -8,53 +11,84 @@
   background-image: url("/img/bg.png");
   background-size: cover; }
   .login .container {
-    position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
-    background-size: contain;
-    background-repeat: no-repeat;
-    vertical-align: middle;
-    margin-top: 50vh;
-    transform: translateY(-50%); }
+    margin: 0 auto; }
     .login .container #fridge {
-      width: 90%;
+      position: relative;
+      width: 284px;
       margin: 0 auto; }
       .login .container #fridge img {
-        max-width: 315px;
-        max-height: 355px;
         width: 100%; }
-    .login .container #input, .login .container #usernameInput, .login .container #passwordInput, .login .container #password2Input, .login .container #password2Placeholder, .login .container #signup, .login .container #login, .login .container #submit, .login .container #submitRegister {
+      .login .container #fridge #input, .login .container #fridge #usernameInput, .login .container #fridge #passwordInput, .login .container #fridge #password2Input {
+        position: absolute;
+        left: 50px;
+        max-width: 156px; }
+    .login .container #buttons, .login .container #signup, .login .container #login, .login .container #submit, .login .container #submitRegister {
       position: absolute;
-      left: 100px; }
-    .login .container #placeholder, .login .container #password2Placeholder {
-      font-weight: bold;
-      color: white; }
+      width: 90px;
+      height: 20px;
+      font-size: 10px;
+      padding: 0px;
+      line-height: 20px;
+      bottom: 22px; }
     .login .container #usernameInput {
-      top: 263px; }
-    .login .container #passwordInput, .login .container #password2Input, .login .container #password2Placeholder {
-      bottom: 230px; }
+      top: 115px; }
+    .login .container #passwordInput, .login .container #password2Input {
+      bottom: 89px; }
     .login .container #password2Input {
       bottom: 120px; }
-    .login .container #password2Placeholder {
-      bottom: 154px; }
     .login .container #signup, .login .container #login {
+      position: absolute;
       color: white;
-      text-decoration: underline;
+      background-color: #5fb7e8;
       font-weight: bold;
-      bottom: 145px; }
+      left: 27px; }
     .login .container #submit, .login .container #submitRegister {
-      left: 190px;
-      font-weight: bold;
-      bottom: 142px; }
-    .login .container #submitRegister {
-      bottom: 50px;
-      right: 150px; }
+      right: 65px;
+      background-color: #5fb7e8;
+      font-weight: bold; }
     .login .container #login {
       bottom: 175px;
       left: 102px; }
+
+.tablet-visible {
+  display: none; }
+
+@media (min-width: 730px) {
+  .container {
+    width: 40%;
+    float: right; }
+
+  .tablet-visible {
+    display: block;
+    margin: 0 auto; }
+
+  #pageTitle {
+    position: absolute;
+    width: 100%;
+    top: 40px;
+    padding-top: 50px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bolder;
+    color: #f9ffff; }
+
+  .left-container {
+    float: left;
+    margin-top: 50vh;
+    transform: translateY(-50%);
+    margin-left: 40px;
+    width: calc(60% - 40px);
+    border: 2px solid black; }
+
+  #presentation {
+    display: block;
+    padding: 0 50px;
+    text-align: center; } }
 
 /*# sourceMappingURL=login.css.map */

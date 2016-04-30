@@ -22,11 +22,12 @@ myApp.factory('ItemsFactory', function($window, APILINK, $location, $http, Authe
     });
   };
 
-  _ItemsFactory.modifyItem = function(id, itemName, idCategory) {
+  _ItemsFactory.modifyItem = function(item) {
 
-    return $http.put(APILINK+'/api/v1/item/'+id, {
-      itemName: itemName,
-      idCategory: idCategory
+    return $http.put(APILINK+'/api/v1/item/'+item.idItem, {
+      itemName: item.itemName,
+      img: item.img,
+      idCategory: item.idCategory
     });
   };
 
@@ -40,8 +41,8 @@ myApp.factory('ItemsFactory', function($window, APILINK, $location, $http, Authe
     });
   }
 
-  _ItemsFactory.deleteItem = function(id) {
-    return $http.delete(APILINK+'/api/v1/item/'+id).success(function(data){
+  _ItemsFactory.deleteItem = function(item) {
+    return $http.delete(APILINK+'/api/v1/item/'+item.idItem).success(function(data){
       console.log(data);
     }).success(function(data){
       console.log(data.status+': '+data.message);

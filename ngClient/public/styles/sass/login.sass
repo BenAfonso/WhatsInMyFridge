@@ -1,6 +1,21 @@
+@import "../../../bower_components/susy/sass/susy"
+@import "../../../bower_components/breakpoint-sass/stylesheets/breakpoint"
+
+// Variables
+$computer: 970px
+$tablet: 730px
+$phone: 480px
+
+// Colors
 $background-color: #0cb1a2
 $mini-title-color: #ffffff
 $submit-color: #e86d57
+$buttons-color: #5fb7e8
+
+#header
+  display: none
+
+
 
 .login
   color:white
@@ -14,73 +29,102 @@ $submit-color: #e86d57
   background-size: cover
   background-repeat:no-repeat
 
-
-
-
   .container
-    position: relative
     display: flex
     flex-direction: row
     flex-wrap: wrap
     justify-content: center
     align-items: center
     margin: 0 auto
-    background-size: contain
-    background-repeat: no-repeat
-    vertical-align: middle
-    margin-top: 50vh
-    transform: translateY(-50%)
 
     #fridge
-      width: 90%
+      position: relative
+      width: 284px
       margin: 0 auto
       img
-        max-width: 315px
-        max-height: 355px
         width: 100%
 
 
-    #input
+      #input
+        position: absolute
+        left: 50px
+        max-width: 156px
+
+
+    #buttons
       position: absolute
-      left: 100px
-    #placeholder
-      font-weight: bold
-      color: white
+      width: 90px
+      height: 20px
+      font-size: 10px
+      padding: 0px
+      line-height: 20px
+      bottom: 22px
+
     #usernameInput
       @extend #input
-      top: 263px
+      top: 115px
+
     #passwordInput
       @extend #input
-      bottom: 230px
+      bottom: 89px
 
     #password2Input
       @extend #passwordInput
       bottom: 120px
 
-    #password2Placeholder
-      @extend #passwordInput,#placeholder
-      bottom: 154px
-
     #signup
-      @extend #input
+      @extend #buttons
+      position: absolute
       color: white
-      text-decoration: underline
+      background-color: $buttons-color
       font-weight: bold
-      bottom: 145px
+      left: 27px
 
 
     #submit
-      @extend #input
-      left: 190px
+      @extend #buttons
+      right: 65px
+      background-color: $buttons-color
       font-weight: bold
-      bottom: 142px
 
     #submitRegister
       @extend #submit
-      bottom: 50px
-      right: 150px
 
     #login
       @extend #signup
       bottom: 175px
       left: 102px
+.tablet-visible
+  display: none
+
+@include breakpoint($tablet)
+  .container
+    width: 40%
+    float: right
+  .tablet-visible
+    display: block
+    margin: 0 auto
+
+  #pageTitle
+    position: absolute
+    width: 100%
+    top: 40px
+    padding-top: 50px
+    line-height: 40px
+    text-align: center
+    font-size: 40px
+    font-weight: bolder
+    color: #f9ffff
+    
+  .left-container
+    float: left
+    margin-top: 50vh
+    transform: translateY(-50%)
+    margin-left: 40px
+    width: calc(60% - 40px)
+    border: 2px solid black
+
+  #presentation
+    display: block
+    padding: 0 50px
+    text-align: center

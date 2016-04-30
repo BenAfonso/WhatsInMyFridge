@@ -20,7 +20,7 @@ $menu-item-background-color: #e86d57
 $left-menu-background: url('/img/menugauche.png')
 $sidebar-color: #0ba2bd
 $left-menu-buttons-hover: #e86d57
-
+$modifying-item-color: #dd6b6b
 
 @include border-box-sizing
 
@@ -32,13 +32,17 @@ $left-menu-buttons-hover: #e86d57
   margin: 0
   padding: 0
 
+html
+  min-width: 298px
 body
   height: 100%
   background-image: $background
 
 
+
 .wrap
   @include container(24)
+  min-width: 298px
 
 /*****************************************
  *           Responsive Header
@@ -138,6 +142,7 @@ body
   background-color: $sidebar-color
   height: 100%
   width: 200px
+  padding: 20px
   ul
     margin: 0px
     padding: 0px
@@ -207,11 +212,82 @@ body
   padding-top: 10px
 
 
+/*****************************************
+ *           Add item button
+ *****************************************/
+.formContainer
+  position: fixed
+  bottom: 50px
+  right: 30px
+.addButton
+  position: absolute
+  bottom: 0px
+  right: 0px
+
+/*****************************************
+ *           Add Item form (animated)
+ *****************************************/
+.addForm
+  position: static
+  margin-right: 45px
+  margin-bottom: 45px
+  height: 0px
+  width: 0px
+  transition: width 0.2s ease-out
+  transition: height 0.2s ease-out
+  background-color: #4bcef7
+
+
+.addForm.displayed
+  height: 190px
+  width: 190px
+  padding: 15px
+  transition: width 0.2s ease-in
+  transition: height 0.2s ease-in
+  #itemNameInput
+    max-width: 110px
+    position: absolute
+    top: 0
+  #imgInput
+    max-width: 110px
+    position: absolute
+    top: 40px
+  #addItem
+    position: absolute
+    bottom: 50px
+
+/*****************************************
+ *           Items
+ *****************************************/
 .itembox
   padding: 5px
+  position: relative
+
+.modifyItemBox
+  display: none
+  position: absolute
+  top: 5px
+  left: 5px
+  min-width: 175px
+  height: 195px
+  background-color: $modifying-item-color
+  padding: 10px
+  .modifyInput
+    width: 100%
+  .modifyInput__small
+    width: 50%
+
+  #submitForm
+    position: absolute
+    bottom: 5px
+    right: 5px
+
+.active
+  display: block
+
 
 .item
-  background-image: url('/img/itembox2.png')
+  background: url('/img/itembox2.png')
   background-repeat: no-repeat
   background-size: contain
   min-width: 160px
@@ -221,6 +297,13 @@ body
   img
     height: 134px
     width: 160px
+
+  .editItem
+    z-index: 1
+    position: absolute
+    top: 13px
+    right: 14px
+
 
   .placeholder
     position: absolute
@@ -235,19 +318,16 @@ body
 
 @include breakpoint(500px)
   .container
-    background-color: red
   .flex-container
     max-width: 400px
 
 @include breakpoint($tablet)
   .container
-    background-color: red
   .flex-container
     max-width: 600px
 
 @include breakpoint($computer)
   .container
-    background-color: blue
   .flex-container
     margin-left: 20px
     padding-top: 20px

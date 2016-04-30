@@ -154,14 +154,23 @@ var items = {
     var id = req.params.id;
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
     if (req.body.itemName){
-      var query = "UPDATE ITEMS SET itemName = '"+req.body.itemName+"' WHERE idUser = '"+user_id+"'\
+      var query = "UPDATE ITEMS SET itemName = '"+req.body.itemName+"'";
+      if (req.body.img){
+          query = query + ", img = '"+req.body.img+"'";
+      }
+      query = query + " WHERE idItem = '"+id+"' AND idUser = '"+user_id+"'\
       RETURNING idItem, itemName, (SELECT quantity FROM STOCKS WHERE idItem = '"+id+"')";
+    }
+    else if (req.body.img){
+        var query = "UPDATE ITEMS SET img = '"+req.body.img+"' WHERE idItem = '"+id+"' AND idUser = '"+user_id+"'\
+        RETURNING idItem, itemName, (SELECT quantity FROM STOCKS WHERE idItem = '"+id+"')";
     }
     if (req.body.idCategory){
       // Check if category is owned by token's owner
     }
-    if (req.body.itemName){
+    if (req.body.itemName || req.body.img || req.body.idCategory){
       // Query to add an item
+      console.log(query);
       db.query(query, function(err,item){
         if (err)
           errorHandler(err, res);

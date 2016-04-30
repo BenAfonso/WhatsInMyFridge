@@ -1,44 +1,26 @@
+
 <div id="sidebar-menu" ng-class="{'visible' : leftMenu}">
     <ul>
       <li><ul>
       <li>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" type="text" id="searchBar" ng-model="searchBar">
+          <input class="mdl-textfield__input" type="text" id="searchBar" ng-model="search.itemName">
           <label class="mdl-textfield__label" for="searchBar">Rechercher...</label>
         </div>
       </li></ul></li>
-
-      <li><a ng-click="toggleAddMenu()">Ajouter un item</a></li>
-      <ul ng-show="addItemMenu">
-        <li>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="itemName">
-            <label class="mdl-textfield__label" for="itemName">Nom</label>
-          </div>
-        </li>
-        <li>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="img">
-            <label class="mdl-textfield__label" for="img">Une petite image ?</label>
-          </div>
-        </li>
-        <li><button id="addItem" class="mdl-button mdl-js-button" ng-click="addItem()">Add item</button></li>
-      </ul>
       <li><a ng-click="toggleFiltersMenu()">Filtrer</a></li>
         <ul ng-show="showFiltersMenu">
           <li>Des filtres</li>
         </ul>
       <li><a ng-click="toggleSortingMenu()">Trier</a></li>
         <ul ng-show="showSortingMenu">
-          <li>Des tris</li>
+          <li ng-repeat="category in categories">{{category.categoryName}}</li>
         </ul>
     </ul>
 
         <div id="pull-bar">
           <div id="sidebar-btn" ng-click="toggleLeftMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+                <i class="material-icons">search</i>
           </div>
         </div>
   </div>
@@ -46,21 +28,54 @@
 <div class="container" ng-class="{'visible' : leftMenu}">
   <!-- Flex container containing items -->
   <div class="flex-container">
-    <div ng-repeat="item in items" class="itembox">
-      <div class="item"><img src="http://www.flexheattransfervinyl.ca/images/catalogItems/noItemImage.gif"></img>
+    <div ng-repeat="item in items | filter:search" class="itembox" ng-click="selectItem(item)">
+      <div class="item"><img src="{{item.img}}"></img>
+        <div class="editItem" ng-show="isSelected(item)">
+            <i class="material-icons" confirmed-click="deleteItem(item)"
+            ng-confirm-click="Êtes vous sur de vouloir supprimer?" ng-show="!isModifying(item)">clear</i>
+            <i class="material-icons" ng-click="toggleModifyItem(item)">mode edit</i>
+        </div>
         <div class="placeholder">
           <span class="itemName">{{item.itemName}}</span>
           <span class="itemQuantity">{{item.quantity}}</span>
         </div>
       </div>
+      <div class="modifyItemBox" ng-class="{ 'active' : isModifying(item) }">
+          <form name="newitem" ng-submit="modifyItem(item)">
+              <div class="modifyInput mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="itemName" ng-model="item.itemName">
+                <label class="mdl-textfield__label" for="itemName">Nom</label>
+              </div>
+              <div class="modifyInput mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="img" ng-model="item.img">
+                <label class="mdl-textfield__label" for="img">Image</label>
+              </div>
+              <div class="modifyInput__small mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                 <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="quantity" ng-model="item.quantity">
+                 <label class="mdl-textfield__label" for="sample2">Quantité</label>
+                 <span class="mdl-textfield__error">Quantité non valide !</span>
+              </div>
+              <button id="submitForm" class="mdl-button mdl-js-button mdl-button--raised" type="submit">Save</button>
+          </form>
+      </div>
     </div>
   </div>
   <!-- / Flex container -->
-</div>
-
-
+  <div class="formContainer">
+    <button class="addButton mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="toggleAddForm()">
+      <i class="material-icons">add</i>
+    </button>
+    <form class="addForm" ng-class="{'displayed' : addFormDisplayed }" ng-submit="addItem()" novalidate>
+        <div class="mdl-textfield mdl-js-textfield" id="itemNameInput">
+          <input class="mdl-textfield__input" type="text" id="itemName" ng-model="itemName">
+          <label class="mdl-textfield__label" for="itemName">Nom de l'item</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield" id="imgInput">
+          <input class="mdl-textfield__input" type="text" pattern="/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/" id="img" ng-model="img">
+          <label class="mdl-textfield__label" for="img">Image</label>
+          <span class="mdl-textfield__error">Ceci n'est pas une URL valide</span>
+        </div>
+        <button id="addItem" class="mdl-button mdl-js-button" type="submit">Add item</button>
+    </form>
     </div>
-  </div>
-
-
- <script src="libs/material-design-lite/material.min.js"></script>
+</div>

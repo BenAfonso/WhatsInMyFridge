@@ -1,16 +1,20 @@
 CREATE DOMAIN role_domain VARCHAR(6) CHECK( VALUE IN ('user','admin') );
 
-CREATE OR REPLACE FUNCTION insert_stock()
-RETURNS TRIGGER AS $$
-BEGIN
-  INSERT INTO STOCKS (idItem, quantity, lowStock) VALUES (NEW.idItem,0,0);
-  RETURN new;
-END; $$ LANGUAGE 'plpgsql';
-
-CREATE TRIGGER insert_stock_trigger AFTER INSERT
+-- Verifier si la quantité est supérieure au maximum,
+-- si oui, remplacer le maximum par la nouvelle quantité
+CREATE TRIGGER check_max_stock AFTER UPDATE
 ON Items
 FOR EACH ROW
-EXECUTE PROCEDURE insert_stock();
+EXECUTE PROCEDURE set_max_stock();
+
+-- Verifier si le produit et la recette concernent le même utilisateur
+-- lors d'une insertion dans Ingredients
+CREATE TRIGGER check_user_on_insert BEFORE INSERT
+ON Ingredients
+FOR EACH ROW
+EXECUTE PROCEDURE proc_check_user_on_insert();
+
+
 
 CREATE TABLE Users (
   idUser SERIAL PRIMARY KEY,
@@ -20,36 +24,26 @@ CREATE TABLE Users (
   role role_domain NOT NULL DEFAULT 'user'
 );
 
-CREATE TABLE Items (
-  idItem SERIAL PRIMARY KEY,
-  idCategory INT references Categories(idCategory) ON DELETE CASCADE,
-  itemName VARCHAR(50),
-  idUser INT references Users(idUser) ON DELETE CASCADE
-);
-
 CREATE TABLE Categories (
   idCategory SERIAL PRIMARY KEY,
   categoryName VARCHAR(50),
   idUser INT references Users(idUser) ON DELETE CASCADE
 );
 
-CREATE TABLE Lists (
-  idList SERIAL PRIMARY KEY,
-  listName VARCHAR(60),
+CREATE TABLE Products (
+  idProduct SERIAL PRIMARY KEY,
+  idCategory INT references Categories(idCategory) ON DELETE CASCADE,
+  productName VARCHAR(50),
   idUser INT references Users(idUser) ON DELETE CASCADE
 );
 
-CREATE TABLE Stocks (
-  idItem INT references Items(idItem) ON DELETE CASCADE,
-  quantity NUMERIC,
-  lowStock NUMERIC,
-  PRIMARY KEY (idItem)
-);
 
-CREATE TABLE ListItems (
-  idList INT references Lists(idList) ON DELETE CASCADE,
-  idItem INT references Items(idItem) ON DELETE CASCADE,
-  PRIMARY KEY (idList, idItem)
+CREATE TABLE Items (
+  idItem SERIAL PRIMARY KEY,
+  idProduct INT references Products(idProduct) ON DELETE CASCADE,
+  idUser INT references Users(idUser) ON DELETE CASCADE,
+  quantity NUMERIC,
+  max NUMERIC
 );
 
 CREATE TABLE Recipes (
@@ -58,9 +52,9 @@ CREATE TABLE Recipes (
   idUser INT references Users(idUser) ON DELETE CASCADE
 );
 
-CREATE TABLE RecipeItems (
-  idRecipe INT references Recipes(idRecipe)ON DELETE CASCADE,
-  idItem INT references Items(idItem) ON DELETE CASCADE,
+CREATE TABLE Ingredients (
+  idRecipe INT references Recipes(idRecipe) ON DELETE CASCADE,
+  idProduct INT references Products(idProduct) ON DELETE CASCADE,
   quantity NUMERIC,
-  PRIMARY KEY (idRecipe, idItem)
+  PRIMARY KEY (idRecipe, idProduct)
 );

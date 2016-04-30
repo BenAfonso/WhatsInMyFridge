@@ -83,7 +83,8 @@ myApp.controller("MainCtrl", ['$scope','$http','$location','UserAuthFactory',
         }
 
         $scope.go = function(path){
-          componentHandler.upgradeAllRegistered();
+          componentHandler.upgradeDom();
+
           $location.path(path);
         }
 
