@@ -66,3 +66,10 @@ CREATE TRIGGER check_user_on_insert BEFORE INSERT
 ON Ingredients
 FOR EACH ROW
 EXECUTE PROCEDURE proc_check_user_on_insert();
+
+-- Verifier si un produit possède un seul item associé, renvoie une erreur sinon
+-- Ou augmente la quantité de l'item déjà créé (TODO réflechir ^^')
+CREATE TRIGGER check_unicity_of_item_per_product BEFORE INSERT
+ON Items
+FOR EACH ROW
+EXECUTE PROCEDURE proc_check_unicity_item_product();

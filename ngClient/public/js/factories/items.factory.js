@@ -1,66 +1,60 @@
-myApp.factory('ItemsFactory', function($window, APILINK, $location, $http, AuthenticationFactory) {
+myApp.factory('ItemsFactory', function(APILINK, $http) {
   var _ItemsFactory = {}
 
   // Add sorting functions to getItems
   _ItemsFactory.getItems = function() {
-      return $http.get(APILINK+'/api/v1/items').success(function(data){
-        return (data.items);
-      }).success(function(data){
-        console.log(data.status+': '+data.message);
-      }).error(function(data){
-        console.log(data.status+': '+data.message);
-      });
-    };
+      var promise = $http.get(APILINK+'/api/v1/items').then(function(response){
+          return (response.data);
+      }, function(error){ // An error occured
+          console.log(error);
+      })
+      return promise;
+      };
 
   _ItemsFactory.getItem = function(id) {
-    return $http.get(APILINK+'/api/v1/item/'+id).success(function(data){
-      return (data.item);
-    }).success(function(data){
-      console.log(data.status+': '+data.message);
-    }).error(function(data){
-      console.log(data.status+': '+data.message);
-    });
-  };
+    var promise = $http.get(APILINK+'/api/v1/item/'+id).then(function(response){
+        return (response.data);
+    }, function(error){ // An error occured
+        console.log(error);
+    })
+    return promise;
+    };
 
   _ItemsFactory.modifyItem = function(item) {
 
-    return $http.put(APILINK+'/api/v1/item/'+item.idItem, {
+    var promise = $http.put(APILINK+'/api/v1/item/'+item.idItem, {
       itemName: item.itemName,
-      img: item.img,
-      idCategory: item.idCategory
-    });
-  };
+      quantity: item.quantity
+    }).then(function(response){
+        return (response.data);
+    }, function(error){ // An error occured
+        console.log(error);
+    })
+    return promise;
+    };
 
-  _ItemsFactory.setStock = function(id,stock) {
-    return $http.put(APILINK+'/api/v1/item/'+id+'/stock', {
-      quantity: stock
-    }).success(function(data){
-      console.log(data.status+': '+data.message);
-    }).error(function(data){
-      console.log(data.status+': '+data.message);
-    });
-  }
 
   _ItemsFactory.deleteItem = function(item) {
-    return $http.delete(APILINK+'/api/v1/item/'+item.idItem).success(function(data){
-      console.log(data);
-    }).success(function(data){
-      console.log(data.status+': '+data.message);
-    }).error(function(data){
-      console.log(data.status+': '+data.message);
-    });
-  }
+    var promise = $http.delete(APILINK+'/api/v1/item/'+item.idItem).then(function(response){
+        return (response.data);
+    }, function(error){ // An error occured
+        console.log(error);
+    })
+    return promise;
+    };
 
-  _ItemsFactory.addItem = function(itemName, img){
-    return $http.post(APILINK+'/api/v1/items', {
+  _ItemsFactory.addItem = function(idProduct, itemName, quantity){
+    var promise = $http.post(APILINK+'/api/v1/items', {
+        idProduct: idProduct,
         itemName: itemName,
-        img: img
-    }).success(function(data){
-      console.log(data.status+': '+data.message);
-    }).error(function(data){
-      console.log(data.status+': '+data.message);
-    });
-  }
+        quantity: quantity
+    }).then(function(response){
+        return (response.data);
+    }, function(error){ // An error occured
+        console.log(error);
+    })
+    return promise;
+    };
 
   return _ItemsFactory;
 

@@ -1,48 +1,48 @@
-myApp.factory('CategoriesFactory', function($window, $location, $http, AuthenticationFactory) {
+myApp.factory('CategoriesFactory', function($http, APILINK) {
   var _CategoriesFactory = {}
 
   _CategoriesFactory.getCategories = function() {
-      return $http.get('http://localhost:3000/api/v1/categories').success(function(data){
-        return (data.categories);
-      }).success(function(data){
-        console.log(data.status+': '+data.message);
-      }).error(function(data){
-        console.log(data.status+': '+data.message);
-      });
-    };
+      var promise = $http.get(APILINK+'/api/v1/categories').then(function(response){
+          return (response.data);
+      }, function(error){ // An error occured
+          console.log(error);
+      })
+      return promise;
+      };
 
 
   _CategoriesFactory.modifyCategory = function(id, categoryName) {
 
-    return $http.put('http://localhost:3000/api/v1/category/'+id, {
+    var promise = $http.put(APILINK+'/api/v1/category/'+id, {
       CategoryName: categoryName
-    }).success(function(data){
-      console.log(data.status+': '+data.message);
-    }).error(function(data){
-      console.log(data.status+': '+data.message);
-    });
-  };
+    }).then(function(response){
+        return (response.data);
+    }, function(error){ // An error occured
+        console.log(error);
+    })
+    return promise;
+    };
 
 
   _CategoriesFactory.deleteCategory = function(id) {
-    return $http.delete('http://localhost:3000/api/v1/category/'+id).success(function(data){
-      console.log(data);
-    }).success(function(data){
-      console.log(data.status+': '+data.message);
-    }).error(function(data){
-      console.log(data.status+': '+data.message);
-    });
-  }
+    var promise = $http.delete(APILINK+'/api/v1/category/'+id).then(function(response){
+        return (response.data);
+    }, function(error){ // An error occured
+        console.log(error);
+    })
+    return promise;
+    }
 
   _CategoriesFactory.addCategory = function(categoryName){
-    return $http.post('http://localhost:3000/api/v1/categories', {
+    var promise = $http.post(APILINK+'/api/v1/categories', {
         categoryName: categoryName
-    }).success(function(data){
-      console.log(data.status+': '+data.message);
-    }).error(function(data){
-      console.log(data.status+': '+data.message);
-    });
-  }
+    }).then(function(response){
+        return (response.data);
+    }, function(error){ // An error occured
+        console.log(error);
+    })
+    return promise;
+    }
 
   return _CategoriesFactory;
 

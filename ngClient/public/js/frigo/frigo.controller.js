@@ -1,14 +1,15 @@
-myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory',
-    function($scope, $location, ItemsFactory){
+myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory','ProductsFactory',
+    function($scope, $location, ItemsFactory, ProductsFactory){
       // Initialisation des covoiturages
       $scope.items = [];
 
       $scope.getItems = function(){
         // Populating $scope with DB
-          ItemsFactory.getItems().then(function(data){
-              $scope.items = data.data.items;
+          ProductsFactory.getProducts().then(function(data){
+              $scope.items = data.products;
           });
       }
+
       $scope.addItemMenu = false;
       $scope.leftMenu = false;
       $scope.showFiltersMenu = false;
@@ -74,7 +75,7 @@ myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory',
           ItemsFactory.modifyItem(item).then(function(){
              $scope.getItems();
              item.modifying = false;
-             item.selected = false; 
+             item.selected = false;
           });
       }
 
