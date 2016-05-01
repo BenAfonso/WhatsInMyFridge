@@ -2,7 +2,8 @@ var db = require('../models/db');
 var errorHandler = require('../lib/errorHandler').handler;
 var tokenAnalyzer = require('../lib/TokenAnalyzer');
 var Recipe = require('../models/Recipe');
-var Item = require('../models/Item');
+var Product = require('../models/Product');
+
 
 
 var recipes = {
@@ -138,11 +139,11 @@ var recipes = {
     var recipeId = req.params.id;
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
     query = "SELECT * \
-             FROM RECIPES RIGHT JOIN RECIPEITEMS ON RECIPES.IDRECIPE = RECIPEITEMS.IDRECIPE \
-             LEFT JOIN ITEMS ON RECIPEITEMS.IDITEM = ITEMS.IDITEM \
+             FROM RECIPES RIGHT JOIN ingredients ON RECIPES.IDRECIPE = ingredients.IDRECIPE \
+             LEFT JOIN PRODUCTS ON ingredients.IDPRODUCT = Products.IDPRODUCT \
              WHERE RECIPES.IDRECIPE = '"+recipeId+"' AND RECIPES.IDUSER = "+user_id;
     // Query for result, store in item
-    db.query(query, function(err,recipeItems){
+    db.query(query, function(err,ingredients){
       console.log(err);
       if (err)
         errorHandler(err, res);
@@ -157,17 +158,19 @@ var recipes = {
               // Transform recipe to Json object (see model)
               var recipeObj = new Recipe(recipe[0].idrecipe, recipe[0].recipename);
               // If there's items in recipe
-              if (recipeItems[0]){
+              if (ingredients[0]){
                 for (i = 0;i<recipe.length;i++){
-                  recipeItems[i] = new Item(recipeItems[i].iditem,recipeItems[i].itemname);
+                  var quantity = ingredients[i].quantity
+                  ingredients[i] = new Product(ingredients[i].idproduct,ingredients[i].productname);
+                  ingredients[i].quantity = quantity;
                 }//For
-              } // RecipeItems
+              } // ingredients
 
               res.status(200).send({
                 "status": 200,
                 "message": "Recipe successfully retrieved",
                 "recipe": recipeObj,
-                "recipeItems": recipeItems
+                "Ingredients": ingredients
               });
             }else{
               var err = new Error("Recipe not found !");
@@ -183,15 +186,15 @@ var recipes = {
   },
 
   // Change HERE
-  addItemToRecipe: function(req,res){
+  addIngredient: function(req,res){
     // Parse request
     var recipeId = req.params.id;
     // Query to add given item in recipe
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    var idItem = req.body.idItem;
+    var idProduct = req.body.idProduct;
     var quantity = req.body.quantity;
 
-    if (idItem == undefined){
+    if (idProduct == undefined){
       var err = new Error("Bad query");
       err.http_code = 400;
       errorHandler(err,res);
@@ -202,13 +205,13 @@ var recipes = {
       quantity = 0;
 
 
-    isOwnerOf(user_id,recipeId,idItem,function(err,isOwner){
+    isOwnerOf(user_id,recipeId,idProduct,function(err,isOwner){
       if (err){
         errorHandler(err,res);
       }else{
 
-      var query = "INSERT INTO RECIPEITEMS (idRecipe,idItem,quantity) \
-                    VALUES ('"+recipeId+"','"+idItem+"','"+quantity+"') \
+      var query = "INSERT INTO ingredients (idRecipe,idProduct,quantity) \
+                    VALUES ('"+recipeId+"','"+idProduct+"','"+quantity+"') \
                     RETURNING idRecipe, (SELECT recipeName FROM RECIPES WHERE idUser = '"+user_id+"' AND idRecipe = '"+recipeId+"')";
 
 
@@ -223,7 +226,7 @@ var recipes = {
 
               res.status(201).send({
                 "status": 201,
-                "message": "Item added to recipe",
+                "message": "Ingredient added to recipe",
                 "recipe": recipe
               });
           }
@@ -233,25 +236,25 @@ var recipes = {
   },
 
   // Change HERE
-  deleteItemInRecipe: function(req,res){
+  deleteIngredient: function(req,res){
     // Parse request
     var recipeId = req.params.recipe_id;
-    var idItem = req.params.item_id;
-    var user_id = tokenAnalyze.getUserId(tokenAnalyzer.grabToken(req));
+    var idProduct = req.params.product_id;
+    var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
     // Query to remove item from recipe
 
-    if (idItem == undefined){
+    if (idProduct == undefined){
       var err = new Error("Bad query (Missing parameter)");
       err.http_code = 400;
       errorHandler(err,res);
     }
 
-    isOwnerOf(user_id,recipeId,idItem,function(err,isOwner){
+    isOwnerOf(user_id,recipeId,idProduct,function(err,isOwner){
       if (err){
         errorHandler(err,res);
       }else{
 
-      var query = "DELETE FROM RECIPEITEMS WHERE idItem = '"+idItem+"' AND idRecipe = '"+recipeId+"'\
+      var query = "DELETE FROM ingredients WHERE idProduct = '"+idProduct+"' AND idRecipe = '"+recipeId+"'\
                     RETURNING idRecipe, (SELECT recipeName FROM RECIPES WHERE idUser = '"+user_id+"' AND idRecipe = '"+recipeId+"')";
 
 
@@ -266,7 +269,7 @@ var recipes = {
 
           res.status(200).send({
             "status": 200,
-            "message": "Item deleted from recipe",
+            "message": "Ingredient deleted",
             "recipe": recipe
           });
         } // Query passed
@@ -276,26 +279,26 @@ var recipes = {
 },
 
 // Change HERE
-  modifyItemInRecipe: function(req,res){
+  modifyIngredient: function(req,res){
     // Parse request
     var recipeId = req.params.recipe_id;
-    var itemId = req.params.item_id;
+    var idProduct = req.params.product_id;
     var newQuantity = req.body.quantity;
-
-    if (quantity == undefined){
+    var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
+    if (newQuantity == undefined){
       var err = new Error("Bad query (Missing 'quantity' in body)");
       err.http_code = 400;
       errorHandler(err,res);
     }
 
-    isOwnerOf(user_id,recipeId,idItem,function(err,isOwner){
+    isOwnerOf(user_id,recipeId,idProduct,function(err,isOwner){
       if (err){
         errorHandler(err,res);
       }else{
         // The user is the owner of the item and the recipe
         // Query to modify the item in recipe
-        var query = "UPDATE RECIPEITEMS SET quantity = '"+newQuantity+"' \
-        WHERE idItem = '"+itemId+"' AND idRecipe = '"+recipeId+"' \
+        var query = "UPDATE ingredients SET quantity = '"+newQuantity+"' \
+        WHERE idProduct = '"+idProduct+"' AND idRecipe = '"+recipeId+"' \
         RETURNING idRecipe, quantity";
         db.query(query, function(err,recipe){
           console.log(err);
@@ -307,7 +310,7 @@ var recipes = {
 
               res.status(200).send({
                 "status": 200,
-                "message": "Item modified in recipe",
+                "message": "Ingredient modified",
                 "recipe": recipe
               });
             } // Query passed
@@ -322,23 +325,23 @@ var recipes = {
 
 };
 // Change HERE
-function isOwnerOf(idUser, idRecipe, idItem, fn) {
+function isOwnerOf(idUser, idRecipe, idProduct, fn) {
   db.query("SELECT * FROM RECIPES WHERE idUser = '"+idUser+"' AND idRecipe = '"+idRecipe+"'", function(err,recipe){
     console.log(err);
     if (err)
       fn(err,false);
     else{
       if (recipe[0]){
-        db.query("SELECT * FROM ITEMS WHERE idUser = '"+idUser+"' AND idItem = '"+idItem+"'", function(err,item){
+        db.query("SELECT * FROM Products WHERE idUser = '"+idUser+"' AND idProduct = '"+idProduct+"'", function(err,product){
           console.log(err);
           if (err)
             fn(err,false);
           else{
               // Send a 201 (created)
-              if (item[0])
+              if (product[0])
                 return fn(null,true);
               else {
-                var err = new Error("Item not found");
+                var err = new Error("Product not found");
                 err.http_code = 404;
                 return fn(err,false);
               }

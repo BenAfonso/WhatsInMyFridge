@@ -92,7 +92,7 @@ var items = {
           else{
               if (item[0] !== undefined){
                       var category = new Category(item[0].idcategory, item[0].categoryname);
-                      var product = new Product(item[0].idproduct, item[0].productname, category);
+                      var product = new Product(item[0].idproduct, item[0].productname, item[0].img, category);
                       var item = new Item(item[0].idItem, product, undefined, item[0].quantity, item[0].max);
                       res.status(200).send({
                           "status": 200,
@@ -117,10 +117,10 @@ var items = {
 
   modifyItem: function(req,res) {
         var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-          if ((req.params.id !== undefined || req.body.idProduct !== undefined) && req.body.quantity !== undefined){
+          if (req.params.id !== undefined && req.body.quantity !== undefined){
               var query = "UPDATE ITEMS SET quantity = '"+req.body.quantity+"' \
-              WHERE idUser = '"+user_id+"' idProduct = '"+req.body.idProduct+"' AND idItem = '"+req.params.id+"' RETURNING \
-              idItem, idProduct, quantity, max, (SELECT productName FROM Products WHERE idProduct = '"+req.body.idProduct+"')";
+              WHERE idUser = '"+user_id+"' AND idItem = '"+req.params.id+"' RETURNING \
+              idItem, idProduct, quantity, max";
           }else{
               // Error missing idProduct or Owner (raising 400)
               var err = new Error("Bad query !");
@@ -130,7 +130,7 @@ var items = {
           // Query database
           db.query(query, function(err,item){
             if (err) // Error during query (raising)
-              fn(err);
+              return errorHandler(err,res);
             else{
                 if (item[0]){
                     var product = new Product(item[0].idproduct, item[0].productname);
@@ -140,11 +140,11 @@ var items = {
                         "message": "Item modified",
                         "item": item
                     });
-                    return fn(null, res);
+                    return;
                 }else { // Not found
                     var err = new Error("Item not found");
                     err.http_code = 404;
-                    return fn(err);
+                    return errorHandler(err,res);
                 }
 
             }

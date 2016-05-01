@@ -6,16 +6,32 @@ function Item(idItem, idProduct, user_id, quantity, max){
   if (quantity == null){
     quantity = undefined;
   }
+  if (idItem == null){
+      idItem = undefined;
+  }
+  if (idProduct == null){
+      idProduct = undefined;
+  }
+  if (user_id == null){
+      user_id = undefined;
+  }
+  if (max == null){
+      max = undefined;
+  }
   this.idItem = idItem,
-  this.idProduct = idProduct,
-  this.idUser = user_id
-  this.quantity = quantity,
-  this.max = max,
-  this.ratio = quantity / max
-  this.links = [ {
-        "rel": "self",
-        "href": "/api/v1/item/"+this.idItem
-  }];
+  this.Product = idProduct,
+  this.idUser = user_id,
+  this.quantity = quantity
+
+  if (max !== undefined && max !== undefined){
+      this.max = max,
+      this.ratio = quantity / max
+  }
+  if (idItem !== undefined)
+      this.links = [ {
+            "rel": "self",
+            "href": "/api/v1/item/"+this.idItem
+      }];
 
 }
 
@@ -74,9 +90,9 @@ Item.prototype.get = function(id, user_id, category_id, max_result, callback){
 Item.prototype.update = function(fn){
     // Update
 
-    if ((this.idItem !== undefined || this.idProduct !== undefined) && this.quantity !== undefined){
+    if ((this.idItem !== undefined || this.Product !== undefined) && this.quantity !== undefined){
         var query = "UPDATE ITEMS SET quantity = '"+this.quantity+"' \
-        WHERE idUser = '"+this.idUser+"' idProduct = '"+this.idProduct+"' AND idItem = '"+this.idItem+"' RETURNING \
+        WHERE idUser = '"+this.idUser+"' idProduct = '"+this.Product+"' AND idItem = '"+this.idItem+"' RETURNING \
         idItem, idProduct, quantity, max, (SELECT productName FROM Products WHERE idProduct = '"+idProduct+"')";
     }else{
         // Error missing idProduct or Owner (raising 400)
@@ -115,13 +131,13 @@ Item.prototype.update = function(fn){
 
 Item.prototype.insert = function(fn){
     // Update
-    if (this.idProduct !== undefined){
+    if (this.Product !== undefined){
         if (this.quantity == undefined){
             this.quantity = 0;
         }
         var query = "INSERT INTO ITEMS (idProduct, quantity, idUser) \
-        VALUES ('"+this.idProduct+"','"+this.quantity+"','"+this.idUser+"') RETURNING \
-        idItem, idProduct, quantity, max, (SELECT productName FROM Products WHERE idProduct = '"+this.idProduct+"')";
+        VALUES ('"+this.Product+"','"+this.quantity+"','"+this.idUser+"') RETURNING \
+        idItem, idProduct, quantity, max, (SELECT productName FROM Products WHERE idProduct = '"+this.Product+"')";
         console.log(query);
     }// idUser
     else{
@@ -148,7 +164,7 @@ Item.prototype.insert = function(fn){
 // TODO Secure
 Item.prototype.delete = function(){
     // Delete
-    if (this.idProduct !== undefined){
+    if (this.Product !== undefined){
         var query = "DELETE FROM Items WHERE idItem = '"+this.idItem+"' AND idUser = '"+this.idUser+"' RETURNING idItem";
         // Query database
         db.query(query, function(err,item){

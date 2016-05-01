@@ -33,12 +33,29 @@ var categories = {
     // ADD FILTERS HERE
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
     var categoryName = req.body.categoryName;
-    var category = (undefined, categoryName, user_id);
-    category.insert(function(err, result){
-        if (err)
-            errorHandler(err,res)
-        else
-            res.status(200).send(result);
+    if (user_id !== undefined && categoryName !== undefined){
+        var query = "INSERT INTO CATEGORIES (categoryName, idUser) \
+        VALUES ('"+categoryName+"', '"+user_id+"') RETURNING \
+        idCategory, categoryName";
+    }// idUser
+    else{
+        var err = new Error("Bad query");
+        err.http_code = 400;
+        return errorHandler(err,res);
+    }
+    // Query database
+    db.query(query, function(err,product){
+      if (err) // Error during query (raising)
+        return errorHandler(err,res);
+      else{
+          var category = new Category(product[0].idcategory, product[0].categoryname);
+          res.status(201).send({
+              "status": 201,
+              "message": "Category added",
+              "category": category
+          });
+          return;
+      }
     });
 
   },
@@ -49,14 +66,38 @@ var categories = {
     var id = req.params.id;
     var newCategoryName = req.body.categoryName;
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    // Query here
-    var category = new Category(id,newCategoryName,user_id);
-    category.update(function(err,result){
-        if (err)
-            errorHandler(err,res);
-        else
-            res.status(200).send(result);
-    });
+    if (id !== undefined && user_id !== undefined && newCategoryName !== undefined){
+        var query = "UPDATE CATEGORIES SET categoryName = '"+newCategoryName+"' \
+        WHERE idUser = '"+user_id+"' AND idCategory = '"+id+"' RETURNING \
+        idCategory, categoryName";
+        // Query database
+        db.query(query, function(err,category){
+          if (err) // Error during query (raising)
+            return errorHandler(err,res);
+          else{
+              if (category[0]){ // A category has been modified
+                  var category = new Category(category[0].idcategory, category[0].categoryname);
+                  res.status(200).send({
+                      "status": 200,
+                      "message": "Category modified",
+                      "category": category
+                  });
+                  return;
+              }else{
+                  var err = new Error("Category not found");
+                  err.http_code = 404;
+                  return errorHandler(err,res);
+              }
+
+          }
+        });
+    }else{
+        // Bad query (raising 400)
+        var err = new Error("Bad query");
+        err.http_code = 400;
+        return errorHandler(err,res);
+    }
+
   },
 
   deleteCategory: function(req,res){
@@ -64,13 +105,31 @@ var categories = {
     var id = req.params.id;
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
     // Query here
-    var category = new Category(id,undefined,user_id);
-    category.delete(function(err,result){
-        if (err)
-            errorHandler(err);
-        else
-            res.status(200).send(result);
-    });
+    if (id !== undefined && user_id !== undefined){
+        var query = "DELETE FROM Categories WHERE idCategory = '"+id+"' AND idUser = '"+user_id+"' RETURNING idcategory";
+        // Query database
+        db.query(query, function(err,category){
+          if (err) // Error during query (raising)
+            fn(err);
+          else{
+              // Something has been deleted
+              if (category[0]){
+                  res.status(200).send({
+                      "status": 200,
+                      "message": "Category deleted",
+                      "category": category
+                  });
+                  return;
+              }
+              else {
+                  // Category not found
+                  var err = new Error("Category not found");
+                  err.http_code = 404;
+                  return errorHandler(err,res);
+              }// Category deleted ?
+              }//Query passed
+          });// Query
+      }// idCategory (if)
   }
 
 

@@ -83,7 +83,7 @@ Category.prototype.delete = function(){
             fn(err);
           else{
               // Something has been deleted
-              if (category[0].idCategory){
+              if (category[0].idcategory){
                   var res = {
                       "status": 200,
                       "message": "Category deleted",
