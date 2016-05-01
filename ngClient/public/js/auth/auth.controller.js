@@ -50,7 +50,7 @@ myApp.controller("RegisterCtrl", ['$scope','$window','$location','UserAuthFactor
             else{
                 alert("Les deux mots de passes ne sont pas identiques !");
             }
-        }
+        };
 
     }
 ]);

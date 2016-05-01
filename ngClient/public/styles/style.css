@@ -1,33 +1,39 @@
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/*****************************************
+ *           Page wrapper
+ **************************************** */
 * {
   margin: 0;
   padding: 0; }
 
+html {
+  min-width: 298px; }
+
 body {
-  background: white;
-  position: relative;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0px;
   height: 100%;
-  clear: both; }
+  background-image: url("/img/bg.png"); }
+
+.wrap {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 298px; }
+  .wrap:after {
+    content: " ";
+    display: block;
+    clear: both; }
 
 /*****************************************
- *           Responsive Menu
+ *           Responsive Header
  **************************************** */
-.content {
-  position: relative;
-  padding-top: 60px; }
-
-.container {
-  position: relative;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 2440px;
-  font-family: helvetica, sans-serif; }
-
 #header {
   z-index: 2;
   position: fixed;
+  top: 0;
   width: 100%;
   height: 60px;
   line-height: 60px;
@@ -46,45 +52,39 @@ body {
       font-size: 30px;
       vertical-align: middle;
       font-weight: bold; }
-
-#nav {
-  position: absolute;
-  right: 0; }
-  #nav ul li {
-    float: left;
-    list-style-type: none; }
-    #nav ul li a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      padding: 0 10px; }
-      #nav ul li a:hover {
-        background-color: #e86d57; }
-
-.push {
-  padding-bottom: 60px; }
-
-@media (max-width: 599px) {
-  #header .container {
-    width: 100%; }
-  #header h1 {
-    left: 3%; }
-
-  #nav {
-    width: 100%;
-    top: 60px; }
-    #nav ul {
+  #header #openNav {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    height: 15px;
+    margin: 20px; }
+    #header #openNav span {
+      height: 3px;
+      right: 0;
+      background-color: #111;
+      margin-bottom: 5px;
+      display: block; }
+  #header #nav {
+    width: calc(100% - 60px);
+    margin-top: 60px;
+    height: 0px;
+    float: right; }
+    #header #nav ul {
       background: #129ab3;
       width: 100%; }
-      #nav ul li {
+      #header #nav ul li {
         float: none;
         list-style-type: none; }
-        #nav ul li a {
-          border-top: 1px solid #ffffff; }
-          #nav ul li a:hover {
-            background-color: #129ab3; }
-
-  #nav ul {
+        #header #nav ul li a {
+          color: white;
+          display: block;
+          text-decoration: none;
+          height: 40px;
+          padding: 8px; }
+          #header #nav ul li a:hover {
+            background-color: #e86d57; }
+  #header #nav ul {
     transition: 350ms;
     -moz-transition: 350ms;
     -webkit-transition: 350ms;
@@ -93,53 +93,49 @@ body {
     -webkit-transform: perspective(600) rotate3d(1, 0, 0, -90deg);
     transform-origin: 50% 0;
     -moz-transform-origin: 50% 0;
-    -webkit-transform-origin: 50% 0; }
+    -webkit-transform-origin: 50% 0;
+    list-style-type: none; }
+  #header #nav.open {
+    display: block;
+    float: right;
+    margin-top: 60px; }
+    #header #nav.open ul {
+      transform: translateY(0px);
+      -moz-transform: translateY(0px);
+      -webkit-transform: perspective(600) rotate3d(0, 0, 0, 0); }
 
-  #nav.open ul {
-    transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    -webkit-transform: perspective(600) rotate3d(0, 0, 0, 0); }
-
-  #openNav {
-    position: absolute;
-    display: inline-block;
-    width: 20px;
-    height: 15px;
-    vertical-align: middle;
-    margin: 20px;
-    top: 0px;
-    right: 0px;
-    cursor: pointer; }
-    #openNav span {
-      height: 3px;
-      right: 0px;
-      background: #111;
-      margin-bottom: 5px;
-      display: block; } }
 /*****************************************
- *              	Sidebar
+ *           Page content
  **************************************** */
-.wrapper {
-  margin: 0;
-  position: relative;
-  height: 100%; }
+.content {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  height: calc(100% - 60px);
+  margin-top: 60px; }
+  .content:after {
+    content: " ";
+    display: block;
+    clear: both; }
 
-#sidebar {
-  display: block;
-  position: absolute;
+/*****************************************
+ *           Left menu
+ **************************************** */
+#sidebar-menu {
+  position: fixed;
   left: -200px;
-  top: 0px;
-  transition: left 0.3s linear;
-  float: left;
+  transition: left 0.1s linear;
   background-color: #0ba2bd;
-  height: 100%; }
-  #sidebar ul {
+  height: 100%;
+  width: 200px;
+  padding: 20px; }
+  #sidebar-menu ul {
     margin: 0px;
     padding: 0px; }
-    #sidebar ul li {
+    #sidebar-menu ul li {
       margin-bottom: 0px;
       list-style: none; }
-      #sidebar ul li a {
+      #sidebar-menu ul li a {
         background: #0ba2bd;
         color: white;
         font-weight: bold;
@@ -147,19 +143,19 @@ body {
         padding: 10px;
         display: block;
         text-decoration: none; }
-        #sidebar ul li a:hover {
+        #sidebar-menu ul li a:hover {
           background: #e86d57; }
 
-#left-pull {
+#pull-bar {
   display: inline-block;
   position: absolute;
   right: -60px;
   top: 0px;
-  height: 100%;
   width: 60px;
   background: url("/img/menu.png"); }
 
 #sidebar-btn {
+  z-index: 2;
   display: inline-block;
   vertical-align: middle;
   width: 20px;
@@ -178,72 +174,147 @@ body {
     #sidebar-btn span:nth-child(3) {
       width: 50%; }
 
-#sidebar.visible {
+#sidebar-menu.visible {
+  z-index: 1;
   left: 0px;
-  transition: left 0.3s linear; }
-
-#content {
-  width: auto;
-  height: 100%;
-  position: absolute;
-  left: 60px;
-  transition: left 0.3s linear; }
-
-#content.visible {
-  left: 260px;
-  transition: left 0.3s linear; }
+  width: 200px;
+  transition: left 0.1s linear; }
 
 /*****************************************
- *               Items style
+ *           Big container
  **************************************** */
+.container {
+  margin-left: 60px;
+  height: calc(100vh - 60px); }
+
 .flex-container {
+  max-width: 196px;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  padding: 40px; }
-
-.itembox {
-  padding: 10px;
-  position: relative; }
-
-.item {
-  background-image: url("/img/itembox2.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  min-height: 200px;
-  padding-top: 8px;
-  padding-right: 8px;
-  padding-left: 8px; }
-  .item img {
-    height: 133px;
-    width: 160px; }
-  .item #placeholder {
-    position: absolute;
-    margin-left: 5px;
-    width: 150px; }
-    .item #placeholder #itemName {
-      color: white;
-      font-weight: bold; }
-    .item #placeholder #itemQuantity {
-      float: right;
-      margin-left: 40px;
-      font-weight: bold; }
+  padding-top: 10px; }
 
 /*****************************************
- *               Footer
+ *           Add item button
  **************************************** */
-#footer {
-  z-index: 2;
+.formContainer {
+  position: fixed;
+  bottom: 50px;
+  right: 30px; }
+
+.addButton {
   position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  background: url("/img/menu.png");
-  color: white; }
-  #footer .right {
+  bottom: 0px;
+  right: 0px; }
+
+/*****************************************
+ *           Add Item form (animated)
+ **************************************** */
+.addForm {
+  position: static;
+  margin-right: 45px;
+  margin-bottom: 45px;
+  height: 0px;
+  width: 0px;
+  transition: width 0.2s ease-out;
+  transition: height 0.2s ease-out;
+  background-color: #4bcef7; }
+
+.addForm.displayed {
+  height: 190px;
+  width: 190px;
+  padding: 15px;
+  transition: width 0.2s ease-in;
+  transition: height 0.2s ease-in; }
+  .addForm.displayed #itemNameInput {
+    max-width: 110px;
     position: absolute;
-    right: 0;
-    margin-right: 40px; }
+    top: 0; }
+  .addForm.displayed #imgInput {
+    max-width: 110px;
+    position: absolute;
+    top: 40px; }
+  .addForm.displayed #addItem {
+    position: absolute;
+    bottom: 50px; }
+
+/*****************************************
+ *           Items
+ **************************************** */
+.itembox {
+  padding: 5px;
+  position: relative; }
+
+.modifyItemBox {
+  display: none;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  min-width: 175px;
+  height: 195px;
+  background-color: #dd6b6b;
+  padding: 10px; }
+  .modifyItemBox .modifyInput {
+    width: 100%; }
+  .modifyItemBox .modifyInput__small {
+    width: 50%; }
+  .modifyItemBox #submitForm {
+    position: absolute;
+    bottom: 5px;
+    right: 5px; }
+
+.active {
+  display: block; }
+
+.item {
+  background: url("/img/itembox2.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  min-width: 160px;
+  min-height: 200px;
+  padding: 8px; }
+  .item img {
+    height: 134px;
+    width: 160px; }
+  .item .editItem {
+    z-index: 1;
+    position: absolute;
+    top: 13px;
+    right: 14px; }
+  .item .placeholder {
+    position: absolute;
+    width: 160px;
+    padding: 8px; }
+    .item .placeholder .itemName {
+      float: left; }
+    .item .placeholder .itemQuantity {
+      float: right; }
+
+@media (min-width: 500px) {
+  .flex-container {
+    max-width: 400px; } }
+@media (min-width: 730px) {
+  .flex-container {
+    max-width: 600px; } }
+@media (min-width: 970px) {
+  .flex-container {
+    margin-left: 20px;
+    padding-top: 20px;
+    max-width: 100%; }
+    .flex-container #nav {
+      position: absolute;
+      right: 0; }
+      .flex-container #nav ul li {
+        line-height: 60px;
+        float: left;
+        list-style-type: none; }
+        .flex-container #nav ul li a {
+          display: block;
+          color: white;
+          text-decoration: none;
+          padding: 0 10px; }
+          .flex-container #nav ul li a:hover {
+            background-color: #e86d57; } }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,5 +1,5 @@
 myApp.factory('ItemsFactory', function(APILINK, $http) {
-  var _ItemsFactory = {}
+  var _ItemsFactory = {};
 
   // Add sorting functions to getItems
   _ItemsFactory.getItems = function() {
@@ -7,7 +7,7 @@ myApp.factory('ItemsFactory', function(APILINK, $http) {
           return (response.data);
       }, function(error){ // An error occured
           console.log(error);
-      })
+      });
       return promise;
       };
 
@@ -16,7 +16,7 @@ myApp.factory('ItemsFactory', function(APILINK, $http) {
         return (response.data);
     }, function(error){ // An error occured
         console.log(error);
-    })
+    });
     return promise;
     };
 
@@ -29,7 +29,7 @@ myApp.factory('ItemsFactory', function(APILINK, $http) {
         return (response.data);
     }, function(error){ // An error occured
         console.log(error);
-    })
+    });
     return promise;
     };
 
@@ -39,7 +39,7 @@ myApp.factory('ItemsFactory', function(APILINK, $http) {
         return (response.data);
     }, function(error){ // An error occured
         console.log(error);
-    })
+    });
     return promise;
     };
 
@@ -52,7 +52,7 @@ myApp.factory('ItemsFactory', function(APILINK, $http) {
         return (response.data);
     }, function(error){ // An error occured
         console.log(error);
-    })
+    });
     return promise;
     };
 

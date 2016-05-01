@@ -1,12 +1,12 @@
 myApp.factory('CategoriesFactory', function($http, APILINK) {
-  var _CategoriesFactory = {}
+  var _CategoriesFactory = {};
 
   _CategoriesFactory.getCategories = function() {
       var promise = $http.get(APILINK+'/api/v1/categories').then(function(response){
           return (response.data);
       }, function(error){ // An error occured
           console.log(error);
-      })
+      });
       return promise;
       };
 
@@ -19,7 +19,7 @@ myApp.factory('CategoriesFactory', function($http, APILINK) {
         return (response.data);
     }, function(error){ // An error occured
         console.log(error);
-    })
+    });
     return promise;
     };
 
@@ -29,9 +29,9 @@ myApp.factory('CategoriesFactory', function($http, APILINK) {
         return (response.data);
     }, function(error){ // An error occured
         console.log(error);
-    })
+    });
     return promise;
-    }
+};
 
   _CategoriesFactory.addCategory = function(categoryName){
     var promise = $http.post(APILINK+'/api/v1/categories', {
@@ -40,9 +40,9 @@ myApp.factory('CategoriesFactory', function($http, APILINK) {
         return (response.data);
     }, function(error){ // An error occured
         console.log(error);
-    })
+    });
     return promise;
-    }
+};
 
   return _CategoriesFactory;
 

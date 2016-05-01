@@ -1,5 +1,5 @@
 myApp.factory('RecipesFactory', function(APILINK, $http) {
-  var _RecipesFactory = {}
+  var _RecipesFactory = {};
 
 
     _RecipesFactory.getRecipes = function() {
@@ -7,9 +7,9 @@ myApp.factory('RecipesFactory', function(APILINK, $http) {
             return (response.data);
         }, function(error){ // An error occured
             console.log(error);
-        })
+        });
         return promise;
-        }
+    };
 
 
     _RecipesFactory.modifyRecipe = function(id, RecipeName) {
@@ -20,9 +20,9 @@ myApp.factory('RecipesFactory', function(APILINK, $http) {
           return (response.data);
       }, function(error){ // An error occured
           console.log(error);
-      })
+      });
       return promise;
-      }
+  };
 
 
     _RecipesFactory.deleteRecipe = function(id) {
@@ -30,9 +30,9 @@ myApp.factory('RecipesFactory', function(APILINK, $http) {
           return (response.data);
       }, function(error){ // An error occured
           console.log(error);
-      })
+      });
       return promise;
-      }
+  };
 
     _RecipesFactory.addRecipe = function(recipeName){
       var promise = $http.post(APILINK+'/api/v1/recipes', {
@@ -41,9 +41,9 @@ myApp.factory('RecipesFactory', function(APILINK, $http) {
           return (response.data);
       }, function(error){ // An error occured
           console.log(error);
-      })
+      });
       return promise;
-      }
+  };
 
 
 

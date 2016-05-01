@@ -7,17 +7,48 @@ module.exports = function(grunt) {
       }
     },
 
+    /*******************
+    * JAVASCRIPT TASKS
+    ********************/
+    // Check all js files
+    jshint: {
+        all: ['public/js/**/*.js']
+    },
+    // Minify all the js files in app.min.js
+    uglify: {
+        options: {
+            mangle: false
+        },
+        build: {
+            files: {
+                'public/dist/js/app.min.js': ['public/js/*.js', 'public/js/**/*.js']
+            }
+        }
+    },
+
+    /*******************
+    *     CSS TASKS
+    ********************/
+
     // Compile Sass
     sass: {
       dist: {
           style: 'expanded',
           files: {
             'public/styles/style.css': 'public/styles/sass/style.sass',
-            'public/styles/login.css': 'public/styles/sass/login.sass',
-            'public/styles/style2.css': 'public/styles/sass/style2.sass',
-            'public/styles/config.css': 'public/styles/sass/config.scss'
+            'public/styles/login.css': 'public/styles/sass/login.sass'
           }
       }
+    },
+
+    // Minify the processed style.css
+    cssmin: {
+        build: {
+            files: {
+                'public/dist/css/style.min.css': ['public/styles/style.css'],
+                'public/dist/css/login.min.css': ['public/styles/login.css']
+            }
+        }
     },
 
     watch: {
@@ -28,8 +59,13 @@ module.exports = function(grunt) {
       css: {
         options: {livereload: true},
         files: ['**/*.sass','**/*.scss'],
-        tasks: ['sass']
+        tasks: ['sass', 'cssmin']
+      },
+      js: {
+          files: ['public/js/**/*.js'],
+          tasks: ['jshint', 'uglify']
       }
+
     },
 
 
@@ -55,6 +91,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-wiredep');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   // Register the nodemon task when we run grunt
   grunt.registerTask('default', ['sass', 'concurrent', 'wiredep']);

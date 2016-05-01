@@ -1,5 +1,5 @@
 myApp.factory('IngredientsFactory', function(APILINK, $http) {
-  var _IngredientsFactory = {}
+  var _IngredientsFactory = {};
 
     _IngredientsFactory.addIngredient = function(recipe_id, idProduct, quantity){
       var promise = $http.post(APILINK+'/api/v1/recipe/'+recipe_id, {
@@ -9,9 +9,9 @@ myApp.factory('IngredientsFactory', function(APILINK, $http) {
           return (response.data);
       }, function(error){ // An error occured
           console.log(error);
-      })
+      });
       return promise;
-      }
+  };
 
     _IngredientsFactory.modifyIngredient = function(recipe_id, product_id, quantity) {
 
@@ -21,9 +21,9 @@ myApp.factory('IngredientsFactory', function(APILINK, $http) {
           return (response.data);
       }, function(error){ // An error occured
           console.log(error);
-      })
+      });
       return promise;
-      }
+  };
 
 
     _IngredientsFactory.deleteIngredient = function(recipe_id,product_id) {
@@ -31,9 +31,9 @@ myApp.factory('IngredientsFactory', function(APILINK, $http) {
           return (response.data);
       }, function(error){ // An error occured
           console.log(error);
-      })
+      });
       return promise;
-      }
+  };
 
 return _IngredientsFactory ;
 

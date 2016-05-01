@@ -9,7 +9,7 @@ myApp.factory('AuthenticationFactory', function($window) {
         delete this.user;
       }
     }
-  }
+};
 
   return auth;
 });
@@ -46,7 +46,7 @@ myApp.factory('UserAuthFactory', function($window, APILINK, $location, $http, Au
         password: password
       });
     }
-  }
+};
 });
 
 myApp.factory('TokenInterceptor', function($q, $window) {

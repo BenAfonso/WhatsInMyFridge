@@ -67,7 +67,7 @@ myApp.run(function($rootScope, $window, $location, AuthenticationFactory) {
     $rootScope.showMenu = AuthenticationFactory.isLogged;
     $rootScope.role = AuthenticationFactory.userRole;
     // if the user is already logged in, take him to the home page
-    if (AuthenticationFactory.isLogged == true && $location.path() == '/login') {
+    if (AuthenticationFactory.isLogged === true && $location.path() == '/login') {
       $location.path('/');
     }
   });
@@ -77,27 +77,26 @@ myApp.run(function($rootScope, $window, $location, AuthenticationFactory) {
 myApp.controller("MainCtrl", ['$scope','$http','$location','UserAuthFactory',
     function($scope,$http,$location,UserAuthFactory){
 
-        $scope.navstate = false
+        $scope.navstate = false;
         $scope.logout=function(){
           UserAuthFactory.logout();
-        }
-
+        };
         $scope.go = function(path){
           componentHandler.upgradeDom();
 
           $location.path(path);
-        }
+      };
 
         $scope.toggleNav = function(){
-          $scope.navstate = !$scope.navstate
-        }
+          $scope.navstate = !$scope.navstate;
+      };
 
         $scope.closeNav = function(){
-          $scope.navstate = false
-        }
+          $scope.navstate = false;
+      };
         $scope.isOpenedNav = function(){
           return $scope.navstate;
-        }
+      };
 
     }
 ]);
