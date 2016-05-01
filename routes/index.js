@@ -2,41 +2,39 @@ var express = require('express');
 var router = express.Router();
 
 var items = require('./items');
-var lists = require('./lists');
 var users = require('./users');
 var categories = require('./categories');
 var recipes = require('./recipes')
 
 
 
-
+// Todo : Search for // Change HERE in recipe.js 
 
 /*
 *   Routes that can be accessed only by authenticated users
 */
 
-// Items
+// Items TODO Security check user_id using product
 router.get('/api/v1/items', items.getItems);
 router.post('/api/v1/items', items.addItem);
 router.get('/api/v1/item/:id', items.getItem);
 router.put('/api/v1/item/:id', items.modifyItem);
 router.delete('/api/v1/item/:id', items.deleteItem);
-router.put('/api/v1/item/:id/stock', items.modifyStock);
 
-// Lists
-router.get('/api/v1/lists', lists.getLists);
-router.post('/api/v1/lists', lists.addList);
-router.get('/api/v1/list/:id', lists.getList);
-router.put('/api/v1/list/:id', lists.modifyList);
-router.delete('/api/v1/list/:id', lists.deleteList);
-router.post('/api/v1/list/:id', lists.addItem);
-router.delete('/api/v1/list/:list_id/item/:item_id', lists.deleteItem);
 
 // Categories
 router.get('/api/v1/categories', categories.getCategories);
 router.post('/api/v1/categories', categories.addCategory);
 router.put('/api/v1/category/:id', categories.modifyCategory);
 router.delete('/api/v1/category/:id', categories.deleteCategory);
+
+// Products
+/**
+router.get('/api/v1/products', products.getProducts);
+router.post('/api/v1/products', products.addProduct);
+router.put('/api/v1/product/:id', products.modifyProduct);
+router.delete('/api/v1/product/:id', products.deleteProduct);
+*/
 
 // Recipes
 router.get('/api/v1/recipes', recipes.getRecipes);

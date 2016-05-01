@@ -1,20 +1,9 @@
 CREATE DOMAIN role_domain VARCHAR(6) CHECK( VALUE IN ('user','admin') );
 
--- Verifier si la quantité est supérieure au maximum,
--- si oui, remplacer le maximum par la nouvelle quantité
-CREATE TRIGGER check_max_stock AFTER UPDATE
-ON Items
-FOR EACH ROW
-EXECUTE PROCEDURE set_max_stock();
 
--- Verifier si le produit et la recette concernent le même utilisateur
--- lors d'une insertion dans Ingredients
-CREATE TRIGGER check_user_on_insert BEFORE INSERT
-ON Ingredients
-FOR EACH ROW
-EXECUTE PROCEDURE proc_check_user_on_insert();
-
-
+----------------
+------- TABLES
+----------------
 
 CREATE TABLE Users (
   idUser SERIAL PRIMARY KEY,
@@ -34,6 +23,7 @@ CREATE TABLE Products (
   idProduct SERIAL PRIMARY KEY,
   idCategory INT references Categories(idCategory) ON DELETE CASCADE,
   productName VARCHAR(50),
+  img TEXT,
   idUser INT references Users(idUser) ON DELETE CASCADE
 );
 
@@ -42,7 +32,7 @@ CREATE TABLE Items (
   idItem SERIAL PRIMARY KEY,
   idProduct INT references Products(idProduct) ON DELETE CASCADE,
   idUser INT references Users(idUser) ON DELETE CASCADE,
-  quantity NUMERIC,
+  quantity NUMERIC NOT NULL DEFAULT 0,
   max NUMERIC
 );
 
@@ -58,3 +48,21 @@ CREATE TABLE Ingredients (
   quantity NUMERIC,
   PRIMARY KEY (idRecipe, idProduct)
 );
+
+----------------
+------- TRIGGERS
+----------------
+
+-- Verifier si la quantité est supérieure au maximum,
+-- si oui, remplacer le maximum par la nouvelle quantité
+CREATE TRIGGER check_max_stock AFTER UPDATE
+ON Items
+FOR EACH ROW
+EXECUTE PROCEDURE set_max_stock();
+
+-- Verifier si le produit et la recette concernent le même utilisateur
+-- lors d'une insertion dans Ingredients
+CREATE TRIGGER check_user_on_insert BEFORE INSERT
+ON Ingredients
+FOR EACH ROW
+EXECUTE PROCEDURE proc_check_user_on_insert();

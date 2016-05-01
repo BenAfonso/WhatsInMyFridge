@@ -133,6 +133,7 @@ var recipes = {
 
   },
 
+  // Change HERE
   getRecipe: function(req, res){
     var recipeId = req.params.id;
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
@@ -181,6 +182,7 @@ var recipes = {
     }); // 1st Query
   },
 
+  // Change HERE
   addItemToRecipe: function(req,res){
     // Parse request
     var recipeId = req.params.id;
@@ -230,6 +232,7 @@ var recipes = {
     });
   },
 
+  // Change HERE
   deleteItemInRecipe: function(req,res){
     // Parse request
     var recipeId = req.params.recipe_id;
@@ -272,6 +275,7 @@ var recipes = {
   }); // isOwnerOf
 },
 
+// Change HERE
   modifyItemInRecipe: function(req,res){
     // Parse request
     var recipeId = req.params.recipe_id;
@@ -317,7 +321,7 @@ var recipes = {
 
 
 };
-
+// Change HERE
 function isOwnerOf(idUser, idRecipe, idItem, fn) {
   db.query("SELECT * FROM RECIPES WHERE idUser = '"+idUser+"' AND idRecipe = '"+idRecipe+"'", function(err,recipe){
     console.log(err);

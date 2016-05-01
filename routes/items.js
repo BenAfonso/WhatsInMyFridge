@@ -3,112 +3,75 @@ var errorHandler = require('../lib/errorHandler').handler;
 var queryBuilder = require('../lib/queryBuilder').queryBuilder;
 var tokenAnalyzer = require('../lib/TokenAnalyzer');
 var Item = require('../models/Item');
-var List = require('../models/List');
 var Category = require('../models/Category');
+var Product = require('../models/Product');
 
 var items = {
   getItems: function(req,res) {
     // Filters List, Category,
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    var query = "SELECT ITEMS.IDITEM, ITEMS.ITEMNAME, ITEMS.IMG, STOCKS.QUANTITY, LISTS.IDLIST, \
-                  LISTS.LISTNAME, CATEGORIES.IDCATEGORY, CATEGORIES.CATEGORYNAME \
-                  FROM ITEMS \
-                  LEFT JOIN CATEGORIES ON ITEMS.IDCATEGORY = CATEGORIES.IDCATEGORY AND CATEGORIES.IDUSER = "+user_id+"\
-                  LEFT JOIN LISTITEMS ON LISTITEMS.IDITEM = ITEMS.IDITEM \
-                  LEFT JOIN LISTS ON LISTITEMS.IDLIST = LISTS.IDLIST \
-                  LEFT JOIN STOCKS ON STOCKS.IDITEM = ITEMS.IDITEM \
-                  WHERE ITEMS.IDUSER = "+user_id;
-    if (req.query.category){
-      query=query+" AND ITEMS.IDCATEGORY = '"+req.query.category+"'";
-    }
+    var id = req.query.id;
+    var category_id = req.query.category;
+    var max_result = req.query.max_result;
+    if (user_id !== undefined){
+        var query = "SELECT * FROM ITEMS \
+        LEFT JOIN PRODUCTS ON PRODUCTS.IDPRODUCT = ITEMS.IDPRODUCT \
+        LEFT JOIN CATEGORIES ON CATEGORIES.idCategory = PRODUCTS.IDCATEGORY \
+        WHERE ITEMS.IDUSER = '"+user_id+"'";
 
-    if (req.query.list)
-    {
-      query = query + " AND LISTS.IDLIST = '"+req.query.list+"'";
-    }
+        if (category_id !== undefined)
+            var query = query + " AND PRODUCTS.IDCATEGORY = '"+category_id+"'";
+        if (id !== undefined)
+            var query = query + " AND ITEMS.IDITEM = '"+id+"'";
+        if (max_result !== undefined)
+            var query = query + " LIMIT "+max_result;
+        db.query(query, function(err,items){
+          if (err) // Error during query (raising)
+             errorHandler(err,res)
+          else{
+              if (items !== undefined){
+                  var result = [];
+                  for (i = 0;i<items.length;i++){
+                      var category = new Category(items[i].idcategory, items[i].categoryname);
+                      var product = new Product(items[i].idproduct, items[i].productname, items[i].img, category);
+                      var item = new Item(items[i].iditem, product, undefined, items[i].quantity, items[i].max);
+                      result.push(item);
+                  }
 
-    if (req.query.max_result){
-      query = query+" LIMIT "+req.query.max_result;
-    }
+                  res.status(200).send({
+                      "status": 200,
+                      "message": "Retrieved items successfully",
+                      "items": result
+                  });
+              }else { // Not found
+                  var err = new Error("Item not found");
+                  err.http_code = 404;
+                  errorHandler(err,res);
+              }
 
-    // Query for result, store in items
-
-    db.query(query, function(err,items){
-      console.log(err);
-      if (err)
-        errorHandler(err, res);
-      else{
-        // Transform to json objects (see Models);
-        for (i=0;i<items.length;i++){
-          var category = {};
-          if (items[i].idcategory)
-            var category = new Category(items[i].idcategory,items[i].categoryname);
-          if (items[i].idlist)
-            var list = new List(items[i].idlist, items[i].listname);
-          items[i] = new Item(items[i].iditem,items[i].itemname,category,items[i].quantity,list,items[i].img);
-
-
-
-
-        }
-        res.status(200).send({
-          "status": 200,
-          "message": "Retrieved items successfully",
-          "items": items
+          }
         });
-      }
-    });
+    }else{
+        // Missing user_id
+        var err = new Error("Bad query !");
+        err.http_code = 400;
+        return fn(err);
+    }
+
   },
 
   addItem: function(req,res) {
     // Parse args
-    var itemName = req.body.itemName;
-    var img = req.body.img;
-    if (itemName == undefined){
-      var err = new Error("Bad query");
-      err.http_code = 400;
-      errorHandler(err,res);
-      return;
-    }
-    var idCategory = (req.body.idCategory || req.body.idcategory);
-    // Get token wherever it's located (in req.body or in req.query (URI) or in authorization headers where it's meant to be
-    var token = tokenAnalyzer.grabToken(req);
-    var user_id = tokenAnalyzer.getUserId(token);
-
-    var params = ['idUser','itemName'];
-    var values = ["'"+user_id+"'","'"+itemName+"'"];
-    var returning = ['idItem','itemName','img'];
-
-    if (idCategory){
-      params.push('idCategory');
-      values.push(idCategory);
-      returning.push("idCategory","SELECT categoryname FROM CATEGORIES WHERE idCategory = '"+idCategory+"'");
-    }
-    if (img){
-      params.push('img');
-      values.push("'"+img+"'");
-    }
-
-    queryBuilder('INSERT',params,'ITEMS',undefined,values,returning, function(err,query){
-      // Query to add an item
-      db.query(query, function(err,item){
-        console.log(err);
+    var idProduct = req.body.idProduct;
+    var qty = req.body.quantity;
+    var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
+    var item = new Item(undefined,idProduct, user_id, qty);
+    item.insert(function(err,result){
         if (err)
-          errorHandler(err, res);
-        else{
-            // Send a 201 (created)
-            var category = new Category(item[0].idcategory, item[0].categoryname);
-            var item = new Item(item[0].iditem, item[0].itemname, category, undefined, undefined, item[0].img);
-
-            res.status(201).send({
-              "status": 201,
-              "message": "Item added",
-              "item": item
-            });
-        }
-      });
+            return errorHandler(err,res)
+        else
+            res.status(201).send(result);
     });
-
 
   },
 
@@ -116,154 +79,106 @@ var items = {
     // ADD FILTERS HERE
     var idItem = req.params.id
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    query = "SELECT ITEMS.IDITEM,ITEMS.IDCATEGORY,IMG, CATEGORYNAME,ITEMNAME,QUANTITY \
-             FROM (ITEMS LEFT JOIN STOCKS ON STOCKS.IDITEM = ITEMS.IDITEM) \
-                  LEFT JOIN CATEGORIES ON ITEMS.IDCATEGORY = CATEGORIES.IDCATEGORY \
-             WHERE ITEMS.IDUSER = "+user_id+" AND ITEMS.IDITEM = '"+idItem+"'";
-    // Query for result, store in item
-    db.query(query, function(err,item){
-      console.log(err);
-      if (err)
-        errorHandler(err, res);
-      else{
 
-          if (item[0]){
-            // Send a 200 (created)
-            var category = new Category(item[0].idcategory, item[0].categoryname);
-            var itemObj = new Item(item[0].iditem, item[0].itemname, category, item[0].quantity, undefined, item[0].img);
+    if (user_id !== undefined){
+        var query = "SELECT * FROM ITEMS \
+        LEFT JOIN PRODUCTS ON PRODUCTS.IDPRODUCT = ITEMS.IDPRODUCT \
+        LEFT JOIN CATEGORIES ON CATEGORIES.idCategory = PRODUCTS.IDCATEGORY \
+        WHERE ITEMS.IDUSER = '"+user_id+"' AND ITEMS.IDITEM = '"+idItem+"'";
 
-            res.status(200).send({
-              "status": 200,
-              "message": "Item successfully retrieved",
-              "item": itemObj
-            });
-          }else{
-            var err = new Error("Item not found !");
-            err.http_code = 404;
-            errorHandler(err,res);
+        db.query(query, function(err,item){
+          if (err) // Error during query (raising)
+             errorHandler(err,res)
+          else{
+              if (item[0] !== undefined){
+                      var category = new Category(item[0].idcategory, item[0].categoryname);
+                      var product = new Product(item[0].idproduct, item[0].productname, category);
+                      var item = new Item(item[0].idItem, product, undefined, item[0].quantity, item[0].max);
+                      res.status(200).send({
+                          "status": 200,
+                          "message": "Retrieved item successfully",
+                          "item": item
+                      });
+              }else { // Not found
+                  var err = new Error("Item not found");
+                  err.http_code = 404;
+                  errorHandler(err,res);
+              }
+
           }
-
-
-
-      }
-    });
+        });
+    }else{
+        // Missing user_id
+        var err = new Error("Bad query !");
+        err.http_code = 400;
+        return fn(err);
+    }
   },
 
   modifyItem: function(req,res) {
-    // Parse request
-    var id = req.params.id;
-    var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    if (req.body.itemName){
-      var query = "UPDATE ITEMS SET itemName = '"+req.body.itemName+"'";
-      if (req.body.img){
-          query = query + ", img = '"+req.body.img+"'";
-      }
-      query = query + " WHERE idItem = '"+id+"' AND idUser = '"+user_id+"'\
-      RETURNING idItem, itemName, (SELECT quantity FROM STOCKS WHERE idItem = '"+id+"')";
-    }
-    else if (req.body.img){
-        var query = "UPDATE ITEMS SET img = '"+req.body.img+"' WHERE idItem = '"+id+"' AND idUser = '"+user_id+"'\
-        RETURNING idItem, itemName, (SELECT quantity FROM STOCKS WHERE idItem = '"+id+"')";
-    }
-    if (req.body.idCategory){
-      // Check if category is owned by token's owner
-    }
-    if (req.body.itemName || req.body.img || req.body.idCategory){
-      // Query to add an item
-      console.log(query);
-      db.query(query, function(err,item){
-        if (err)
-          errorHandler(err, res);
-        else{
-          if (item[0] == null){
-            var err = new Error("Item not found !");
-            err.http_code = 404;
-            errorHandler(err,res);
+        var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
+          if ((req.params.id !== undefined || req.body.idProduct !== undefined) && req.body.quantity !== undefined){
+              var query = "UPDATE ITEMS SET quantity = '"+req.body.quantity+"' \
+              WHERE idUser = '"+user_id+"' idProduct = '"+req.body.idProduct+"' AND idItem = '"+req.params.id+"' RETURNING \
+              idItem, idProduct, quantity, max, (SELECT productName FROM Products WHERE idProduct = '"+req.body.idProduct+"')";
           }else{
-          var item = new Item(item[0].iditem,item[0].itemname,item[0].idCategory,item[0].quantity);
+              // Error missing idProduct or Owner (raising 400)
+              var err = new Error("Bad query !");
+              err.http_code = 400;
+              return fn(err);
+          }
+          // Query database
+          db.query(query, function(err,item){
+            if (err) // Error during query (raising)
+              fn(err);
+            else{
+                if (item[0]){
+                    var product = new Product(item[0].idproduct, item[0].productname);
+                    var item = new Item(item[0].iditem, product, undefined, item[0].quantity, item[0].max);
+                    res.status(200).send({
+                        "status": 200,
+                        "message": "Item modified",
+                        "item": item
+                    });
+                    return fn(null, res);
+                }else { // Not found
+                    var err = new Error("Item not found");
+                    err.http_code = 404;
+                    return fn(err);
+                }
 
-          // Finally return result
-          res.status(200).send({
-            "status": 200,
-            "message": "Item successfully modified",
-            "item": item
+            }
           });
-        }
-      }
-    });
-  }else{
-    var err = new Error("Bad query ! (Missing 'itemName')");
-    err.http_code = 400;
-    errorHandler(err,res);
-  }
 
-  },
-
-  modifyStock: function(req, res){
-    var id = req.params.id;
-    var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    // Query
-    if (req.body.quantity == undefined){
-      var err = new Error("Bad query ! (Missing quantity)");
-      err.http_code = 400;
-      errorHandler(err,res);
-      return;
-    }
-    // Check is user owns this stock
-    var query = "UPDATE STOCKS SET QUANTITY = '"+req.body.quantity+"' \
-    WHERE idItem = '"+id+"' \
-    RETURNING iditem, quantity,(SELECT itemName FROM ITEMS WHERE idItem = '"+id+"' AND idUser = '"+user_id+"')";
-    db.query(query, function(err,item){
-      if (err)
-        errorHandler(err, res);
-      else{
-        console.log(item);
-        if (item[0]){
-          var item = new Item(item[0].iditem, item[0].itemname, undefined, item[0].quantity);
-          res.status(200).send({
-            "status": 200,
-            "message": "Stock successfully modified",
-            "item": item
-          });
-        }else{
-          var err = new Error("Item not found !");
-          err.http_code = 404;
-          errorHandler(err,res);
-        }
-      }
-    });
   },
 
   deleteItem: function(req,res){
     // Parse request
     var id = req.params.id;
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    // Query here
-    var query = "DELETE FROM ITEMS WHERE IDITEM = '"+id+"' AND IDUSER = '"+user_id+"' RETURNING IDITEM, ITEMNAME";
-    db.query(query, function(err,item){
-      console.log(err);
-      if (err)
-        errorHandler(err, res);
-      else{
-        // The item got deleted
-        if (item[0])
-        {
-          var item = new Item(item[0].iditem, item[0].itemname);
-          // Send result 200
-          res.status(200).send({
-            "status": 200,
-            "message": "Item successfully deleted",
-            "oldItem": item
-          });
-        }else{ // The item didn't exist
-          var err = new Error("Item not found !");
-          err.http_code = 404;
-          errorHandler(err,res);
-        }
-
-      }
-    });
-
+    // Delete
+        var query = "DELETE FROM Items WHERE idItem = '"+id+"' AND idUser = '"+user_id+"' RETURNING idItem";
+        // Query database
+        db.query(query, function(err,item){
+          if (err) // Error during query (raising)
+            return errorHandler(err,res);
+          else{
+              console.log(item[0].iditem);
+              if (item[0]){
+                  res.status(200).send({
+                      "status": 200,
+                      "message": "Item deleted",
+                      "item": item[0].iditem
+                  });
+              }
+              else {
+                  // Item not found
+                  var err = new Error("Item not found");
+                  err.http_code = 404;
+                  return errorHandler(err,res);
+              }// Item deleted ?
+          }//Query passed
+      });// Query
   }
 
 
