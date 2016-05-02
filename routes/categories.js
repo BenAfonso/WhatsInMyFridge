@@ -110,7 +110,7 @@ var categories = {
         // Query database
         db.query(query, function(err,category){
           if (err) // Error during query (raising)
-            fn(err);
+            return errorHandler(err,res);
           else{
               // Something has been deleted
               if (category[0]){

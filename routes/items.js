@@ -46,7 +46,7 @@ var items = {
               }else { // Not found
                   var err = new Error("Item not found");
                   err.http_code = 404;
-                  errorHandler(err,res);
+                  return errorHandler(err,res);
               }
 
           }
@@ -55,7 +55,7 @@ var items = {
         // Missing user_id
         var err = new Error("Bad query !");
         err.http_code = 400;
-        return fn(err);
+        return errorHandler(err,res);
     }
 
   },
@@ -102,7 +102,7 @@ var items = {
               }else { // Not found
                   var err = new Error("Item not found");
                   err.http_code = 404;
-                  errorHandler(err,res);
+                  return errorHandler(err,res);
               }
 
           }
@@ -111,7 +111,7 @@ var items = {
         // Missing user_id
         var err = new Error("Bad query !");
         err.http_code = 400;
-        return fn(err);
+        return errorHandler(err,res);
     }
   },
 
@@ -125,7 +125,7 @@ var items = {
               // Error missing idProduct or Owner (raising 400)
               var err = new Error("Bad query !");
               err.http_code = 400;
-              return fn(err);
+              return errorHandler(err,res);
           }
           // Query database
           db.query(query, function(err,item){

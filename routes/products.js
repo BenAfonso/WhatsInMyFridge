@@ -58,7 +58,7 @@ var products = {
             // Missing user_id
             var err = new Error("Bad query !");
             err.http_code = 400;
-            return fn(err);
+            errorHandler(err,res);
         }
 
       },
@@ -148,7 +148,7 @@ var products = {
             // Missing user_id
             var err = new Error("Bad query !");
             err.http_code = 400;
-            return fn(err);
+            errorHandler(err,res);
         }
       },
 
@@ -162,7 +162,8 @@ var products = {
                       params.push('img');
                       values.push("'"+req.body.img+"'");
                   }
-                  if (req.body.idCategory){
+                  if (req.body.idCategory !== undefined){
+                      console.log(req.body.idCategory);
                       params.push('idCategory');
                       values.push("'"+req.body.idCategory+"'");
                   }
@@ -170,9 +171,9 @@ var products = {
                       params.push('productName');
                       values.push("'"+req.body.productName+"'");
                   }
-                  var query = "UPDATE PRODUCTS SET ("+params.toString()+") = ("+values.toString()+") \
+                  var query = "UPDATE PRODUCTS AS P SET ("+params.toString()+") = ("+values.toString()+") \
                   WHERE idProduct = '"+req.params.id+"' AND idUser = '"+user_id+"' RETURNING \
-                  idProduct, idcategory, productName, img, (SELECT categoryName FROM Categories WHERE idCategory = '"+req.body.idCategory+"')";
+                  idProduct, idcategory, productName, img, (SELECT categoryName FROM Categories WHERE idCategory = P.idcategory)";
               }else{
                   // Error missing idProduct or Owner (raising 400)
                   var err = new Error("Bad query !");

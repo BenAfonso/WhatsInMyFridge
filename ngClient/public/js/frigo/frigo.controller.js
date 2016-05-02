@@ -1,48 +1,48 @@
 myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory','ProductsFactory',
     function($scope, $location, ItemsFactory, ProductsFactory){
       // Initialisation des covoiturages
-      $scope.items = [];
+      $scope.products = [];
 
-      $scope.getItems = function(){
+      $scope.getProducts = function(){
         // Populating $scope with DB
           ProductsFactory.getProducts().then(function(data){
-              $scope.items = data.products;
+              $scope.products = data.products;
           });
       };
 
-      $scope.addItemMenu = false;
+      $scope.addProductMenu = false;
       $scope.leftMenu = false;
       $scope.showFiltersMenu = false;
       $scope.showSortingMenu = false;
       $scope.addFormDisplayed = false;
-      $scope.getItems();
+      $scope.getProducts();
 
       $scope.toggleAddForm = function(){
           $scope.addFormDisplayed = !$scope.addFormDisplayed;
       };
 
-      $scope.selectItem = function(item){
-          if (item.modifying)
+      $scope.selectProduct = function(product){
+          if (product.modifying)
             return;
-          if (item.selected !== undefined)
-            item.selected = !item.selected;
+          if (product.selected !== undefined)
+            product.selected = !product.selected;
           else
-            item.selected = true;
+            product.selected = true;
       };
 
-      $scope.isSelected = function(item){
-          return item.selected;
+      $scope.isSelected = function(product){
+          return product.selected;
       };
 
-      $scope.toggleModifyItem = function(item){
-          if (item.modifying !== undefined)
-            item.modifying = !item.modifying;
+      $scope.toggleModifyProduct = function(product){
+          if (product.modifying !== undefined)
+            product.modifying = !product.modifying;
           else
-            item.modifying = true;
+            product.modifying = true;
       };
 
-      $scope.isModifying = function(item){
-          return item.modifying;
+      $scope.isModifying = function(product){
+          return product.modifying;
       };
       $scope.toggleAddMenu = function(){
         $scope.addItemMenu = !$scope.addItemMenu;
@@ -63,26 +63,26 @@ myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory','ProductsFact
     };
 
 
-      $scope.addItem = function(){
-        ItemsFactory.addItem($scope.itemName, $scope.img).then(function(){
+      $scope.addProduct = function(){
+        ProductsFactory.addProduct($scope.productName, $scope.img).then(function(){
             $scope.leftMenu = false;
             $scope.addFormDisplayed = false;
-            $scope.getItems();
+            $scope.getProducts();
         });
     };
 
-      $scope.modifyItem = function(item){
-          ItemsFactory.modifyItem(item).then(function(){
-             $scope.getItems();
-             item.modifying = false;
-             item.selected = false;
+      $scope.modifyProduct = function(product){
+          ProductsFactory.modifyProduct(product).then(function(){
+             $scope.getProducts();
+             product.modifying = false;
+             product.selected = false;
           });
       };
 
-      $scope.deleteItem = function(item){
-          ItemsFactory.deleteItem(item).then(function(){
+      $scope.deleteProduct = function(product){
+          ProductsFactory.deleteProduct(product).then(function(){
               alert("Supprimé !");
-              $scope.getItems();
+              $scope.getProducts();
           });
 
       };

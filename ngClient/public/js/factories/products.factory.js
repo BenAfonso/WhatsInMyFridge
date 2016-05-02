@@ -4,6 +4,7 @@ myApp.factory('ProductsFactory', function(APILINK, $http) {
   // Add sorting functions to getProducts
   _ProductsFactory.getProducts = function() {
       var promise = $http.get(APILINK+'/api/v1/products').then(function(response){
+        response.data.products = replaceProductsImg(response.data.products);
         return (response.data);
     }, function(error){
         console.log(error);
@@ -21,11 +22,11 @@ myApp.factory('ProductsFactory', function(APILINK, $http) {
     };
 
   _ProductsFactory.modifyProduct = function(product) {
-
+     console.log(product);
     var promise = $http.put(APILINK+'/api/v1/product/'+product.idProduct, {
       productName: product.productName,
       img: product.img,
-      idCategory: Product.idCategory
+      idCategory: product.idCategory
     }).then(function(response){
         return (response.data);
     }, function(error){ // An error occured
@@ -44,7 +45,7 @@ myApp.factory('ProductsFactory', function(APILINK, $http) {
       return promise;
       };
 
-  _ProductsFactory.addProduct = function(productName, img){
+  _ProductsFactory.addProduct = function(productName, img, idCategory){
 
     var promise = $http.post(APILINK+'/api/v1/products', {
         productName: productName,
@@ -60,4 +61,14 @@ myApp.factory('ProductsFactory', function(APILINK, $http) {
 
   return _ProductsFactory;
 
+
 });
+
+var replaceProductsImg = function(products){
+    for (i=0;i<products.length;i++){
+        if (products[i].img === undefined)
+            // The default image
+            products[i].img = 'img/imageNotFound.jpg';
+    }
+    return products;
+};

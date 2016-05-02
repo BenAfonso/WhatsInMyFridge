@@ -4,7 +4,7 @@
       <li><ul>
       <li>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" type="text" id="searchBar" ng-model="search.itemName">
+          <input class="mdl-textfield__input" type="text" id="searchBar" ng-model="search.productName">
           <label class="mdl-textfield__label" for="searchBar">Rechercher...</label>
         </div>
       </li></ul></li>
@@ -26,28 +26,28 @@
   </div>
 
 <div class="container" ng-class="{'visible' : leftMenu}">
-  <!-- Flex container containing items -->
+  <!-- Flex container containing products -->
   <div class="flex-container">
-    <div ng-repeat="item in items | filter:search" class="itembox" ng-click="selectItem(item)">
-      <div class="item"><img src="{{item.img}}"></img>
-        <div class="editItem" ng-show="isSelected(item)">
-            <i class="material-icons" confirmed-click="deleteItem(item)"
-            ng-confirm-click="Êtes vous sur de vouloir supprimer?" ng-show="!isModifying(item)">clear</i>
-            <i class="material-icons" ng-click="toggleModifyItem(item)">mode edit</i>
+    <div ng-repeat="product in products | filter:search" class="itembox" ng-click="selectProduct(product)">
+      <div class="item"><img src="{{product.img}}"></img>
+        <div class="editItem" ng-show="isSelected(product)">
+            <i class="material-icons" confirmed-click="deleteProduct(product)"
+            ng-confirm-click="Êtes vous sur de vouloir supprimer?" ng-show="!isModifying(product)">clear</i>
+            <i class="material-icons" ng-click="toggleModifyProduct(product)">mode edit</i>
         </div>
         <div class="placeholder">
-          <span class="itemName">{{item.itemName}}</span>
-          <span class="itemQuantity">{{item.quantity}}</span>
+          <span class="itemName">{{product.productName}}</span>
+          <span class="itemQuantity">{{product.quantity}}</span>
         </div>
       </div>
-      <div class="modifyItemBox" ng-class="{ 'active' : isModifying(item) }">
-          <form name="newitem" ng-submit="modifyItem(item)">
+      <div class="modifyItemBox" ng-class="{ 'active' : isModifying(product) }">
+          <form name="newitem" ng-submit="modifyProduct(product)">
               <div class="modifyInput mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="itemName" ng-model="item.itemName">
+                <input class="mdl-textfield__input" type="text" id="itemName" ng-model="product.productName">
                 <label class="mdl-textfield__label" for="itemName">Nom</label>
               </div>
               <div class="modifyInput mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="img" ng-model="item.img">
+                <input class="mdl-textfield__input" type="text" id="img" ng-model="product.img">
                 <label class="mdl-textfield__label" for="img">Image</label>
               </div>
               <div class="modifyInput__small mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -65,9 +65,9 @@
     <button class="addButton mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="toggleAddForm()">
       <i class="material-icons">add</i>
     </button>
-    <form class="addForm" ng-class="{'displayed' : addFormDisplayed }" ng-submit="addItem()" novalidate>
+    <form class="addForm" ng-class="{'displayed' : addFormDisplayed }" ng-submit="addProduct()" novalidate>
         <div class="mdl-textfield mdl-js-textfield" id="itemNameInput">
-          <input class="mdl-textfield__input" type="text" id="itemName" ng-model="itemName">
+          <input class="mdl-textfield__input" type="text" id="itemName" ng-model="productName">
           <label class="mdl-textfield__label" for="itemName">Nom de l'item</label>
         </div>
         <div class="mdl-textfield mdl-js-textfield" id="imgInput">
@@ -75,7 +75,7 @@
           <label class="mdl-textfield__label" for="img">Image</label>
           <span class="mdl-textfield__error">Ceci n'est pas une URL valide</span>
         </div>
-        <button id="addItem" class="mdl-button mdl-js-button" type="submit">Add item</button>
+        <button id="addItem" class="mdl-button mdl-js-button" type="submit">Add product</button>
     </form>
     </div>
 </div>
