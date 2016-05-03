@@ -138,7 +138,6 @@ Item.prototype.insert = function(fn){
         var query = "INSERT INTO ITEMS (idProduct, quantity, idUser) \
         VALUES ('"+this.Product+"','"+this.quantity+"','"+this.idUser+"') RETURNING \
         idItem, idProduct, quantity, max, (SELECT productName FROM Products WHERE idProduct = '"+this.Product+"')";
-        console.log(query);
     }// idUser
     else{
         var err = new Error("Bad query (Missing product)");

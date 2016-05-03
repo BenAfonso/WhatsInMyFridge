@@ -12,7 +12,7 @@ var recipes = {
     var query = "SELECT * FROM RECIPES WHERE RECIPES.IDUSER = "+user_id;
     // Query for result, store in recipes
     db.query(query, function(err,recipes){
-      console.log(err);
+
       if (err)
         errorHandler(err, res);
       else{
@@ -39,7 +39,7 @@ var recipes = {
       var query = "INSERT INTO RECIPES (recipeName,idUser) VALUES ('"+recipeName+"','"+user_id+"') \
       RETURNING idRecipe, recipeName";
       db.query(query, function(err,recipe){
-        console.log(err);
+
         if (err)
           errorHandler(err, res);
         else{
@@ -70,7 +70,7 @@ var recipes = {
 
     var query = "DELETE FROM RECIPES WHERE IDRECIPE = '"+recipeId+"' AND IDUSER = '"+user_id+"' RETURNING IDRECIPE, RECIPENAME";
     db.query(query, function(err,recipe){
-      console.log(err);
+
       if (err)
         errorHandler(err, res);
       else{
@@ -103,7 +103,7 @@ var recipes = {
       var query = "UPDATE RECIPES SET recipeName = '"+newName+"' \
       WHERE idRecipe = '"+recipeid+"' AND idUser = '"+user_id+"' RETURNING idRecipe, recipeName";
       db.query(query, function(err,recipe){
-        console.log(err);
+
         if (err)
           errorHandler(err, res);
         else{
@@ -144,12 +144,10 @@ var recipes = {
              WHERE RECIPES.IDRECIPE = '"+recipeId+"' AND RECIPES.IDUSER = "+user_id;
     // Query for result, store in item
     db.query(query, function(err,ingredients){
-      console.log(err);
       if (err)
         errorHandler(err, res);
       else{
         db.query("SELECT * FROM RECIPES WHERE IDRECIPE = '"+recipeId+"' AND IDUSER = '"+user_id+"'", function(err,recipe){
-          console.log(err);
           if (err)
             errorHandler(err, res);
           else{
@@ -217,7 +215,7 @@ var recipes = {
 
         // Query to add an item
         db.query(query, function(err,recipe){
-          console.log(err);
+
           if (err)
             errorHandler(err, res);
           else{
@@ -235,7 +233,6 @@ var recipes = {
     });
   },
 
-  // Change HERE
   deleteIngredient: function(req,res){
     // Parse request
     var recipeId = req.params.recipe_id;
@@ -260,7 +257,7 @@ var recipes = {
 
     // Query to add an item
     db.query(query, function(err,recipe){
-      console.log(err);
+
       if (err)
         errorHandler(err, res);
       else{
@@ -301,7 +298,7 @@ var recipes = {
         WHERE idProduct = '"+idProduct+"' AND idRecipe = '"+recipeId+"' \
         RETURNING idRecipe, quantity";
         db.query(query, function(err,recipe){
-          console.log(err);
+
           if (err)
             errorHandler(err, res);
           else{
@@ -327,13 +324,13 @@ var recipes = {
 // Change HERE
 function isOwnerOf(idUser, idRecipe, idProduct, fn) {
   db.query("SELECT * FROM RECIPES WHERE idUser = '"+idUser+"' AND idRecipe = '"+idRecipe+"'", function(err,recipe){
-    console.log(err);
+
     if (err)
       fn(err,false);
     else{
       if (recipe[0]){
         db.query("SELECT * FROM Products WHERE idUser = '"+idUser+"' AND idProduct = '"+idProduct+"'", function(err,product){
-          console.log(err);
+
           if (err)
             fn(err,false);
           else{

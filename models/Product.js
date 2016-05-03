@@ -96,7 +96,6 @@ Product.prototype.insert = function(fn){
         var query = "INSERT INTO PRODUCTS ('"+params.toString()+"') \
         VALUES ('"+values.toString()+"') RETURNING \
         idProduct, productName, img, idCategory, (SELECT categoryName FROM Categories WHERE idCategory = '"+idCategory+"')";
-        console.log(query);
     }// idUser
     else{
         var err = new Error("Missing user");

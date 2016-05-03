@@ -11,7 +11,7 @@ var categories = {
     var query = "SELECT * FROM CATEGORIES WHERE IDUSER = '"+user_id+"'";
     // Query for result, store in categories
     db.query(query, function(err,categories){
-      console.log(err);
+
       if (err)
         errorHandler(err, res);
       else{
