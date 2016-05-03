@@ -1,13 +1,17 @@
-myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory','ProductsFactory',
-    function($scope, $location, ItemsFactory, ProductsFactory){
+myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory','ProductsFactory','Product',
+    function($scope, $location, ItemsFactory, ProductsFactory, Product){
       // Initialisation des covoiturages
       $scope.products = [];
 
       $scope.getProducts = function(){
         // Populating $scope with DB
-          ProductsFactory.getProducts().then(function(data){
-              $scope.products = data.products;
+          var products = Product.query(function(){
+              $scope.products = products.products;
+              var promise = Product.get({id: 5},function(){
+                  console.log(promise.product.category);
+              });
           });
+
       };
 
       $scope.addProductMenu = false;
