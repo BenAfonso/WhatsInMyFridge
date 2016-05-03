@@ -10,7 +10,7 @@ myApp.factory('CategoriesFactory', function($http, APILINK) {
       return promise;
       };
 
-
+  
   _CategoriesFactory.modifyCategory = function(id, categoryName) {
 
     var promise = $http.put(APILINK+'/api/v1/category/'+id, {
