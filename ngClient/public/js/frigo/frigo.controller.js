@@ -7,12 +7,17 @@ myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory','ProductsFact
         // Populating $scope with DB
           var products = Product.query(function(){
               $scope.products = products.products;
-              var promise = Product.get({id: 5},function(){
-                  console.log(promise.product.category);
-              });
+
           });
 
       };
+
+      var promise = Product.get({id: 5},function(){
+          promise.product.productName = 'ngResourceRocks';
+          promise.product.$update(function(){
+              console.log("done");
+          });
+      });
 
       $scope.addProductMenu = false;
       $scope.leftMenu = false;

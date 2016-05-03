@@ -1,6 +1,11 @@
 myApp.factory("Product", function($resource,APILINK) {
   return $resource(APILINK+"/api/v1/products/:id", {id: '@id'}, {
-      query: {method: 'GET', isArray: false}
+      query: {method: 'GET',
+      transformResponse: function(data){
+          return data.products;
+      },
+      isArray: false},
+      update: { method: 'PUT' }
   });
 });
 
