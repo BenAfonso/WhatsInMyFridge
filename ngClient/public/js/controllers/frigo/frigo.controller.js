@@ -1,11 +1,11 @@
-myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory','ProductsFactory','Product',
-    function($scope, $location, ItemsFactory, ProductsFactory, Product){
+myApp.controller("FrigoCtrl", ['$scope','Products',
+    function($scope, Products){
       // Initialisation des covoiturages
       $scope.products = [];
 
       $scope.getProducts = function(){
         // Populating $scope with DB
-          Product.query(function(result){
+          Products.query(function(result){
             $scope.products = result;
           });
       };
@@ -82,7 +82,7 @@ myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory','ProductsFact
       };
 
       $scope.deleteProduct = function(product){
-          Product.delete({id:product.idProduct},function(result){
+          Products.delete({id:product.idProduct},function(result){
             // Remove the deleted item from the products list with Ajax call
             $scope.products.splice($scope.products.indexOf(product), 1);
           });

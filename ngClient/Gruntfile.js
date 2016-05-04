@@ -62,6 +62,7 @@ module.exports = function(grunt) {
         tasks: ['sass', 'cssmin']
       },
       js: {
+          options: {livereload: true},
           files: ['public/js/**/*.js'],
           tasks: ['jshint', 'uglify']
       }

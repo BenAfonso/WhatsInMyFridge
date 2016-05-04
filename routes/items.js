@@ -11,16 +11,15 @@ var items = {
     // Filters List, Category,
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
     var id = req.query.id;
-    var category_id = req.query.category;
+    var product_id = req.query.product_id;
     var max_result = req.query.max_result;
     if (user_id !== undefined){
         var query = "SELECT * FROM ITEMS \
         LEFT JOIN PRODUCTS ON PRODUCTS.IDPRODUCT = ITEMS.IDPRODUCT \
-        LEFT JOIN CATEGORIES ON CATEGORIES.idCategory = PRODUCTS.IDCATEGORY \
         WHERE ITEMS.IDUSER = '"+user_id+"'";
 
-        if (category_id !== undefined)
-            var query = query + " AND PRODUCTS.IDCATEGORY = '"+category_id+"'";
+        if (product_id !== undefined)
+            var query = query + " AND PRODUCTS.IDPRODUCT = '"+product_id+"'";
         if (id !== undefined)
             var query = query + " AND ITEMS.IDITEM = '"+id+"'";
         if (max_result !== undefined)
@@ -32,8 +31,7 @@ var items = {
               if (items !== undefined){
                   var result = [];
                   for (i = 0;i<items.length;i++){
-                      var category = new Category(items[i].idcategory, items[i].categoryname);
-                      var product = new Product(items[i].idproduct, items[i].productname, items[i].img, category);
+                      var product = new Product(items[i].idproduct, items[i].productname, items[i].img);
                       var item = new Item(items[i].iditem, product, undefined, items[i].quantity, items[i].max);
                       result.push(item);
                   }
@@ -120,8 +118,18 @@ var items = {
 
   modifyItem: function(req,res) {
         var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-          if (req.params.id !== undefined && req.body.quantity !== undefined){
-              var query = "UPDATE ITEMS SET quantity = '"+req.body.quantity+"' \
+          if (req.params.id !== undefined){
+              var params = [];
+              var values = [];
+              if (req.body.quantity !== undefined){
+                params.push('quantity');
+                values.push("'"+req.body.quantity+"'");
+              }
+              if (req.body.max !== undefined){
+                params.push('max');
+                values.push("'"+req.body.max+"'");
+              }
+              var query = "UPDATE ITEMS SET ("+params.toString()+") = ("+values.toString()+") \
               WHERE idUser = '"+user_id+"' AND idItem = '"+req.params.id+"' RETURNING \
               idItem, idProduct, quantity, max";
           }else{

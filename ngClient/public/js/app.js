@@ -19,9 +19,15 @@ myApp.config(function($routeProvider, $httpProvider) {
       access: {
         requiredLogin: false
       }
-    }).when('/monfrigo', {
-      templateUrl: 'partials/frigo/frigo.html',
+    }).when('/panel', {
+      templateUrl: 'partials/panel/panel.html',
       controller: 'FrigoCtrl',
+      access: {
+        requiredLogin: true
+      }
+    }).when('/product/:id', {
+      templateUrl: 'partials/product/product.html',
+      controller: 'ProductCtrl',
       access: {
         requiredLogin: true
       }
