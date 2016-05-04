@@ -84,7 +84,7 @@ var products = {
                   if (product[0] !== undefined){
                           var category = new Category(product[0].idcategory, product[0].categoryname);
                           var product = new Product(product[0].idproduct, product[0].productname, product[0].img, category);
-                          res.status(201).send({product});
+                          res.status(201).send(product);
                   }else { // Not found
                       var err = new Error("Product not found");
                       err.http_code = 404;

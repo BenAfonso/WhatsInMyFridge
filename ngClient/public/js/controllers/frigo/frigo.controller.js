@@ -64,9 +64,9 @@ myApp.controller("FrigoCtrl", ['$scope','Products',
 
 
       $scope.addProduct = function(product){
-        Product.save(product, function(result){
+        Products.save(product, function(result){
           // Add the just-posted product at first position of products with AJAX call
-          $scope.products.unshift(result.product);
+          $scope.products.unshift(result);
           $scope.newProduct = {};
           $scope.toggleAddForm();
         });

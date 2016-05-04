@@ -218,26 +218,26 @@ body {
   height: 0px;
   width: 0px;
   transition: width 0.2s ease-out;
-  transition: height 0.2s ease-out;
-  background-color: #4bcef7; }
+  transition: height 0.2s ease-out; }
 
 .addForm.displayed {
-  height: 190px;
-  width: 190px;
+  height: 200px;
+  width: 240px;
   padding: 15px;
   transition: width 0.2s ease-in;
-  transition: height 0.2s ease-in; }
+  transition: height 0.2s ease-in;
+  background-image: url("/img/bulle.gif"); }
   .addForm.displayed #itemNameInput {
-    max-width: 110px;
+    max-width: 180px;
     position: absolute;
-    top: 0; }
+    top: 10px; }
   .addForm.displayed #imgInput {
-    max-width: 110px;
+    max-width: 180px;
     position: absolute;
-    top: 40px; }
+    top: 60px; }
   .addForm.displayed #addItem {
     position: absolute;
-    bottom: 50px; }
+    bottom: 80px; }
 
 /*****************************************
  *           Items
@@ -277,17 +277,24 @@ body {
   .item img {
     height: 134px;
     width: 160px; }
-  .item .editItem {
+  .item .editItem, .item .selectProduct {
     z-index: 1;
     position: absolute;
     top: 13px;
     right: 14px; }
+  .item .selectProduct {
+    top: 115px; }
+    .item .selectProduct .material-icons {
+      font-size: 30px; }
   .item .placeholder {
     position: absolute;
     width: 160px;
     padding: 8px; }
     .item .placeholder .itemName {
-      float: left; }
+      float: left;
+      font-weight: bold;
+      color: white;
+      cursor: pointer; }
     .item .placeholder .itemQuantity {
       float: right; }
 
@@ -298,7 +305,7 @@ body {
   padding-top: 30px;
   width: auto;
   height: auto; }
-  #product img {
+  #product #productImg {
     float: left;
     width: 100px;
     height: 100px;
@@ -309,6 +316,19 @@ body {
     font-size: 24px; }
   #product #productInfo #productStock {
     margin-top: 6px; }
+
+.banner {
+  position: relative;
+  margin-bottom: 30px; }
+  .banner img {
+    width: 100%;
+    height: auto; }
+  .banner span {
+    position: absolute;
+    font-weight: 600;
+    color: white;
+    top: 8px;
+    margin-left: 40%; }
 
 @media (min-width: 500px) {
   .flex-container {

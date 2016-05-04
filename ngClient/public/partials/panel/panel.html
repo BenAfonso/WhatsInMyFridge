@@ -34,8 +34,9 @@
             ng-confirm-click="Êtes vous sur de vouloir supprimer?" ng-show="!isModifying(product)">clear</i>
             <i class="material-icons" ng-click="toggleModifyProduct(product)">mode edit</i>
         </div>
+
         <div class="placeholder">
-          <span class="itemName">{{product.productName}}</span>
+          <span class="itemName" ng-click="go('/product/'+product.idProduct)">{{product.productName}}</span>
           <span class="itemQuantity">{{product.quantity}}</span>
         </div>
       </div>
@@ -48,11 +49,6 @@
               <div class="modifyInput mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" id="img" ng-model="product.img">
                 <label class="mdl-textfield__label" for="img">Image</label>
-              </div>
-              <div class="modifyInput__small mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                 <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="quantity" ng-model="item.quantity">
-                 <label class="mdl-textfield__label" for="sample2">Quantité</label>
-                 <span class="mdl-textfield__error">Quantité non valide !</span>
               </div>
               <button id="submitForm" class="mdl-button mdl-js-button mdl-button--raised" type="submit">Save</button>
           </form>
@@ -70,7 +66,7 @@
           <label class="mdl-textfield__label" for="itemName">Nom de l'item</label>
         </div>
         <div class="mdl-textfield mdl-js-textfield" id="imgInput">
-          <input class="mdl-textfield__input" type="text" pattern="/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/" id="img" ng-model="newProduct.img">
+          <input class="mdl-textfield__input" type="text" id="img" ng-model="newProduct.img">
           <label class="mdl-textfield__label" for="img">Image</label>
           <span class="mdl-textfield__error">Ceci n'est pas une URL valide</span>
         </div>
