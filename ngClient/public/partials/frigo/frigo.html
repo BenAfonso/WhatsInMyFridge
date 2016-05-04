@@ -4,7 +4,7 @@
   <!-- Flex container containing products -->
   <div class="flex-container">
     <div ng-repeat="product in products | filter:search" class="itembox" ng-click="selectProduct(product)">
-      <div class="item"><img src="{{product.img}}"></img>
+      <div class="item"><img ng-src="{{product.img}}"></img>
         <div class="editItem" ng-show="isSelected(product)">
             <i class="material-icons" confirmed-click="deleteProduct(product)"
             ng-confirm-click="Êtes vous sur de vouloir supprimer?" ng-show="!isModifying(product)">clear</i>
@@ -40,13 +40,13 @@
     <button class="addButton mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="toggleAddForm()">
       <i class="material-icons">add</i>
     </button>
-    <form class="addForm" ng-class="{'displayed' : addFormDisplayed }" ng-submit="addProduct()" novalidate>
+    <form class="addForm" ng-class="{'displayed' : addFormDisplayed }" ng-submit="addProduct(newProduct)" novalidate>
         <div class="mdl-textfield mdl-js-textfield" id="itemNameInput">
-          <input class="mdl-textfield__input" type="text" id="itemName" ng-model="productName">
+          <input class="mdl-textfield__input" type="text" id="itemName" ng-model="newProduct.productName">
           <label class="mdl-textfield__label" for="itemName">Nom de l'item</label>
         </div>
         <div class="mdl-textfield mdl-js-textfield" id="imgInput">
-          <input class="mdl-textfield__input" type="text" pattern="/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/" id="img" ng-model="img">
+          <input class="mdl-textfield__input" type="text" pattern="/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/" id="img" ng-model="newProduct.img">
           <label class="mdl-textfield__label" for="img">Image</label>
           <span class="mdl-textfield__error">Ceci n'est pas une URL valide</span>
         </div>

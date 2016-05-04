@@ -42,7 +42,7 @@ module.exports = function(req, res, next) {
             if (dbUser) {
 
 
-                if ( (decoded.admin && dbUser.getRole() == 'admin') || (!decoded.admin && req.url.indexOf('/api/v1/') >= 0)) {
+                if ( (decoded.admin && dbUser.getRole() == 'admin') || (!decoded.admin && ( req.url.indexOf('/api/v1/') >= 0 || req.url.indexOf('/api/v2/') >= 0 ))) {
                         next(); // To move to next middleware
                 } else {
                     res.status(403);

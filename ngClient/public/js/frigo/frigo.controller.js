@@ -5,19 +5,10 @@ myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory','ProductsFact
 
       $scope.getProducts = function(){
         // Populating $scope with DB
-          var products = Product.query(function(){
-              $scope.products = products.products;
-
+          Product.query(function(result){
+            $scope.products = result;
           });
-
       };
-
-      var promise = Product.get({id: 5},function(){
-          promise.product.productName = 'ngResourceRocks';
-          promise.product.$update(function(){
-              console.log("done");
-          });
-      });
 
       $scope.addProductMenu = false;
       $scope.leftMenu = false;
@@ -55,7 +46,7 @@ myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory','ProductsFact
       };
       $scope.toggleAddMenu = function(){
         $scope.addItemMenu = !$scope.addItemMenu;
-    };
+      };
 
       $scope.toggleFiltersMenu = function(){
         $scope.showFiltersMenu = !$scope.showFiltersMenu;
@@ -72,26 +63,28 @@ myApp.controller("FrigoCtrl", ['$scope','$location','ItemsFactory','ProductsFact
     };
 
 
-      $scope.addProduct = function(){
-        ProductsFactory.addProduct($scope.productName, $scope.img).then(function(){
-            $scope.leftMenu = false;
-            $scope.addFormDisplayed = false;
-            $scope.getProducts();
+      $scope.addProduct = function(product){
+        Product.save(product, function(result){
+          // Add the just-posted product at first position of products with AJAX call
+          $scope.products.unshift(result.product);
+          $scope.newProduct = {};
+          $scope.toggleAddForm();
         });
-    };
+
+      };
 
       $scope.modifyProduct = function(product){
-          ProductsFactory.modifyProduct(product).then(function(){
-             $scope.getProducts();
-             product.modifying = false;
-             product.selected = false;
+          product.$update({id:product.idProduct}, function(product){
+              // Refresh only the product entry with AJAX call
+              $scope.products[$scope.products.indexOf(product)] = product;
           });
+
       };
 
       $scope.deleteProduct = function(product){
-          ProductsFactory.deleteProduct(product).then(function(){
-              alert("Supprimé !");
-              $scope.getProducts();
+          Product.delete({id:product.idProduct},function(result){
+            // Remove the deleted item from the products list with Ajax call
+            $scope.products.splice($scope.products.indexOf(product), 1);
           });
 
       };

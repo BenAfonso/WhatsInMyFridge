@@ -34,7 +34,13 @@ app.all('/*', function(req, res, next) {
 // The others should be avoided
 
 
+// Handling version 1
 app.all('/api/v1/*', [require('./auth/middlewares/validateRequest')]);
+// Handling version 2
+app.all('/api/v2/*', [require('./auth/middlewares/validateRequest')]);
+
+
+app.use('/', require('./routes/v1'));
 app.use('/', require('./routes'));
 app.use('/', require('./auth/routes'));
 

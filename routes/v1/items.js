@@ -1,10 +1,10 @@
-var db = require('../models/db');
-var errorHandler = require('../lib/errorHandler').handler;
-var queryBuilder = require('../lib/queryBuilder').queryBuilder;
-var tokenAnalyzer = require('../lib/TokenAnalyzer');
-var Item = require('../models/Item');
-var Category = require('../models/Category');
-var Product = require('../models/Product');
+var db = require('../../models/db');
+var errorHandler = require('../../lib/errorHandler').handler;
+var queryBuilder = require('../../lib/queryBuilder').queryBuilder;
+var tokenAnalyzer = require('../../lib/TokenAnalyzer');
+var Item = require('../../models/Item');
+var Category = require('../../models/Category');
+var Product = require('../../models/Product');
 
 var items = {
   getItems: function(req,res) {
@@ -38,7 +38,11 @@ var items = {
                       result.push(item);
                   }
 
-                  res.status(200).send(result);
+                  res.status(200).send({
+                      "status": 200,
+                      "message": "Retrieved items successfully",
+                      "items": result
+                  });
               }else { // Not found
                   var err = new Error("Item not found");
                   err.http_code = 404;
@@ -66,20 +70,30 @@ var items = {
     if (qty == undefined){
         qty = 0;
     }
+    else{
+        var err = new Error("Bad query (Missing product)");
+        err.http_code = 400;
+        return errorHandler(err,res);
+    }
     var query = "INSERT INTO ITEMS (idProduct, quantity, idUser) \
       VALUES ('"+idProduct+"','"+qty+"','"+user_id+"') RETURNING \
       idItem, idProduct, quantity, max, (SELECT productName FROM Products WHERE idProduct = '"+idProduct+"')";
+
     // Query database
     db.query(query, function(err,item){
       if (err) // Error during query (raising)
-        return errorHandler(err,res);
+        fn(err);
       else{
           var product = new Product(item[0].idproduct, item[0].productname);
           var item = new Item(item[0].iditem, product, undefined, item[0].quantity);
-          res.status(201).send(item);
-      }
-
+          res.status(201).send({
+              "status": 201,
+              "message": "Item added",
+              "item": item
+          });
+        }
     });
+
   },
 
   getItem: function(req,res) {
@@ -101,7 +115,11 @@ var items = {
                       var category = new Category(item[0].idcategory, item[0].categoryname);
                       var product = new Product(item[0].idproduct, item[0].productname, item[0].img, category);
                       var item = new Item(item[0].iditem, product, undefined, item[0].quantity, item[0].max);
-                      res.status(200).send(item);
+                      res.status(200).send({
+                          "status": 200,
+                          "message": "Retrieved item successfully",
+                          "item": item
+                      });
               }else { // Not found
                   var err = new Error("Item not found");
                   err.http_code = 404;

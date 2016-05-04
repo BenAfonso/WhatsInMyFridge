@@ -1,11 +1,11 @@
 // Change HERE
-var db = require('../models/db');
-var errorHandler = require('../lib/errorHandler').handler;
-var queryBuilder = require('../lib/queryBuilder').queryBuilder;
-var tokenAnalyzer = require('../lib/TokenAnalyzer');
-var Item = require('../models/Item');
-var Category = require('../models/Category');
-var Product = require('../models/Product');
+var db = require('../../models/db');
+var errorHandler = require('../../lib/errorHandler').handler;
+var queryBuilder = require('../../lib/queryBuilder').queryBuilder;
+var tokenAnalyzer = require('../../lib/TokenAnalyzer');
+var Item = require('../../models/Item');
+var Category = require('../../models/Category');
+var Product = require('../../models/Product');
 
 var products = {
 
@@ -41,7 +41,11 @@ var products = {
                           result.push(product);
                       }
 
-                      res.status(200).send(result);
+                      res.status(200).send({
+                          "status": 200,
+                          "message": "Retrieved products successfully",
+                          "products": result
+                      });
                   }else { // Not found
                       var err = new Error("Product not found");
                       err.http_code = 404;
@@ -84,7 +88,11 @@ var products = {
                   if (product[0] !== undefined){
                           var category = new Category(product[0].idcategory, product[0].categoryname);
                           var product = new Product(product[0].idproduct, product[0].productname, product[0].img, category);
-                          res.status(201).send({product});
+                          res.status(201).send({
+                              "status": 201,
+                              "message": "Product added successfully",
+                              "Product": product
+                          });
                   }else { // Not found
                       var err = new Error("Product not found");
                       err.http_code = 404;
@@ -122,7 +130,12 @@ var products = {
                           var item = new Item(product[0].iditem, undefined, undefined, product[0].quantity, product[0].max);
                           var product = new Product(product[0].idproduct, product[0].productname, product[0].img, category);
 
-                          res.status(200).send(product);
+                          res.status(200).send({
+                              "status": 200,
+                              "message": "Retrieved product successfully",
+                              "product": product,
+                              "item": item
+                          });
                   }else { // Not found
                       var err = new Error("Product not found");
                       err.http_code = 404;
@@ -175,7 +188,11 @@ var products = {
                     if (product[0]){
                         var category = new Category(product[0].idcategory, product[0].categoryname);
                         var product = new Product(product[0].idproduct, product[0].productname, product[0].img, category);
-                        res.status(200).send(product);
+                        res.status(200).send({
+                            "status": 200,
+                            "message": "Product modified",
+                            "product": product
+                        });
                     }else { // Not found
                         var err = new Error("Product not found");
                         err.http_code = 404;

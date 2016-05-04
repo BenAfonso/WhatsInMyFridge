@@ -107,7 +107,7 @@ Item.prototype.update = function(fn){
       else{
           if (item[0]){
               var product = new Product(item[0].idproduct, item[0].productname);
-              var item = new Item(item[0].idItem, product, undefined, item[0].quantity, item[0].max);
+              var item = new Item(item[0].iditem, product, undefined, item[0].quantity, item[0].max);
               var res = {
                   "status": 200,
                   "message": "Item modified",
@@ -170,11 +170,11 @@ Item.prototype.delete = function(){
           if (err) // Error during query (raising)
             fn(err);
           else{
-              if (item[0].idItem){
+              if (item[0].iditem){
                   var res = {
                       "status": 200,
                       "message": "Item deleted",
-                      "item": item[0].idItem
+                      "item": item[0].iditem
                   };
                   fn(null, res);
               }

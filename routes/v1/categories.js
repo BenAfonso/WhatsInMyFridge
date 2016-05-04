@@ -1,8 +1,8 @@
-var db = require('../models/db');
-var errorHandler = require('../lib/errorHandler').handler;
-var tokenAnalyzer = require('../lib/TokenAnalyzer');
+var db = require('../../models/db');
+var errorHandler = require('../../lib/errorHandler').handler;
+var tokenAnalyzer = require('../../lib/TokenAnalyzer');
 
-var Category = require('../models/Category');
+var Category = require('../../models/Category');
 
 var categories = {
   getCategories: function(req,res) {
@@ -19,7 +19,11 @@ var categories = {
         for (i=0;i<categories.length;i++){
           categories[i] = new Category(categories[i].idcategory,categories[i].categoryname);
         }
-        res.status(200).send(categories);
+        res.status(200).send({
+          "status": 200,
+          "message": "Retrieved categories successfully",
+          "categories": categories
+        });
       }
     });
 
@@ -45,7 +49,11 @@ var categories = {
         return errorHandler(err,res);
       else{
           var category = new Category(product[0].idcategory, product[0].categoryname);
-          res.status(201).send(category);
+          res.status(201).send({
+              "status": 201,
+              "message": "Category added",
+              "category": category
+          });
           return;
       }
     });
@@ -69,7 +77,11 @@ var categories = {
           else{
               if (category[0]){ // A category has been modified
                   var category = new Category(category[0].idcategory, category[0].categoryname);
-                  res.status(200).send(category);
+                  res.status(200).send({
+                      "status": 200,
+                      "message": "Category modified",
+                      "category": category
+                  });
                   return;
               }else{
                   var err = new Error("Category not found");
@@ -102,7 +114,11 @@ var categories = {
           else{
               // Something has been deleted
               if (category[0]){
-                  res.status(200).send(category);
+                  res.status(200).send({
+                      "status": 200,
+                      "message": "Category deleted",
+                      "category": category
+                  });
                   return;
               }
               else {
