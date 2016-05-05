@@ -13,7 +13,7 @@ module.exports = function(req, res, next) {
     //if(req.method == 'OPTIONS') next();
 
     var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
-
+    var time = new Date().getTime();
     if (token) {
         try {
             // Decoding the passed token
@@ -41,7 +41,7 @@ module.exports = function(req, res, next) {
             }
             if (dbUser) {
 
-
+                console.log((time - (new Date().getTime())+" ms for middleware."));
                 if ( (decoded.admin && dbUser.getRole() == 'admin') || (!decoded.admin && ( req.url.indexOf('/api/v1/') >= 0 || req.url.indexOf('/api/v2/') >= 0 ))) {
                         next(); // To move to next middleware
                 } else {

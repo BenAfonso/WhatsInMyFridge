@@ -3,19 +3,17 @@ myApp.controller("FrigoCtrl", ['$scope','Products',
       // Initialisation des covoiturages
       $scope.products = [];
 
-      $scope.getProducts = function(){
-        // Populating $scope with DB
-          Products.query(function(result){
-            $scope.products = result;
-          });
-      };
+      // Populating $scope with DB
+      Products.query(function(result){
+        $scope.products = result;
+      });
+
 
       $scope.addProductMenu = false;
       $scope.leftMenu = false;
       $scope.showFiltersMenu = false;
       $scope.showSortingMenu = false;
       $scope.addFormDisplayed = false;
-      $scope.getProducts();
 
       $scope.toggleAddForm = function(){
           $scope.addFormDisplayed = !$scope.addFormDisplayed;

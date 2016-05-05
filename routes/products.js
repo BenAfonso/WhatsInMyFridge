@@ -40,7 +40,6 @@ var products = {
 
                           result.push(product);
                       }
-
                       res.status(200).send(result);
                   }else { // Not found
                       var err = new Error("Product not found");

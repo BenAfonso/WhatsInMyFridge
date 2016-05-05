@@ -1,70 +1,41 @@
 var User = require('./User');
-var pg = require('pg');
-var conString = require('../../config/database').url;
+database = require('../../models/db');
+
 var db = {
   /**
   * Returns an object with associated methods
   *
   */
   getUserFromDb: function(username, fn) {
-    db.userExists(username, function(err,res){
       // Query to get user's password (hashed) and salt
-      if (err)
-        return fn(err,null);
-      if (res) {
-      var client = new pg.Client(conString);
-      client.connect(function(err) {
-        if(err) {
-          console.error('Could not connect to postgres', err);
-          var err = new Error("Could not connect to postgres");
-          err.http_code = 500;
-          return fn(err,null);
-        }
-        client.query("SELECT * FROM USERS WHERE USERNAME = '"+username+"'", function(err, result) {
+        database.query("SELECT iduser, username, password, salt, role FROM USERS WHERE USERNAME = '"+username+"'", function(err, result) {
           if(err) {
             console.error('Error running query', err);
             var err = new Error("Error running query");
             err.http_code = 400;
             return fn(err,null);
           }
-          client.end();
-
-          return fn(null,new User(result.rows[0].iduser,result.rows[0].username,result.rows[0].password,result.rows[0].salt,result.rows[0].role));
+          if (result[0] !== undefined)
+            return fn(null,new User(result[0].iduser,result[0].username,result[0].password,result[0].salt,result[0].role));
+          else{
+            var err = new Error("User doesn't exist !");
+            err.http_code = 401;
+            return fn(err,null);
+          }
         });
-      });
-
-
-    }else{
-      var err = new Error("User doesn't exist !");
-      err.http_code = 401;
-      return fn(err,null);
-    }
-  });
-
   },
 
   userExists: function(username, fn) {
     // Query to know if a user exists, returns BOOLEAN
-    var client = new pg.Client(conString);
-    client.connect(function(err) {
-      if(err) {
-        console.error('Could not connect to postgres', err);
-        var err = new Error("Could not connect to postgres");
-        err.http_code = 500;
-        return fn(err,null);
-      }
-      client.query("SELECT * FROM USERS WHERE USERNAME = '"+username+"'", function(err, result) {
+    var time = new Date().getTime();
+      database.query("SELECT iduser FROM USERS WHERE USERNAME = '"+username+"'", function(err, result) {
         if(err) {
-          console.error('Error running query', err);
-          var err = new Error("Error running query");
-          err.http_code = 400;
           return fn(err,null);
         }
-        client.end();
+        console.log((time - new Date().getTime())+" ms running userExists");
         return fn(null,result.rows[0] !== undefined);
 
       });
-    });
   },
 
   insertUser: function(User, fn) {
@@ -77,26 +48,12 @@ var db = {
         err.http_code = 400;
         return fn(err,null);
       }else{
-        var client = new pg.Client(conString);
-        client.connect(function(err) {
-          if(err) {
-            console.error('Could not connect to postgres', err);
-            var err = new Error("Could not connect to postgres");
-            err.http_code = 500;
-            return fn(err,null);
-          }
-          client.query("INSERT INTO USERS (USERNAME,PASSWORD,SALT) VALUES ('"+User.getUsername()+"','"+User.getPassword()+"','"+User.getSalt()+"')", function(err, result) {
+          database.query("INSERT INTO USERS (USERNAME,PASSWORD,SALT) VALUES ('"+User.getUsername()+"','"+User.getPassword()+"','"+User.getSalt()+"')", function(err, result) {
             if(err) {
-              console.error('Error running query', err);
-              var err = new Error("Error running query");
-              err.http_code = 400;
               return fn(err,null);
             }
-            client.end();
-
             return fn(null, res);
           });
-        });
       }
     });
   }
