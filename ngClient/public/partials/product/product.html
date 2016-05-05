@@ -6,12 +6,31 @@
 
     <div id="productStock"> Votre stock : {{quantity}} / {{max}}</div>
   </div>
-  
+
   <div id="newItem">
-    <form class="">
+    <i class="material-icons" ng-click="showAddItem()">add</i>
+    <form class="" ng-show="addItemShown()" ng-submit="addItem(newItem)">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" ng-model="newItem.quantity" pattern="-?[0-9]*(\.[0-9]+)?">
+        <label class="mdl-textfield__label" for="sample4">Quantité</label>
+        <span class="mdl-textfield__error">Ce n'est pas une quantité valide !</span>
+      </div>
+      <input type="submit" value="Valider"/>
     </form>
   </div>
-  <div id="productItems">
 
+</div>
+<div id="productItems">
+  <div class="box" ng-show="addItemShown()">
+    <div> Ajouté le: {{ currentDate | date:"dd/MM/yyyy" }}</div>
+    <div> Quantité restante: {{newItem.quantity}}</div>
+    <div> Quantité initiale: {{newItem.quantity}}</div>
+    <div class="progress"><div style="width:100%" class="current"><span class="ratio">100%</span></div></div>
+  </div>
+  <div class="box" ng-repeat="item in items">
+    <div> Ajouté le: </div>
+    <div> Quantité restante: {{item.quantity}}</div>
+    <div> Quantité initiale: {{item.max}}</div>
+    <div class="progress"><div style="width:{{item.ratio}}%" class="current"><span class="ratio">{{ item.ratio }}%</span></div></div>
   </div>
 </div>

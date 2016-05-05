@@ -304,18 +304,21 @@ body {
 #product {
   padding-top: 30px;
   width: auto;
-  height: auto; }
+  height: auto;
+  margin-bottom: 40px; }
   #product #productImg {
     float: left;
     width: 100px;
     height: 100px;
     border: 3px solid black;
     margin-right: 30px; }
-  #product #productInfo #productTitle {
-    font-weight: 600;
-    font-size: 24px; }
-  #product #productInfo #productStock {
-    margin-top: 6px; }
+  #product #productInfo {
+    height: 100px; }
+    #product #productInfo #productTitle {
+      font-weight: 600;
+      font-size: 24px; }
+    #product #productInfo #productStock {
+      margin-top: 6px; }
 
 .banner {
   position: relative;
@@ -329,6 +332,35 @@ body {
     color: white;
     top: 8px;
     margin-left: 40%; }
+
+#newItem {
+  text-align: center;
+  width: 80%;
+  margin: 0 auto; }
+
+#productItems .box {
+  font-weight: bold;
+  color: white;
+  padding: 20px;
+  height: 120px;
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  background-color: #11b2dd; }
+  #productItems .box .progress {
+    margin-top: 10px;
+    height: 10px;
+    width: 100%;
+    background-color: white; }
+    #productItems .box .progress .current {
+      height: 10px;
+      background-color: #5ecd7a; }
+      #productItems .box .progress .current .ratio {
+        font-weight: bold;
+        color: white;
+        float: right;
+        margin-top: 10px; }
 
 @media (min-width: 500px) {
   .flex-container {
