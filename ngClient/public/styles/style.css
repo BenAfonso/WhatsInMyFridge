@@ -14,7 +14,7 @@ html {
   min-width: 298px; }
 
 body {
-  height: 100%;
+  height: 50px;
   background-image: url("/img/bg.png"); }
 
 .wrap {
@@ -296,7 +296,8 @@ body {
       color: white;
       cursor: pointer; }
     .item .placeholder .itemQuantity {
-      float: right; }
+      float: right;
+      font-weight: bold; }
 
 /*****************************************
  *           Product Page
@@ -338,13 +339,18 @@ body {
   width: 80%;
   margin: 0 auto; }
 
+.itemRow {
+  width: 85%;
+  margin: 0 auto;
+  height: 120px; }
+
 #productItems .box {
   font-weight: bold;
   color: white;
   padding: 20px;
-  height: 120px;
-  width: 80%;
-  margin: 0 auto;
+  height: inherit;
+  width: 90%;
+  float: left;
   margin-bottom: 20px;
   border-radius: 20px;
   background-color: #11b2dd; }
@@ -362,12 +368,96 @@ body {
         float: right;
         margin-top: 10px; }
 
+.itemRow .control-box {
+  width: 10%;
+  height: inherit;
+  float: right;
+  display: block; }
+  .itemRow .control-box .material-icons {
+    font-size: 49px; }
+  .itemRow .control-box .up {
+    display: block;
+    height: 50%; }
+  .itemRow .control-box .down {
+    display: block;
+    height: 50%; }
+
+/*****************************************
+ *           Recipes
+ **************************************** */
+.recipe-container {
+  height: 100px;
+  width: 80%;
+  background-color: #fb7c66;
+  margin: 0 auto;
+  margin-top: 15px;
+  border-radius: 20px;
+  padding: 20px; }
+  .recipe-container #recipeName {
+    font-weight: bold; }
+
+.recipe-container.canDo {
+  background-color: #77f19d; }
+
+.center-container {
+  width: 90%;
+  margin: 0 auto; }
+
+/*****************************************
+ *           Recipe
+ **************************************** */
+.products-list {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll; }
+
+.product {
+  text-align: center;
+  margin-right: 5px; }
+
+.product-img {
+  height: 100px;
+  width: 100px; }
+
+.product-name {
+  text-align: center; }
+
+.selectedProduct {
+  margin-bottom: 20px; }
+
+.ingredient-img {
+  height: 100px;
+  width: 100px; }
+
+.ingredient-infos {
+  display: inline; }
+
+.ingredient-name {
+  display: inline-block; }
+
+.ingredient-quantity {
+  display: block; }
+
+.product-quantity__input {
+  display: inline-block;
+  width: 100px; }
+
+/*****************************************
+ *           Breakpoints
+ **************************************** */
 @media (min-width: 500px) {
   .flex-container {
     max-width: 400px; } }
+/*****************************************
+ *           Tablets
+ **************************************** */
 @media (min-width: 730px) {
   .flex-container {
     max-width: 600px; } }
+/*****************************************
+ *           Computer
+ **************************************** */
 @media (min-width: 970px) {
   .flex-container {
     margin-left: 20px;

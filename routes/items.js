@@ -32,7 +32,7 @@ var items = {
                   var result = [];
                   for (i = 0;i<items.length;i++){
                       var product = new Product(items[i].idproduct, items[i].productname, items[i].img);
-                      var item = new Item(items[i].iditem, product, undefined, items[i].quantity, items[i].max);
+                      var item = new Item(items[i].iditem, product, items[i].iduser, items[i].quantity, items[i].unit,items[i].max, items[i].created_at);
                       result.push(item);
                   }
 
@@ -58,22 +58,31 @@ var items = {
     // Parse args
     var idProduct = req.body.idProduct;
     var qty = req.body.quantity;
+    var max = req.body.max;
+    var unit = req.body.unit;
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    var item = new Item(undefined,idProduct, user_id, qty);
-
-    if (qty == undefined){
+    console.log(req.body);
+    if (user_id === undefined || unit === undefined || idProduct == undefined ){
+      var err = new Error("Bad query");
+      err.http_code = 400;
+      return errorHandler(err,res);
+    }
+    if (qty === undefined){
         qty = 0;
     }
-    var query = "INSERT INTO ITEMS (idProduct, quantity, idUser) \
-      VALUES ('"+idProduct+"','"+qty+"','"+user_id+"') RETURNING \
-      idItem, idProduct, quantity, max, (SELECT productName FROM Products WHERE idProduct = '"+idProduct+"')";
+    if (max === undefined){
+        max = qty;
+    }
+    var query = "INSERT INTO ITEMS (idProduct, quantity, unit, max, idUser) \
+      VALUES ('"+idProduct+"','"+qty+"','"+unit+"','"+max+"','"+user_id+"') RETURNING \
+      idItem, idProduct, idUser, quantity, unit, max, created_at, (SELECT productName FROM Products WHERE idProduct = '"+idProduct+"')";
     // Query database
     db.query(query, function(err,item){
       if (err) // Error during query (raising)
         return errorHandler(err,res);
       else{
           var product = new Product(item[0].idproduct, item[0].productname);
-          var item = new Item(item[0].iditem, product, undefined, item[0].quantity);
+          var item = new Item(item[0].iditem, product, item[0].iduser, item[0].quantity, item[0].unit, item[0].max, item[0].created_at);
           res.status(201).send(item);
       }
 
@@ -98,7 +107,7 @@ var items = {
               if (item[0] !== undefined){
                       var category = new Category(item[0].idcategory, item[0].categoryname);
                       var product = new Product(item[0].idproduct, item[0].productname, item[0].img, category);
-                      var item = new Item(item[0].iditem, product, undefined, item[0].quantity, item[0].max);
+                      var item = new Item(item[0].iditem, product, item[0].iduser, item[0].quantity, item[0].unit, item[0].max, item[0].created_at);
                       res.status(200).send(item);
               }else { // Not found
                   var err = new Error("Item not found");
@@ -131,7 +140,7 @@ var items = {
               }
               var query = "UPDATE ITEMS SET ("+params.toString()+") = ("+values.toString()+") \
               WHERE idUser = '"+user_id+"' AND idItem = '"+req.params.id+"' RETURNING \
-              idItem, idProduct, quantity, max";
+              idItem, idUser, idProduct, quantity, unit, max, created_at";
           }else{
               // Error missing idProduct or Owner (raising 400)
               var err = new Error("Bad query !");
@@ -145,12 +154,8 @@ var items = {
             else{
                 if (item[0]){
                     var product = new Product(item[0].idproduct, item[0].productname);
-                    var item = new Item(item[0].iditem, product, undefined, item[0].quantity, item[0].max);
-                    res.status(200).send({
-                        "status": 200,
-                        "message": "Item modified",
-                        "item": item
-                    });
+                    var item = new Item(item[0].iditem, product, item[0].iduser, item[0].quantity, item[0].unit, item[0].max, item[0].created_at);
+                    res.status(200).send(item);
                     return;
                 }else { // Not found
                     var err = new Error("Item not found");

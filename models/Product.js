@@ -1,6 +1,6 @@
 var db = require('../models/db');
 var Category = require('../models/Category');
-function Product(idProduct, productName, img, Category, idUser){
+function Product(idProduct, productName, img, Category, idUser, quantity, max){
     // Constructeur
 
       if (img == null){
@@ -10,7 +10,12 @@ function Product(idProduct, productName, img, Category, idUser){
       if (idProduct == null){
           idProduct = undefined;
       }
-
+      if (quantity == null){
+        quantity = 0;
+      }
+      if (max == null){
+        max = 0;
+      }
       if (productName == null){
           productName = undefined;
       }
@@ -19,6 +24,8 @@ function Product(idProduct, productName, img, Category, idUser){
       this.img = img,
       this.category = Category,
       this.idUser = idUser,
+      this.quantity = quantity,
+      this.max = max,
       this.links = [ {
             "rel": "self",
             "href": "/api/v1/product/"+this.idProduct

@@ -2,7 +2,7 @@ var Product = require('./Product');
 var Category = require('./Category');
 var db = require('../models/db');
 
-function Item(idItem, idProduct, user_id, quantity, max){
+function Item(idItem, idProduct, user_id, quantity, unit, max, created_at){
   if (quantity == null){
     quantity = undefined;
   }
@@ -21,8 +21,9 @@ function Item(idItem, idProduct, user_id, quantity, max){
   this.idItem = idItem,
   this.Product = idProduct,
   this.idUser = user_id,
-  this.quantity = quantity
-
+  this.quantity = quantity,
+  this.unit = unit,
+  this.created_at = created_at
   if (max !== undefined && max !== undefined){
       this.max = max,
       this.ratio = quantity / max

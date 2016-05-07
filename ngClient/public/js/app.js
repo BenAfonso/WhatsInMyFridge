@@ -33,13 +33,19 @@ myApp.config(function($routeProvider, $httpProvider) {
       }
     }).when('/mescourses', {
       templateUrl: 'partials/courses/courses.html',
-      controller: 'RegisterCtrl',
+      controller: 'CoursesCtrl',
       access: {
         requiredLogin: true
       }
     }).when('/mesrecettes', {
       templateUrl: 'partials/recettes/recettes.html',
-      controller: 'RegisterCtrl',
+      controller: 'RecettesCtrl',
+      access: {
+        requiredLogin: true
+      }
+    }).when('/recette/:id', {
+      templateUrl: 'partials/recettes/recette.html',
+      controller: 'RecetteCtrl',
       access: {
         requiredLogin: true
       }

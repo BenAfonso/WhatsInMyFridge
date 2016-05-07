@@ -16,10 +16,11 @@ var products = {
         var category_id = req.query.category;
         var max_result = req.query.max_result;
         if (user_id !== undefined){
-            var query = "SELECT PRODUCTS.IDPRODUCT, PRODUCTNAME, IMG, QUANTITY, MAX, PRODUCTS.IDCATEGORY, CATEGORYNAME, ITEMS.IDITEM FROM PRODUCTS \
-            LEFT JOIN ITEMS ON PRODUCTS.IDPRODUCT = ITEMS.IDPRODUCT \
+            var query = "SELECT PRODUCTS.IDPRODUCT, SUM(QUANTITY) AS QUANTITY, SUM(MAX) AS MAX, PRODUCTS.IDUSER, PRODUCTNAME, IMG, PRODUCTS.IDCATEGORY, CATEGORYNAME FROM PRODUCTS \
             LEFT JOIN CATEGORIES ON CATEGORIES.idCategory = PRODUCTS.IDCATEGORY \
-            WHERE PRODUCTS.IDUSER = '"+user_id+"'";
+            LEFT JOIN ITEMS ON ITEMS.IDPRODUCT = PRODUCTS.IDPRODUCT \
+            WHERE PRODUCTS.IDUSER = '"+user_id+"' \
+            GROUP BY PRODUCTS.IDPRODUCT, CATEGORYNAME";
 
             if (category_id !== undefined)
                 var query = query + " AND PRODUCTS.IDCATEGORY = '"+category_id+"'";
@@ -35,9 +36,7 @@ var products = {
                       var result = [];
                       for (i = 0;i<products.length;i++){
                           var category = new Category(products[i].idcategory, products[i].categoryname);
-                          var item = new Item(products[i].iditem, undefined, undefined, products[i].quantity, products[i].max);
-                          var product = new Product(products[i].idproduct, products[i].productname, products[i].img, category, item);
-
+                          var product = new Product(products[i].idproduct, products[i].productname, products[i].img, category, products[i].iduser, products[i].quantity, products[i].max);
                           result.push(product);
                       }
                       res.status(200).send(result);
@@ -106,7 +105,7 @@ var products = {
         var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
 
         if (user_id !== undefined){
-            var query = "SELECT Products.idproduct, productName, img, Products.idCategory, \
+            var query = "SELECT Products.idproduct, productName, img, products.iduser, Products.idCategory, \
             Categories.categoryName, Items.idItem, Items.quantity, Items.max FROM PRODUCTS \
             LEFT JOIN ITEMS ON PRODUCTS.IDPRODUCT = ITEMS.IDPRODUCT \
             LEFT JOIN CATEGORIES ON CATEGORIES.idCategory = PRODUCTS.IDCATEGORY \
@@ -119,7 +118,7 @@ var products = {
                   if (product[0] !== undefined){
                           var category = new Category(product[0].idcategory, product[0].categoryname);
                           var item = new Item(product[0].iditem, undefined, undefined, product[0].quantity, product[0].max);
-                          var product = new Product(product[0].idproduct, product[0].productname, product[0].img, category);
+                          var product = new Product(product[0].idproduct, product[0].productname, product[0].img, category, product[0].iduser, product[0].quantity, product[0].max);
 
                           res.status(200).send(product);
                   }else { // Not found

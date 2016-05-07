@@ -20,11 +20,7 @@ var recipes = {
         for (i=0;i<recipes.length;i++){
           recipes[i] = new Recipe(recipes[i].idrecipe,recipes[i].recipename);
         }
-        res.status(200).send({
-          "status": 200,
-          "message": "Retrieved recipes successfully",
-          "recipes": recipes
-        });
+        res.status(200).send(recipes);
       }
     });
   },
@@ -46,11 +42,7 @@ var recipes = {
           // Transform to json objects (see Models);
           recipe = new Recipe(recipe[0].idrecipe,recipe[0].recipename);
           // Send result 201 (created)
-          res.status(201).send({
-            "status": 201,
-            "message": "Recipe successfully added",
-            "recipe": recipe
-          });
+          res.status(201).send(recipe);
         }
       });
     }else{
@@ -112,11 +104,7 @@ var recipes = {
           {
             var recipe = new Recipe(recipe[0].idrecipe, recipe[0].recipename);
             // Send result 200
-            res.status(200).send({
-              "status": 200,
-              "message": "Recipe successfully modified",
-              "recipe": recipe
-            });
+            res.status(200).send(recipe);
           }else{ // The item didn't exist or wasn't the token owner's
             var err = new Error("Recipe not found !");
             err.http_code = 404;
@@ -164,12 +152,7 @@ var recipes = {
                 }//For
               } // ingredients
 
-              res.status(200).send({
-                "status": 200,
-                "message": "Recipe successfully retrieved",
-                "recipe": recipeObj,
-                "Ingredients": ingredients
-              });
+              res.status(200).send(recipeObj);
             }else{
               var err = new Error("Recipe not found !");
               err.http_code = 404;

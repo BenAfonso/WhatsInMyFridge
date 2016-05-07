@@ -33,7 +33,7 @@ var db = {
           return fn(err,null);
         }
         console.log((time - new Date().getTime())+" ms running userExists");
-        return fn(null,result.rows[0] !== undefined);
+        return fn(null,result[0] !== undefined);
 
       });
   },

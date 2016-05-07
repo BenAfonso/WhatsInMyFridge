@@ -33,7 +33,9 @@ CREATE TABLE Items (
   idProduct INT references Products(idProduct) ON DELETE CASCADE,
   idUser INT references Users(idUser) ON DELETE CASCADE,
   quantity NUMERIC NOT NULL DEFAULT 0,
-  max NUMERIC
+  unit VARCHAR(15) NOT NULL,
+  max NUMERIC,
+  created_at DATE DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE Recipes (

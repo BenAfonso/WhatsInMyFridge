@@ -1,0 +1,30 @@
+<div class="center-container">
+<h3> {{recipe.recipeName}} </h3>
+
+<h4> Ingredients </h4>
+
+
+<p> Ajoutez des ingrédients: </p>
+
+<div class="selectedProduct" ng-show="selectedProduct">
+  <p>Ingredient à ajouter:</p>
+  <img class="Ingredient-img" ng-src="{{selectedProduct.img}}"/>
+  <div class="ingredient-infos">
+    <div class="ingredient-name">{{selectedProduct.productName}}</div>
+    <div class="product-quantity__input mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="quantity" ng-model="selectedProduct.quantity">
+      <label class="mdl-textfield__label" for="quantity">Quantité</label>
+    </div>
+    <button id="show-dialog" type="button" class="mdl-button" ng-click="addIngredient(selectedProduct)">Ajouter</button>
+
+  </div>
+</div>
+
+<h4> Liste des produits </h4>
+<div class="products-list">
+  <div class="product" ng-repeat="product in products">
+    <img class="product-img" ng-src="{{product.img}}" ng-click="selectProduct(product)"/>
+    <span class="product-name">{{product.productName}}</span>
+  </div>
+</div>
+</div>

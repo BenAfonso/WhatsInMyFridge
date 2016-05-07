@@ -1,1 +1,22 @@
-<h3>Mes courses</h3>
+<div class="content">
+  <h3>Mes courses</h3>
+
+  <div>
+  <h4>Faible quantité:</h4>
+    <div ng-repeat="product in lowstocks">
+    {{product.productName}} - {{product.quantity}} / {{product.max}}
+    </div>
+
+  </div>
+
+  <div>
+  <h4>Pas de stock:</h4>
+    <div ng-repeat="product in nostocks">
+    {{product.productName}}
+    </div>
+  </div>
+
+  <div>
+
+  </div>
+</div>
