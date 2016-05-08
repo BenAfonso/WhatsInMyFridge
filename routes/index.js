@@ -6,6 +6,7 @@ var users = require('./users');
 var categories = require('./categories');
 var recipes = require('./recipes');
 var products = require('./products');
+var ingredients = require('./ingredients');
 
 
 // Todo : Search for // Change HERE in recipe.js
@@ -42,17 +43,24 @@ router.get('/api/v2/recipes', recipes.getRecipes);
 router.get('/api/v2/recipes/:id', recipes.getRecipe);
 router.post('/api/v2/recipes', recipes.addRecipe);
 router.put('/api/v2/recipes/:id', recipes.modifyRecipe);
-router.post('/api/v2/recipes/:id', recipes.addIngredient);
 router.delete('/api/v2/recipes/:id', recipes.deleteRecipe);
-router.delete('/api/v2/recipes/:recipe_id/products/:product_id', recipes.deleteIngredient);
-router.put('/api/v2/recipes/:recipe_id/products/:product_id', recipes.modifyIngredient);
+
+// Ingredients
+router.get('/api/v2/recipes/:id/ingredients', ingredients.getIngredients);
+router.post('/api/v2/recipes/:id/ingredients', ingredients.addIngredient);
+router.delete('/api/v2/recipes/:recipe_id/ingredients/:product_id', ingredients.deleteIngredient);
+router.put('/api/v2/recipes/:recipe_id/ingredients/:product_id', ingredients.modifyIngredient);
+
+// Profile
+router.get('/api/v2/users/me', users.me);
 
 /*
 *   Routes that can be accessed only by authenticated and authorized users
 */
 
 // Users
-//router.get('/api/v2/admin/users', users.getUsers);
+router.get('/api/v2/admin/users', users.getUsers);
+router.put('/api/v2/admin/users/:id', users.updateUser);
 
 
 module.exports = router;

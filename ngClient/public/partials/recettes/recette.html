@@ -2,8 +2,11 @@
 <h3> {{recipe.recipeName}} </h3>
 
 <h4> Ingredients </h4>
-
-
+<div class="ingredients">
+<div class="ingredient" ng-repeat="ingredient in ingredients">
+  <img class="ingredient-img" ng-src="{{ingredient.product.img}}"/> {{ingredient.product.productName}} - {{ingredient.quantity}}
+</div>
+</div>
 <p> Ajoutez des ingrédients: </p>
 
 <div class="selectedProduct" ng-show="selectedProduct">

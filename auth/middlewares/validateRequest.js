@@ -33,7 +33,7 @@ module.exports = function(req, res, next) {
             // If it gets there, the user IS AUTHENTICATED
             // Authorize the user to see if he can access our ressources
 
-            // Test if the token's owner is a valid user is DB
+            // Test if the token's owner is a valid user in DB
             db.getUserFromDb(decoded.username, function(err,dbUser){
             if (err){
                 errorHandler(err,res);
@@ -42,7 +42,7 @@ module.exports = function(req, res, next) {
             if (dbUser) {
 
                 console.log((time - (new Date().getTime())+" ms for middleware."));
-                if ( (decoded.admin && dbUser.getRole() == 'admin') || (!decoded.admin && ( req.url.indexOf('/api/v1/') >= 0 || req.url.indexOf('/api/v2/') >= 0 ))) {
+                if ( (req.url.indexOf('admin') > 0 && (decoded.role == 'admin' && dbUser.role == 'admin')) || (req.url.indexOf('admin') < 0 && (req.url.indexOf('/api/v1/') >= 0 || req.url.indexOf('/api/v2/') >= 0) )) {
                         next(); // To move to next middleware
                 } else {
                     res.status(403);

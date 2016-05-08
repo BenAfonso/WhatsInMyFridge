@@ -25,7 +25,7 @@ myApp.factory("Recipes", function($resource,APILINK) {
 });
 
 myApp.factory("Ingredients", function($resource,APILINK) {
-  return $resource(APILINK+"/api/v2/recipes/:recipe_id/products/:product_id", {recipe_id: '@recipe_id', product_id: '@product_id'}, {
+  return $resource(APILINK+"/api/v2/recipes/:recipe_id/ingredients/:product_id", {recipe_id: '@recipe_id', product_id: '@product_id'}, {
       query: {method: 'GET', isArray: true}
   });
 });
