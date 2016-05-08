@@ -30,8 +30,6 @@ myApp.controller("RecetteCtrl", ['$scope','$routeParams','Recipes','Ingredients'
         });
       };
 
-
-
       Products.query(function(products){
         $scope.products = products;
       });
