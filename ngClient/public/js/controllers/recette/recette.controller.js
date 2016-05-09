@@ -10,11 +10,11 @@ myApp.controller("RecetteCtrl", ['$scope','$routeParams','Recipes','Ingredients'
 
       Ingredients.query({recipe_id: $routeParams.id}, function(ingredients){
         $scope.ingredients = ingredients;
-        console.log(ingredients);
       });
 
       $scope.selectProduct = function(product){
         $scope.selectedProduct = product;
+        $scope.selectedProduct.quantity = undefined;
       };
 
       $scope.addIngredient = function(ingredient){

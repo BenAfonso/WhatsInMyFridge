@@ -8,14 +8,19 @@
   </div>
 
   <div class="recipe-container" ng-class="canDo" ng-repeat="recipe in recipes">
-      <span id="recipeName">{{recipe.recipeName}}</span>
+      <div id="recipeName">{{recipe.recipeName}}</div>
       <span id="canDo">{{recipe.canDo}}</span>
+      <div class="ingredient" ng-repeat="ingredient in recipe.ingredients">
+        <img ng-src="{{ingredient.product.img}}"/>
+        {{ingredient.product.productName}} - {{ingredient.quantity}}
+      </div>
       <div id="addIngredients" ng-click="go('/recette/'+recipe.idRecipe)">Ajouter des ingrédients</div>
       <div id="deleteRecipe"><i class="material-icons" ng-click="deleteRecipe(recipe)">clear</i></div>
 
   <div class="ingredientsDisplay">
     <div class="ingredient" ng-repeat="product in products">
       {{product.productName}}
+
     </div>
   </div>
 

@@ -412,7 +412,8 @@ body
  *****************************************/
 
 .recipe-container
-  height: 100px
+  position: relative
+  height: auto
   width: 80%
   background-color: #fb7c66
   margin: 0 auto
@@ -421,6 +422,28 @@ body
   padding: 20px
   #recipeName
     font-weight: bold
+    margin-bottom: 10px
+  #deleteRecipe
+    position: absolute
+    top: 10px
+    right: 10px
+  .ingredient
+    color: white
+    display: block
+    font-weight: bold
+    img
+      width: 30px
+      height: 30px
+      margin-bottom: 4px
+      border-radius: 6px
+
+  // FIX THE INDICATOR !! TODO
+  .indicator
+    background-color: orange
+    height: 20px
+    width: 20px
+  .indicator.available
+    background-color: green
 
 .recipe-container.canDo
   background-color: #77f19d
@@ -441,26 +464,33 @@ body
   text-align: center
   margin-right: 5px
 .product-img
-  height: 100px
-  width: 100px
-.product-name
-  text-align: center
+  height: 80px
+  width: 80px
+  border-radius: 10px
 .selectedProduct
   margin-bottom: 20px
+  position: relative
 
 .ingredient-img
-  height: 100px
-  width: 100px
+  height: 50px
+  border-radius: 10px
+  width: 50px
+  margin-bottom: 10px
 .ingredient-infos
-  display: inline
+  height: 50px
 .ingredient-name
-  display: inline-block
-.ingredient-quantity
   display: block
+  font-weight: bold
+.ingredient-quantity
 
 .product-quantity__input
-  display: inline-block
   width: 100px
+
+.separator
+  height: 5px
+  margin: 5px
+  background-color: white
+  width: 100%
 
 
 /*****************************************

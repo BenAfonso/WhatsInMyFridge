@@ -1,61 +1,16 @@
-myApp.factory('ItemsFactory', function(APILINK, $http) {
-  var _ItemsFactory = {};
+myApp.factory("Items", function($resource,APILINK) {
+  var Items = $resource(APILINK+"/api/v2/items/:id", {id: '@id'}, {
+      query: {method: 'GET', isArray: true},
+      update: { method: 'PUT' }
+  });
 
-  // Add sorting functions to getItems
-  _ItemsFactory.getItems = function() {
-      var promise = $http.get(APILINK+'/api/v1/items').then(function(response){
-          return (response.data);
-      }, function(error){ // An error occured
-          console.log(error);
-      });
-      return promise;
-      };
-
-  _ItemsFactory.getItem = function(id) {
-    var promise = $http.get(APILINK+'/api/v1/item/'+id).then(function(response){
-        return (response.data);
-    }, function(error){ // An error occured
-        console.log(error);
+  Items.prototype.getProduct = function(){
+    Products.get({id: this.product.idProduct}, function(product){
+      return product;
     });
-    return promise;
-    };
-
-  _ItemsFactory.modifyItem = function(item) {
-
-    var promise = $http.put(APILINK+'/api/v1/item/'+item.idItem, {
-      itemName: item.itemName,
-      quantity: item.quantity
-    }).then(function(response){
-        return (response.data);
-    }, function(error){ // An error occured
-        console.log(error);
-    });
-    return promise;
-    };
-
-
-  _ItemsFactory.deleteItem = function(item) {
-    var promise = $http.delete(APILINK+'/api/v1/item/'+item.idItem).then(function(response){
-        return (response.data);
-    }, function(error){ // An error occured
-        console.log(error);
-    });
-    return promise;
-    };
-
-  _ItemsFactory.addItem = function(idProduct, itemName, quantity){
-    var promise = $http.post(APILINK+'/api/v1/items', {
-        idProduct: idProduct,
-        itemName: itemName,
-        quantity: quantity
-    }).then(function(response){
-        return (response.data);
-    }, function(error){ // An error occured
-        console.log(error);
-    });
-    return promise;
-    };
-
-  return _ItemsFactory;
-
+  };
+  Items.prototype.setRatio = function(){
+    this.ratio = parseInt((this.quantity / this.max)*100);
+  };
+  return Items;
 });

@@ -23,7 +23,7 @@
       margin: 0 auto; }
       .login .container #fridge img {
         width: 100%; }
-      .login .container #fridge #input, .login .container #fridge #usernameInput, .login .container #fridge #passwordInput, .login .container #fridge #password2Input {
+      .login .container #fridge #input, .login .container #fridge #usernameInput, .login .container #fridge #passwordInput, .login .container #fridge #password2Input, .login .container #fridge #passwordInput1, .login .container #fridge #passwordInput2 {
         position: absolute;
         left: 50px;
         max-width: 156px; }
@@ -36,7 +36,7 @@
       line-height: 20px;
       bottom: 22px; }
     .login .container #usernameInput {
-      top: 115px; }
+      top: 111px; }
     .login .container #passwordInput, .login .container #password2Input {
       bottom: 89px; }
     .login .container #password2Input {
@@ -54,6 +54,12 @@
     .login .container #login {
       bottom: 175px;
       left: 102px; }
+
+#passwordInput1 {
+  bottom: 88px; }
+
+#passwordInput2 {
+  bottom: 38px; }
 
 .tablet-visible {
   display: none; }

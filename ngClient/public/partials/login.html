@@ -28,9 +28,9 @@
             <input class="mdl-textfield__input" type="password" id="password" ng-model="password">
             <label class="mdl-textfield__label" for="password">Mot de passe</label>
           </div>
-          <button id="signup" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+          <a id="signup" ng-click="go('/register')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
               S'enregistrer
-            </button>
+            </a>
           <button id="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
             Se connecter
           </button>
