@@ -53,16 +53,9 @@ module.exports = function(grunt) {
 
     watch: {
       html: {
-        options: {livereload: true},
         files: ['**/*.html']
       },
-      css: {
-        options: {livereload: true},
-        files: ['**/*.sass','**/*.scss'],
-        tasks: ['sass', 'cssmin']
-      },
       js: {
-          options: {livereload: true},
           files: ['public/js/**/*.js'],
           tasks: ['jshint', 'uglify']
       }
@@ -77,12 +70,6 @@ module.exports = function(grunt) {
       }
     },
 
-    concurrent: {
-      options: {
-        logConcurrentOutput: true
-      },
-      tasks: ['nodemon', 'watch']
-    }
 
   });
 
@@ -97,7 +84,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   // Register the nodemon task when we run grunt
-  grunt.registerTask('default', ['sass', 'concurrent', 'wiredep']);
+  grunt.registerTask('default', ['nodemon']);
 
 
 };
