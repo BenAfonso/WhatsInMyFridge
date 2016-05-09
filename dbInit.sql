@@ -22,7 +22,7 @@ CREATE TABLE Categories (
 CREATE TABLE Products (
   idProduct SERIAL PRIMARY KEY,
   idCategory INT references Categories(idCategory) ON DELETE CASCADE,
-  productName VARCHAR(50),
+  productName VARCHAR(50) NOT NULL CONSTRAINT unique_productname UNIQUE,
   img TEXT,
   idUser INT references Users(idUser) ON DELETE CASCADE
 );
@@ -51,9 +51,23 @@ CREATE TABLE Ingredients (
   PRIMARY KEY (idRecipe, idProduct)
 );
 
+CREATE TABLE Log (
+  idProduct SERIAL PRIMARY KEY,
+  oldQuantity NUMERIC NOT NULL DEFAULT 0,
+  newQuantity NUMERIC NOT NULL,
+  consumed_on DATE DEFAULT CURRENT_DATE
+);
 ----------------
 ------- TRIGGERS
 ----------------
+
+-- Enregistrer dans un journal chaque consommation d'un produit
+-- afin de permettre par la suite des statistiques et un suivi
+-- de la consommation pour chaque produit
+CREATE TRIGGER write_consumption_logs AFTER UPDATE, INSERT
+ON Items
+FOR EACH ROW
+EXECUTE PROCEDURE proc_write_consumption_logs();
 
 -- Verifier si la quantité est supérieure au maximum,
 -- si oui, remplacer le maximum par la nouvelle quantité
@@ -68,10 +82,3 @@ CREATE TRIGGER check_user_on_insert BEFORE INSERT
 ON Ingredients
 FOR EACH ROW
 EXECUTE PROCEDURE proc_check_user_on_insert();
-
--- Verifier si un produit possède un seul item associé, renvoie une erreur sinon
--- Ou augmente la quantité de l'item déjà créé (TODO réflechir ^^')
-CREATE TRIGGER check_unicity_of_item_per_product BEFORE INSERT
-ON Items
-FOR EACH ROW
-EXECUTE PROCEDURE proc_check_unicity_item_product();
