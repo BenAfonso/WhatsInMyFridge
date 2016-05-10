@@ -188,7 +188,7 @@ body {
   height: calc(100vh - 60px); }
 
 .flex-container {
-  max-width: 196px;
+  max-width: 80%;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -323,16 +323,15 @@ body {
 
 .banner {
   position: relative;
-  margin-bottom: 30px; }
-  .banner img {
-    width: 100%;
-    height: auto; }
-  .banner span {
-    position: absolute;
-    font-weight: 600;
-    color: white;
-    top: 8px;
-    margin-left: 40%; }
+  margin-bottom: 30px;
+  background-image: url("/img/banner.gif");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100%;
+  line-height: 90px;
+  text-align: center;
+  color: white;
+  font-weight: bold; }
 
 #newItem {
   text-align: center;
@@ -469,6 +468,98 @@ body {
   width: 100%; }
 
 /*****************************************
+ *           Courses
+ **************************************** */
+#lowStocks .product {
+  position: relative;
+  margin: 0 auto;
+  margin-top: 40px; }
+  #lowStocks .product #quantity-display {
+    position: absolute;
+    background-color: #a41a33;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    right: 0;
+    width: 40px; }
+  #lowStocks .product .productImg {
+    height: 110px;
+    width: 110px;
+    border-radius: 55px;
+    border: 6px solid; }
+  #lowStocks .product #placeholder {
+    position: absolute;
+    background-color: #a41a33;
+    border-radius: 5px;
+    height: 30px;
+    width: 110px;
+    bottom: -15px;
+    line-height: 30px;
+    font-weight: bold;
+    color: white; }
+#lowStocks .product.critical .productImg {
+  border-color: #f53c3c; }
+#lowStocks .product.critical #placeholder {
+  background-color: #f53c3c; }
+#lowStocks .product.critical #quantity-display {
+  background-color: #f53c3c; }
+#lowStocks .product.cool .productImg {
+  border-color: #3d9d55; }
+#lowStocks .product.cool #placeholder {
+  background-color: #3d9d55; }
+#lowStocks .product.cool #quantity-display {
+  background-color: #3d9d55; }
+#lowStocks .product.alert .productImg {
+  border-color: #f75928; }
+#lowStocks .product.alert #placeholder {
+  background-color: #f75928; }
+#lowStocks .product.alert #quantity-display {
+  background-color: #f75928; }
+#lowStocks .product.warning .productImg {
+  border-color: #f9b138; }
+#lowStocks .product.warning #placeholder {
+  background-color: #f9b138; }
+#lowStocks .product.warning #quantity-display {
+  background-color: #f9b138; }
+
+#stockSettings {
+  width: auto;
+  max-height: 0px;
+  transition: max-height 0.5s;
+  overflow: hidden;
+  margin-left: 60px;
+  background-color: #67bee3;
+  border-radius: 10px;
+  display: block; }
+  #stockSettings .secTitle {
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 10px; }
+  #stockSettings #seuils {
+    width: 100%;
+    display: block; }
+  #stockSettings #filters {
+    width: 100%;
+    padding-left: 10px;
+    display: block; }
+    #stockSettings #filters .filter {
+      margin: 6px; }
+
+#stockSettings.active {
+  max-height: 340px;
+  transition: max-height 0.5s;
+  padding: 10px; }
+
+#pull-button {
+  position: absolute;
+  height: 60px;
+  width: 60px;
+  font-size: 40px;
+  line-height: 60px;
+  text-align: center; }
+
+/*****************************************
  *           Breakpoints
  **************************************** */
 @media (min-width: 500px) {
@@ -479,7 +570,16 @@ body {
  **************************************** */
 @media (min-width: 730px) {
   .flex-container {
-    max-width: 600px; } }
+    max-width: 600px; }
+
+  #stockSettings {
+    width: auto; }
+    #stockSettings #seuils {
+      width: 60%;
+      float: left; }
+    #stockSettings #filters {
+      width: 40%;
+      float: right; } }
 /*****************************************
  *           Computer
  **************************************** */

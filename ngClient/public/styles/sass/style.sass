@@ -21,6 +21,7 @@ $left-menu-background: url('/img/menugauche.png')
 $sidebar-color: #0ba2bd
 $left-menu-buttons-hover: #e86d57
 $modifying-item-color: #dd6b6b
+$stockItemsColor--placeholder: white
 
 @include border-box-sizing
 
@@ -204,7 +205,7 @@ body
   height: calc(100vh - 60px)
 
 .flex-container
-  max-width: 196px
+  max-width: 80%
   margin: 0 auto
   display: flex
   flex-wrap: wrap
@@ -349,15 +350,15 @@ body
 .banner
   position: relative
   margin-bottom: 30px
-  img
-    width: 100%
-    height: auto
-  span
-    position: absolute
-    font-weight: 600
-    color: white
-    top: 8px
-    margin-left: 40%
+  background-image: url('/img/banner.gif')
+  background-repeat: no-repeat
+  background-size: contain
+  width: 100%
+  line-height: 90px
+  text-align: center
+  color: white
+  font-weight: bold
+
 
 #newItem
   text-align: center
@@ -492,6 +493,105 @@ body
   background-color: white
   width: 100%
 
+/*****************************************
+ *           Courses
+ *****************************************/
+
+#lowStocks
+  .product
+    position: relative
+    margin: 0 auto
+    margin-top: 40px
+    #quantity-display
+      position: absolute
+      background-color: #a41a33
+      color: white
+      font-weight: bold
+      border-radius: 4px
+      right: 0
+      width: 40px
+    .productImg
+      height: 110px
+      width: 110px
+      border-radius: 55px
+      border: 6px solid
+    #placeholder
+      position: absolute
+      background-color: #a41a33
+      border-radius: 5px
+      height: 30px
+      width: 110px
+      bottom: -15px
+      line-height: 30px
+      font-weight: bold
+      color: $stockItemsColor--placeholder
+  .product.critical
+    .productImg
+      border-color: #f53c3c
+    #placeholder
+      background-color: #f53c3c
+    #quantity-display
+      background-color: #f53c3c
+  .product.cool
+    .productImg
+      border-color: #3d9d55
+    #placeholder
+      background-color: #3d9d55
+    #quantity-display
+      background-color: #3d9d55
+  .product.alert
+    .productImg
+      border-color: #f75928
+    #placeholder
+      background-color: #f75928
+    #quantity-display
+      background-color: #f75928
+  .product.warning
+    .productImg
+      border-color: #f9b138
+    #placeholder
+      background-color: #f9b138
+    #quantity-display
+      background-color: #f9b138
+
+
+#stockSettings
+  width: auto
+  max-height: 0px
+  transition: max-height 0.5s
+  overflow: hidden
+  margin-left: 60px
+  background-color: #67bee3
+  border-radius: 10px
+  display: block
+  .secTitle
+    font-weight: bold
+    font-size: 20px
+    color: white
+    margin-bottom: 10px
+  #seuils
+    width: 100%
+    display: block
+  #filters
+    width: 100%
+    padding-left: 10px
+    display: block
+    .filter
+      margin: 6px
+
+#stockSettings.active
+  max-height: 340px
+  transition: max-height 0.5s
+  padding: 10px
+#pull-button
+  position: absolute
+  height: 60px
+  width: 60px
+  font-size: 40px
+  line-height: 60px
+  text-align: center
+
+
 
 /*****************************************
  *           Breakpoints
@@ -512,6 +612,14 @@ body
   .flex-container
     max-width: 600px
 
+  #stockSettings
+    width: auto
+    #seuils
+      width: 60%
+      float: left
+    #filters
+      width: 40%
+      float: right
 /*****************************************
  *           Computer
  *****************************************/

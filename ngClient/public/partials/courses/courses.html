@@ -1,22 +1,47 @@
-<div class="content">
-  <h3>Mes courses</h3>
+<div class="center-container">
 
-  <div>
-  <h4>Faible quantité:</h4>
-    <div ng-repeat="product in lowstocks">
-    {{product.productName}} - {{product.quantity}} / {{product.max}}
+    <div id="pull-button" class="material-icons" ng-click="toggleSettings()">settings</div>
+    <div id="stockSettings" ng-class="{'active' : settingsDisplayed }">
+      <div id="seuils">
+        <div class="secTitle">Seuils</div>
+        <span class="indicator">Seuil d'avertissement: {{(alertLevel1 * 100) | number: 0}}%</span>
+        <input class="alertLevel mdl-slider mdl-js-slider" type="range" ng-model="alertLevel1" min="0" max="1" value="{{alertLevel1}}" step="0.05">
+        <span class="indicator">Seuil d'alerte: {{alertLevel2 * 100 | number: 0}}%</span>
+        <input class="alertLevel mdl-slider mdl-js-slider" type="range" ng-model="alertLevel2" min="0" max="1" value="{{alertLevel2}}" step="0.05">
+        <span class="indicator">Seuil critique: {{alertLevel3 * 100 | number: 0}}%</span>
+        <input class="alertLevel mdl-slider mdl-js-slider" type="range" ng-model="alertLevel3" min="0" max="1" value="{{alertLevel3}}" step="0.05">
+      </div>
+      <div id="filters">
+        <div class="secTitle">Filtres</div>
+        <label class="filter mdl-switch mdl-js-switch mdl-js-ripple-effect" for="critique">
+          <input type="checkbox" id="critique" ng-model="filters.alertLevel0" class="mdl-switch__input" checked>
+          <span class="mdl-switch__label">Acceptables</span>
+        </label>
+        <label class="filter mdl-switch mdl-js-switch mdl-js-ripple-effect" for="avertissement">
+          <input type="checkbox" id="avertissement" ng-model="filters.alertLevel1" class="mdl-switch__input" checked>
+          <span class="mdl-switch__label">Avertissements</span>
+        </label>
+        <label class="filter mdl-switch mdl-js-switch mdl-js-ripple-effect" for="alerte">
+          <input type="checkbox" id="alerte" ng-model="filters.alertLevel2" class="mdl-switch__input" checked>
+          <span class="mdl-switch__label">Alertes</span>
+        </label>
+        <label class="filter mdl-switch mdl-js-switch mdl-js-ripple-effect" for="critique">
+          <input type="checkbox" id="critique" ng-model="filters.alertLevel3" class="mdl-switch__input" checked>
+          <span class="mdl-switch__label">Critiques</span>
+        </label>
+      </div>
     </div>
 
-  </div>
-
-  <div>
-  <h4>Pas de stock:</h4>
-    <div ng-repeat="product in nostocks">
-    {{product.productName}}
+  <section id="lowStocks">
+    <div class="flex-container">
+    <div class="product" ng-click="go('/product/'+product.idProduct)" ng-class="alertLevel(product)" ng-repeat="product in products">
+      <div id="quantity-display">{{product.quantity}}</div>
+      <img class="productImg" ng-src="{{product.img}}"/>
+      <div id="placeholder">{{product.productName}}</div>
     </div>
   </div>
+  </section>
 
-  <div>
-
-  </div>
+  <section id="noStocks">
+  </section>
 </div>
