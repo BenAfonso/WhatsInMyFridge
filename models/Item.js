@@ -31,7 +31,7 @@ function Item(idItem, idProduct, user_id, quantity, unit, max, created_at){
   if (idItem !== undefined)
       this.links = [ {
             "rel": "self",
-            "href": "/api/v1/item/"+this.idItem
+            "href": "/api/v2/items/"+this.idItem
       }];
 
 }

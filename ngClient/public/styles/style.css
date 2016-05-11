@@ -433,10 +433,29 @@ body {
 /*****************************************
  *           Recipe
  **************************************** */
-#recipeTitle {
-  margin-top: 75;
+.headTitle {
+  text-align: center;
+  margin-top: 85px;
   font-size: 25px;
-  font-weight: bold; }
+  font-weight: bold;
+  height: 40px;
+  line-height: 40px; }
+  .headTitle .cross {
+    display: inline-block;
+    width: 30px;
+    height: 5px;
+    margin-bottom: 6px;
+    background-color: red; }
+
+.localTitle {
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border: 2px solid black; }
 
 .products-list {
   width: 100%;
@@ -461,7 +480,11 @@ body {
   height: 50px;
   border-radius: 10px;
   width: 50px;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  border: 3px solid #f53c3c; }
+
+.ingredient-img.cando {
+  border: 4px solid #3d9d55; }
 
 .ingredient-infos {
   height: 50px; }
@@ -560,6 +583,25 @@ body {
     display: block; }
     #stockSettings #filters .filter {
       margin: 6px; }
+
+.indicator {
+  color: white; }
+
+#acceptable-label {
+  font-weight: bold;
+  color: #3d9d55; }
+
+#warning-label {
+  font-weight: bold;
+  color: #f9b138; }
+
+#alert-label {
+  font-weight: bold;
+  color: #f75928; }
+
+#critical-label {
+  font-weight: bold;
+  color: #f53c3c; }
 
 #stockSettings.active {
   max-height: 340px;

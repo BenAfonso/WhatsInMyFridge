@@ -19,7 +19,7 @@ var ingredients = {
       if (err)
         errorHandler(err, res);
       else{
-        // TODO Transform to json objects (see Models);
+
         for (i = 0; i < ingredients.length; i++){
           var recipe = new Recipe(ingredients[i].idrecipe, ingredients[i].recipename);
           var product = new Product(ingredients[i].idproduct, ingredients[i].productname, ingredients[i].img);
@@ -41,7 +41,7 @@ var ingredients = {
     var quantity = req.body.quantity;
 
     if (idProduct == undefined){
-      var err = new Error("Bad query");
+      var err = new Error("Bad query (Missing parameter)");
       err.http_code = 400;
       errorHandler(err,res);
       return;
@@ -58,19 +58,22 @@ var ingredients = {
 
       var query = "INSERT INTO ingredients (idRecipe,idProduct,quantity) \
                     VALUES ('"+recipeId+"','"+idProduct+"','"+quantity+"') \
-                    RETURNING idRecipe, (SELECT recipeName FROM RECIPES WHERE idUser = '"+user_id+"' AND idRecipe = '"+recipeId+"')";
+                    RETURNING idRecipe, quantity, (SELECT recipeName FROM RECIPES WHERE idUser = '"+user_id+"' AND idRecipe = '"+recipeId+"'), \
+                    (SELECT productName FROM PRODUCTS WHERE idProduct = "+idProduct+"), \
+                    (SELECT img FROM PRODUCTS WHERE idProduct = '"+idProduct+"')";
 
 
         // Query to add an item
-        db.query(query, function(err,recipe){
+        db.query(query, function(err,ingredient){
 
           if (err)
             errorHandler(err, res);
           else{
               // Send a 201 (created)
-              var recipe = new Recipe(recipe[0].idrecipe, recipe[0].recipename);
-
-              res.status(201).send(recipe);
+              var recipe = new Recipe(ingredient[0].idrecipe, ingredient[0].recipename);
+              var product = new Product(idProduct, ingredient[0].productname, ingredient[0].img);
+              var ingredient = new Ingredient(recipe, product, ingredient[0].quantity);
+              res.status(201).send(ingredient);
           }
         });
       }
@@ -140,20 +143,19 @@ var ingredients = {
         // Query to modify the item in recipe
         var query = "UPDATE ingredients SET quantity = '"+newQuantity+"' \
         WHERE idProduct = '"+idProduct+"' AND idRecipe = '"+recipeId+"' \
-        RETURNING idRecipe, quantity";
-        db.query(query, function(err,recipe){
+        RETURNING idRecipe, quantity, (SELECT recipeName FROM RECIPES WHERE idUser = '"+user_id+"' AND idRecipe = '"+recipeId+"'), \
+        (SELECT productName FROM PRODUCTS WHERE idProduct = "+idProduct+"), \
+        (SELECT img FROM PRODUCTS WHERE idProduct = '"+idProduct+"')";
+        db.query(query, function(err,ingredient){
 
           if (err)
             errorHandler(err, res);
           else{
               // Send a 200
-              var recipe = new Recipe(recipe[0].idrecipe);
-
-              res.status(200).send({
-                "status": 200,
-                "message": "Ingredient modified",
-                "recipe": recipe
-              });
+              var recipe = new Recipe(ingredient[0].idrecipe, ingredient[0].recipename);
+              var product = new Product(idProduct, ingredient[0].productname, ingredient[0].img);
+              var ingredient = new Ingredient(recipe, product, ingredient[0].quantity);
+              res.status(200).send(ingredient);
             } // Query passed
           }); // Query
       } // user authorized

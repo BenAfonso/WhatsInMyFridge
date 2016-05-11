@@ -28,7 +28,7 @@ function Product(idProduct, productName, img, Category, idUser, quantity, max){
       this.max = max,
       this.links = [ {
             "rel": "self",
-            "href": "/api/v1/product/"+this.idProduct
+            "href": "/api/v2/products/"+this.idProduct
       }];
 }
 // Methodes

@@ -5,7 +5,11 @@ function Recipe(idRecipe, recipeName, idUser){
   this.idUser = idUser,
   this.links = [ {
         "rel": "self",
-        "href": "/api/v1/recipe/"+this.idRecipe
+        "href": "/api/v2/recipes/"+this.idRecipe
+  },
+  {
+    "rel": "ingredients",
+    "href": "/api/v2/recipes/"+this.idRecipe+"/ingredients"
   }];
 
 }

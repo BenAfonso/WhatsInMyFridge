@@ -1,15 +1,18 @@
 myApp.controller("ProductCtrl", ['$scope','$routeParams','Products','Items',
     function($scope,$routeParams,Products,Items){
 
-
+      $scope.currentDate = new Date();
+      $scope.addItem = false;
       var id = $routeParams.id;
+
+      // Call the factory to get the requested Product
       Products.get({ id : id }, function(product){
         $scope.product = product;
         $scope.product.setQuantityMaxRatio();
       });
 
-      $scope.currentDate = new Date();
-      $scope.addItem = false;
+
+
       $scope.saveItem = function(newItem){
         newItem.idProduct = id;
         newItem.max = newItem.quantity;
@@ -28,14 +31,18 @@ myApp.controller("ProductCtrl", ['$scope','$routeParams','Products','Items',
         });
       };
 
+
+      // Toggle the item Form display
       $scope.showAddItem = function(){
         $scope.addItem = !$scope.addItem;
       };
 
+      // Returns true if the item form is shown
       $scope.addItemShown = function(){
         return ($scope.addItem === true);
       };
 
+      // Calls the Factory to get all product's Items
       // This makes a GET /api/v2/items?product_id='id'
       Items.query({product_id: id},function(items){
         $scope.items = items;
@@ -44,10 +51,12 @@ myApp.controller("ProductCtrl", ['$scope','$routeParams','Products','Items',
         });
       });
 
+      // Returns true if a given item is being 'edited'
       $scope.editingItem = function(item){
         return item.editing;
       };
 
+      // Toggle the 'editing' state of an item
       $scope.toggleEditItem = function(item){
         if (item.editing !== undefined)
           item.editing = !item.editing;
@@ -55,6 +64,8 @@ myApp.controller("ProductCtrl", ['$scope','$routeParams','Products','Items',
           item.editing = true;
       };
 
+      // Calls the Factory to update an item
+      // If an item is updated to quantity 0, it's deleted
       $scope.updateItem = function(item){
         if (parseInt(item.quantity) === 0){ // If the stack is over (quantity == 0)
           Items.delete({id:item.idItem}, function(result){

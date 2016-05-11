@@ -15,10 +15,12 @@ myApp.controller("FrigoCtrl", ['$scope','Products',
       $scope.showSortingMenu = false;
       $scope.addFormDisplayed = false;
 
+      // Toggle the new Product form
       $scope.toggleAddForm = function(){
           $scope.addFormDisplayed = !$scope.addFormDisplayed;
       };
 
+      // Toggle the state of a product to 'selected' or not
       $scope.selectProduct = function(product){
           if (product.modifying)
             return;
@@ -28,10 +30,12 @@ myApp.controller("FrigoCtrl", ['$scope','Products',
             product.selected = true;
       };
 
+      // Returns true if a product has 'selected' state
       $scope.isSelected = function(product){
           return product.selected;
       };
 
+      // Toggle the state of a product 'modifying' or not
       $scope.toggleModifyProduct = function(product){
           if (product.modifying !== undefined)
             product.modifying = !product.modifying;
@@ -39,28 +43,30 @@ myApp.controller("FrigoCtrl", ['$scope','Products',
             product.modifying = true;
       };
 
+      // Returns true if a product is being modified
       $scope.isModifying = function(product){
           return product.modifying;
       };
-      $scope.toggleAddMenu = function(){
-        $scope.addItemMenu = !$scope.addItemMenu;
-      };
 
+
+      // Display or not the filters menu
       $scope.toggleFiltersMenu = function(){
         $scope.showFiltersMenu = !$scope.showFiltersMenu;
     };
 
+      // Display or not the sorting menu
       $scope.toggleSortingMenu = function(){
         $scope.showSortingMenu = !$scope.showSortingMenu;
     };
 
-
-
+      // Display or not the left menu
       $scope.toggleLeftMenu = function(){
         $scope.leftMenu = !$scope.leftMenu;
     };
 
 
+
+      // Call the factory to add a product
       $scope.addProduct = function(product){
         Products.save(product, function(result){
           // Add the just-posted product at first position of products with AJAX call
@@ -71,6 +77,7 @@ myApp.controller("FrigoCtrl", ['$scope','Products',
 
       };
 
+      // Calls the factory to modify a product
       $scope.modifyProduct = function(product){
           product.$update({id:product.idProduct}, function(product){
               // Refresh only the product entry with AJAX call
@@ -79,6 +86,7 @@ myApp.controller("FrigoCtrl", ['$scope','Products',
 
       };
 
+      // Calls the factory to delete a product
       $scope.deleteProduct = function(product){
           Products.delete({id:product.idProduct},function(result){
             // Remove the deleted item from the products list with Ajax call

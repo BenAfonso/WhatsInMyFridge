@@ -1,23 +1,24 @@
 myApp.controller("RecettesCtrl", ['$scope','Recipes','Ingredients',
     function($scope, Recipes, Ingredients){
       $scope.recipes = [];
+      $scope.addFormDisplayed = false;
 
+      // Sets the product quantity of an ingredient
+      function setQuantity(ingredient){
+          ingredient.getProductQuantity().then(function(data){
+            ingredient.product.quantity = data.quantity;
+          });
+      }
 
       // Add the ingredients to the given Recipe
       var addIngredients = function(recipe){
         Ingredients.get({recipe_id: recipe.idRecipe}, function(ingredients){
             recipe.ingredients = ingredients;
-            for (i=0;i<recipe.ingredients.length;i++){
-              if (recipe.ingredients[i].product.quantity >= recipe.ingredients[i].quantity){
-                recipe.ingredients[i].enough = true;
-              }else{
-                console.log(recipe.ingredients[i]);
-                recipe.ingredients[i].enough = false;
-              }
-            }
+            recipe.ingredients.forEach(setQuantity);
         });
 
       };
+
 
       // Populate the scope with ingredients
       $scope.populateIngredients = function(){
@@ -26,21 +27,20 @@ myApp.controller("RecettesCtrl", ['$scope','Recipes','Ingredients',
         }
       };
 
+      // Calls the factory to get all recipes and populate $scope with it
       Recipes.query(function(recipes){
         $scope.recipes = recipes;
         $scope.populateIngredients();
       });
 
-      $scope.addFormDisplayed = false;
-
+      // display or not the 'new recipe' Form
       $scope.toggleAddForm = function(){
         $scope.addFormDisplayed = !$scope.addFormDisplayed;
       };
 
 
 
-
-
+      // Calls the factory to add a recipe and add it to $scope (Ajax call)
       $scope.addRecipe = function(recipe){
         Recipes.save(recipe,function(result){
           // Add the recipe to the recipes
@@ -51,6 +51,7 @@ myApp.controller("RecettesCtrl", ['$scope','Recipes','Ingredients',
         });
       };
 
+      // Calls the facyory to delete a recipe and removes it from the $scope
       $scope.deleteRecipe = function(recipe){
         Recipes.delete({id: recipe.idRecipe},function(result){
           // Remove the recipe from the recipes (Ajax call)
