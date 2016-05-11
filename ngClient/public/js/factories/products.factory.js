@@ -4,6 +4,7 @@ myApp.factory("Products", function($resource,APILINK, Items) {
       update: { method: 'PUT' }
   });
 
+  // Sets the quantity & max of a product depending on all the items associated
   Products.prototype.setQuantityMaxRatio = function(){
       Items.query({product_id: this.id},function(items){
         var sum = 0;

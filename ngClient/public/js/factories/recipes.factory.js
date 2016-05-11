@@ -3,6 +3,7 @@ myApp.factory("Recipes", function($resource,APILINK, $q) {
       query: {method: 'GET', isArray: true}
   });
 
+  // Get ingredients associated with the Recipe
   Recipes.prototype.getIngredients = function(){
     var deferred = $q.defer();
     Ingredients.query({recipe_id: this.id}, function(ingredients){

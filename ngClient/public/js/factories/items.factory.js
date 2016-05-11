@@ -4,13 +4,18 @@ myApp.factory("Items", function($resource,APILINK) {
       update: { method: 'PUT' }
   });
 
+  // Gets the product associated with the Item
   Items.prototype.getProduct = function(){
     Products.get({id: this.product.idProduct}, function(product){
       return product;
     });
   };
+
+  // Sets the ratio of an Item (Percentage of qty left)
   Items.prototype.setRatio = function(){
     this.ratio = parseInt((this.quantity / this.max)*100);
   };
+
+  
   return Items;
 });

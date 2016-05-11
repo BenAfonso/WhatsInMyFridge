@@ -5,6 +5,7 @@ myApp.factory("Ingredients", function($resource,APILINK, Products, Recipes, $q) 
       update: { method: 'PUT' }
   });
 
+  // Get the producted associated with the ingredient
   Ingredients.prototype.getProduct = function(){
     var deferred = $q.defer();
     Products.get({id: this.product.idProduct}, function(product){
@@ -13,6 +14,7 @@ myApp.factory("Ingredients", function($resource,APILINK, Products, Recipes, $q) 
     return deferred.promise;
   };
 
+  // Returns true if the ingredient is 'available'
   Ingredients.prototype.isAvailable = function(fn){
     var deferred = $q.defer();
     if (this.product.quantity > this.quantity){
@@ -21,6 +23,7 @@ myApp.factory("Ingredients", function($resource,APILINK, Products, Recipes, $q) 
     return deferred.promise;
   };
 
+  // Returns ingredient's product informations such as real quantity 
   Ingredients.prototype.getProductQuantity = function(){
       var deferred = $q.defer();
       Products.get({id: this.product.idProduct}, function(product){
