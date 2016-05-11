@@ -303,18 +303,22 @@ body {
  *           Product Page
  **************************************** */
 #product {
-  padding-top: 30px;
+  padding: 5px;
   width: auto;
   height: auto;
-  margin-bottom: 40px; }
+  margin-bottom: 40px;
+  border-radius: 20px;
+  background-color: #88b2c4; }
   #product #productImg {
     float: left;
     width: 100px;
     height: 100px;
-    border: 3px solid black;
+    border: 3px solid #429feb;
+    border-radius: 12px;
     margin-right: 30px; }
   #product #productInfo {
-    height: 100px; }
+    height: 100px;
+    margin-top: 10px; }
     #product #productInfo #productTitle {
       font-weight: 600;
       font-size: 24px; }
@@ -337,6 +341,9 @@ body {
   text-align: center;
   width: 80%;
   margin: 0 auto; }
+  #newItem #submitProduct {
+    display: block;
+    margin: 0 auto; }
 
 .itemRow {
   width: 85%;
@@ -426,6 +433,11 @@ body {
 /*****************************************
  *           Recipe
  **************************************** */
+#recipeTitle {
+  margin-top: 75;
+  font-size: 25px;
+  font-weight: bold; }
+
 .products-list {
   width: 100%;
   display: flex;
@@ -466,6 +478,9 @@ body {
   margin: 5px;
   background-color: white;
   width: 100%; }
+
+#editQuantity {
+  width: 60px; }
 
 /*****************************************
  *           Courses

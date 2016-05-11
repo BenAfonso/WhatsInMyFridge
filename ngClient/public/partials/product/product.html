@@ -1,28 +1,31 @@
 <div class="center-container">
+  <div class="banner"><span> Produit </span></div>
   <div id="product">
-    <div class="banner"><span> Produit </span></div>
+
     <img id="productImg" ng-src="{{product.img}}"/>
     <div id="productInfo">
       <div id="productTitle"> {{product.productName}} </div>
 
       <div id="productStock"> Votre stock : {{product.quantity}} / {{product.max}}</div>
     </div>
-
     <div id="newItem">
       <i class="material-icons" ng-click="showAddItem()">add</i>
       <form class="" ng-show="addItemShown()" ng-submit="saveItem(newItem)">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <div id="itemQuantity" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
           <input class="mdl-textfield__input" type="text" ng-model="newItem.quantity" pattern="-?[0-9]*(\.[0-9]+)?">
           <label class="mdl-textfield__label" for="sample4">Quantité</label>
           <span class="mdl-textfield__error">Ce n'est pas une quantité valide !</span>
         </div>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <div id="itemUnit" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
           <input class="mdl-textfield__input" type="text" ng-model="newItem.unit">
           <label class="mdl-textfield__label" for="sample4">Unité</label>
         </div>
-        <input type="submit" value="Valider"/>
+        <button type="submit" id="submitProduct" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+          Ajouter
+        </button>
       </form>
     </div>
+
 
   </div>
   <div id="productItems">

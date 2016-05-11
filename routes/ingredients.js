@@ -70,11 +70,7 @@ var ingredients = {
               // Send a 201 (created)
               var recipe = new Recipe(recipe[0].idrecipe, recipe[0].recipename);
 
-              res.status(201).send({
-                "status": 201,
-                "message": "Ingredient added to recipe",
-                "recipe": recipe
-              });
+              res.status(201).send(recipe);
           }
         });
       }

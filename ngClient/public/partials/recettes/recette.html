@@ -1,10 +1,20 @@
 <div class="center-container">
-<h3> {{recipe.recipeName}} </h3>
+<div id="recipeTitle"> {{recipe.recipeName}} </div>
 
-<h4> Ingredients </h4>
+<div class="localTitle">Ingredients</div>
+
 <div class="ingredients">
 <div class="ingredient" ng-repeat="ingredient in ingredients">
-  <img class="ingredient-img" ng-src="{{ingredient.product.img}}"/> {{ingredient.product.productName}} - {{ingredient.quantity}}
+  <img ng-click="editQuantity(ingredient)" class="ingredient-img" ng-src="{{ingredient.product.img}}"/>
+  {{ingredient.product.productName}} - <span ng-hide="ingredient.editing">{{ingredient.quantity}}</span>
+  <span ng-show="ingredient.editing">
+    <div id="editQuantity" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" ng-model="ingredient.quantity">
+      <label class="mdl-textfield__label" for="sample4">Quantité</label>
+      <span class="mdl-textfield__error">Ce n'est pas un nombre !</span>
+    </div>
+    <i ng-click="edit(ingredient)" class="material-icons">done</i>
+  </span>
 </div>
 </div>
 
@@ -17,15 +27,16 @@
       <input class="mdl-textfield__input" type="text" id="quantity" ng-model="selectedProduct.quantity">
       <label class="mdl-textfield__label" for="quantity">Quantité</label>
     </div>
-    <button id="show-dialog" type="button" class="mdl-button" ng-click="addIngredient(selectedProduct)">Ajouter</button>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" ng-click="addIngredient(selectedProduct)">Ajouter</button>
+
   <div class="separator"></div>
 </div>
 
-<h4> Liste des produits </h4>
+<div id="localTitle"> Liste des produits </div>
 <div class="products-list">
   <div class="product" ng-repeat="product in products">
     <img class="product-img" ng-src="{{product.img}}" ng-click="selectProduct(product)"/>
-    <span class="product-name">{{product.productName}}</span>
+    <div class="product-name">{{product.productName}}</div>
   </div>
 </div>
 </div>
