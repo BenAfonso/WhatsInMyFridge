@@ -1,6 +1,6 @@
 {
   "name": "whats-in-my-fridge",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "A node web app to know what's in your fridge",
   "main": "server.js",
   "scripts": {

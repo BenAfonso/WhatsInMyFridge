@@ -98,6 +98,7 @@ module.exports = function(grunt) {
 
   // Register the nodemon task when we run grunt
   grunt.registerTask('default', ['sass', 'concurrent', 'wiredep']);
+  grunt.registerTask('deploy', ['nodemon','wiredep']);
 
 
 };

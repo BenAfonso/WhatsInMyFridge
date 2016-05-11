@@ -1,6 +1,7 @@
 var myApp = angular.module('WIMF', ['ngRoute','ngResource']);
 
 myApp.constant('APILINK','http://localhost:3000');
+//myApp.constant('APILINK','https://stark-basin-30783.herokuapp.com:3000');
 
 myApp.config(function($routeProvider, $httpProvider) {
 

@@ -1,13 +1,18 @@
-myApp.controller("FrigoCtrl", ['$scope','Products',
-    function($scope, Products){
+myApp.controller("FrigoCtrl", ['$scope','Products','Categories',
+    function($scope, Products, Categories){
       // Initialisation des covoiturages
       $scope.products = [];
+      $scope.categories = [];
 
       // Populating $scope with DB
       Products.query(function(result){
         $scope.products = result;
       });
 
+      Categories.query(function(categories){
+        $scope.categories = categories;
+        console.log(categories);
+      });
 
       $scope.addProductMenu = false;
       $scope.leftMenu = false;

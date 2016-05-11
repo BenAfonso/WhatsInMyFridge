@@ -1,12 +1,11 @@
 <div id="sidebar-menu" ng-class="{'visible' : leftMenu}">
     <ul>
-      <li><ul>
       <li>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" type="text" id="searchBar" ng-model="search.productName">
+        <div id="searchBar" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" ng-model="search.productName">
           <label class="mdl-textfield__label" for="searchBar">Rechercher...</label>
         </div>
-      </li></ul></li>
+      </li>
       <li><a ng-click="toggleFiltersMenu()">Filtrer</a></li>
         <ul ng-show="showFiltersMenu">
           <li>Des filtres</li>
@@ -15,6 +14,7 @@
         <ul ng-show="showSortingMenu">
           <li ng-repeat="category in categories">{{category.categoryName}}</li>
         </ul>
+      <li ng-repeat="category in categories"><a ng-click="selectCategory(category)">{{category.categoryName}}</a></li>
     </ul>
 
         <div id="pull-bar">

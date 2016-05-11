@@ -127,8 +127,10 @@ body {
   transition: left 0.1s linear;
   background-color: #0ba2bd;
   height: 100%;
-  width: 200px;
-  padding: 20px; }
+  width: 200px; }
+  #sidebar-menu #searchBar {
+    width: 150px;
+    margin-left: 25px; }
   #sidebar-menu ul {
     margin: 0px;
     padding: 0px; }
@@ -139,7 +141,7 @@ body {
         background: #0ba2bd;
         color: white;
         font-weight: bold;
-        width: 180px;
+        width: 100%;
         padding: 10px;
         display: block;
         text-decoration: none; }
