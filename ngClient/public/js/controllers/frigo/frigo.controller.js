@@ -19,6 +19,21 @@ myApp.controller("FrigoCtrl", ['$scope','Products','Categories',
       $scope.showFiltersMenu = false;
       $scope.showSortingMenu = false;
       $scope.addFormDisplayed = false;
+      $scope.selectedCategory = false;
+      $scope.displayNewCategory = false;
+
+      $scope.selectCategory = function(category){
+        // Unselect the category (Toggle)
+        if ($scope.selectedCategory == category)
+          $scope.selectedCategory = false;
+        else
+          $scope.selectedCategory = category;
+      };
+
+      // Returns true if it's the selected category
+      $scope.isSelectedCategory = function(category){
+        return ($scope.selectedCategory.idCategory == category.idCategory || !$scope.selectedCategory );
+      };
 
       // Toggle the new Product form
       $scope.toggleAddForm = function(){
@@ -73,6 +88,9 @@ myApp.controller("FrigoCtrl", ['$scope','Products','Categories',
 
       // Call the factory to add a product
       $scope.addProduct = function(product){
+        if ($scope.selectedCategory.idCategory){
+          product.idCategory = $scope.selectedCategory.idCategory;
+        }
         Products.save(product, function(result){
           // Add the just-posted product at first position of products with AJAX call
           $scope.products.unshift(result);
@@ -99,6 +117,27 @@ myApp.controller("FrigoCtrl", ['$scope','Products','Categories',
           });
 
       };
+
+      $scope.addCategory = function(category){
+        Categories.save(category, function(result){
+          $scope.categories.unshift(result);
+          $scope.newCategory = {};
+          $scope.displayNewCategory = false;
+        });
+      };
+
+      $scope.toggleNewCategory = function(){
+        $scope.displayNewCategory = !$scope.displayNewCategory;
+      };
+
+      $scope.deleteCategory = function(category){
+        Categories.delete({id: category.idCategory}, function(result){
+          $scope.categories.splice($scope.categories.indexOf(category), 1);
+        });
+      };
+
+
+      // TODO Modify category
 
 
 

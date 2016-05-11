@@ -104,6 +104,7 @@ body
           padding: 8px
           &:hover
             background-color: $menu-item-background-color
+
   #nav ul
     transition: 350ms
     -moz-transition: 350ms
@@ -162,7 +163,8 @@ body
         text-decoration: none
         &:hover
           background: $left-menu-buttons-hover
-
+      a.selected
+        background-color: #fac651
 #pull-bar
   display: inline-block
   position: absolute
@@ -238,6 +240,7 @@ body
   width: 0px
   transition: width 0.2s ease-out
   transition: height 0.2s ease-out
+  overflow: hidden
 
 
 
@@ -648,6 +651,14 @@ body
   text-align: center
 
 
+#copyrights
+  color: #939393
+  float: right
+  margin-right: 20px
+  margin-top: 20px
+  bottom: 0
+  #name
+    font-weight: bold
 
 /*****************************************
  *           Breakpoints

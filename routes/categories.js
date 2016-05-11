@@ -102,7 +102,7 @@ var categories = {
           else{
               // Something has been deleted
               if (category[0]){
-                  res.status(200).send(category);
+                  res.status(200).send(category[0]);
                   return;
               }
               else {

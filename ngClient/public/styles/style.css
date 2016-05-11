@@ -147,6 +147,8 @@ body {
         text-decoration: none; }
         #sidebar-menu ul li a:hover {
           background: #e86d57; }
+      #sidebar-menu ul li a.selected {
+        background-color: #fac651; }
 
 #pull-bar {
   display: inline-block;
@@ -220,7 +222,8 @@ body {
   height: 0px;
   width: 0px;
   transition: width 0.2s ease-out;
-  transition: height 0.2s ease-out; }
+  transition: height 0.2s ease-out;
+  overflow: hidden; }
 
 .addForm.displayed {
   height: 200px;
@@ -617,6 +620,15 @@ body {
   font-size: 40px;
   line-height: 60px;
   text-align: center; }
+
+#copyrights {
+  color: #939393;
+  float: right;
+  margin-right: 20px;
+  margin-top: 20px;
+  bottom: 0; }
+  #copyrights #name {
+    font-weight: bold; }
 
 /*****************************************
  *           Breakpoints

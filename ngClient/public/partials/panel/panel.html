@@ -14,7 +14,15 @@
         <ul ng-show="showSortingMenu">
           <li ng-repeat="category in categories">{{category.categoryName}}</li>
         </ul>
-      <li ng-repeat="category in categories"><a ng-click="selectCategory(category)">{{category.categoryName}}</a></li>
+      <li ng-repeat="category in categories"><a ng-class="{'selected' : isSelectedCategory(category)}" ng-click="selectCategory(category)">{{category.categoryName}}<span ng-show="isSelectedCategory(category)" ng-click="deleteCategory(category)" class="material-icons">delete</span></a></li>
+      <li><a ng-click="toggleNewCategory()">Ajouter une catégorie</a></li>
+      <li ng-show="displayNewCategory">
+        <div id="newCategory" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" ng-model="newCategory.categoryName">
+          <label class="mdl-textfield__label" for="newCategory">Nom de la catégorie</label>
+        </div>
+        <button id="submitForm" class="mdl-button mdl-js-button mdl-button--raised" ng-click="addCategory(newCategory)">Enregistrer</button>
+      </li>
     </ul>
 
         <div id="pull-bar">
@@ -27,7 +35,7 @@
 <div class="container" ng-class="{'visible' : leftMenu}">
   <!-- Flex container containing products -->
   <div class="flex-container">
-    <div ng-repeat="product in products | filter:search" class="itembox" ng-click="selectProduct(product)">
+    <div ng-repeat="product in products | filter:search" ng-show="isSelectedCategory(product.category)" class="itembox" ng-click="selectProduct(product)">
       <div class="item"><img ng-src="{{product.img}}"></img>
         <div class="editItem" ng-show="isSelected(product)">
             <i class="material-icons" confirmed-click="deleteProduct(product)"
@@ -70,7 +78,9 @@
           <label class="mdl-textfield__label" for="img">Image</label>
           <span class="mdl-textfield__error">Ceci n'est pas une URL valide</span>
         </div>
-        <button id="addItem" class="mdl-button mdl-js-button" type="submit">Add product</button>
+        <button id="addItem" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+          Ajouter !
+        </button>
     </form>
     </div>
 </div>
