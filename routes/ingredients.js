@@ -62,7 +62,7 @@ var ingredients = {
                     (SELECT productName FROM PRODUCTS WHERE idProduct = "+idProduct+"), \
                     (SELECT img FROM PRODUCTS WHERE idProduct = '"+idProduct+"')";
 
-
+        console.log(query);
         // Query to add an item
         db.query(query, function(err,ingredient){
 

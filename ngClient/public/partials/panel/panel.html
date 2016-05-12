@@ -6,15 +6,10 @@
           <label class="mdl-textfield__label" for="searchBar">Rechercher...</label>
         </div>
       </li>
-      <li><a ng-click="toggleFiltersMenu()">Filtrer</a></li>
-        <ul ng-show="showFiltersMenu">
-          <li>Des filtres</li>
-        </ul>
-      <li><a ng-click="toggleSortingMenu()">Trier</a></li>
-        <ul ng-show="showSortingMenu">
-          <li ng-repeat="category in categories">{{category.categoryName}}</li>
-        </ul>
-      <li ng-repeat="category in categories"><a ng-class="{'selected' : isSelectedCategory(category)}" ng-click="selectCategory(category)">{{category.categoryName}}<span ng-show="isSelectedCategory(category)" ng-click="deleteCategory(category)" class="material-icons">delete</span></a></li>
+
+      <li ng-repeat="category in categories"><a ng-class="{'selected' : isSelectedCategory(category)}" ng-click="selectCategory(category)">{{category.categoryName}}
+        <span ng-show="isSelectedCategory(category)" confirmed-click="deleteCategory(category)"
+        ng-confirm-click="Êtes vous sur de vouloir supprimer cette catégorie ?" id="deleteCategory" class="material-icons">delete</span></a></li>
       <li><a ng-click="toggleNewCategory()">Ajouter une catégorie</a></li>
       <li ng-show="displayNewCategory">
         <div id="newCategory" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -35,11 +30,11 @@
 <div class="container" ng-class="{'visible' : leftMenu}">
   <!-- Flex container containing products -->
   <div class="flex-container">
-    <div ng-repeat="product in products | filter:search" ng-show="isSelectedCategory(product.category)" class="itembox" ng-click="selectProduct(product)">
+    <div ng-repeat="product in products | filter:search | orderBy:'-quantity'" ng-show="isSelectedCategory(product.category)" class="itembox" ng-click="selectProduct(product)">
       <div class="item"><img ng-src="{{product.img}}"></img>
         <div class="editItem" ng-show="isSelected(product)">
             <i class="material-icons" confirmed-click="deleteProduct(product)"
-            ng-confirm-click="Êtes vous sur de vouloir supprimer?" ng-show="!isModifying(product)">clear</i>
+            ng-confirm-click="Êtes vous sur de vouloir supprimer ce produit ?" ng-show="!isModifying(product)">clear</i>
             <i class="material-icons" ng-click="toggleModifyProduct(product)">mode edit</i>
         </div>
 

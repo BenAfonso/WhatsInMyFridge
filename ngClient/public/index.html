@@ -4,13 +4,13 @@
   <title>WIMF!</title>
 
    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-   <!-- Material Design Lite Stylesheets -->
 
+   <!-- Material Design Lite Stylesheets & Google icons-->
    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
    <link rel="stylesheet" href="libs/material-design-lite/material.min.css">
 
-   <link href="styles/normalize.css" rel="stylesheet">
-  <link href="./dist/css/style.min.css" rel="stylesheet">
+
+   <link href="./dist/css/style.min.css" rel="stylesheet">
 </head>
 
 <body ng-controller="MainCtrl">
@@ -20,27 +20,31 @@
       <div class="content" ng-view></div>
     </div>
 
+    <!--
     <footer>
-      <a href="http://www.beyondsecurity.com/vulnerability-scanner-verification/fierce-brushlands-81295.herokuapp.com"><img src="https://seal.beyondsecurity.com/verification-images/fierce-brushlands-81295.herokuapp.com/vulnerability-scanner-2.gif" alt="Website Security Test" border="0" /></a>
       <span id="copyrights"><span id="name">AFONSO Benjamin</span> - Projet Web IG3 2016 - Tous droits reservés</span>
     </footer>
+    -->
 </body>
 
 
-    <!-- Importing Angular and Routes -->
+    <!-- Importing Angular, ngRoutes and ngResource -->
     <script type="text/javascript" src="/node_modules/angular/angular.min.js"></script>
     <script type="text/javascript" src="/node_modules/angular-route/angular-route.min.js"></script>
-
     <script type="text/javascript" src="/node_modules/angular-resource/angular-resource.min.js"></script>
 
+    <!-- Importing Material Design lite assets -->
     <script src="libs/material-design-lite/material.min.js"></script>
+
+
     <!-- Loading the Angular App -->
     <script type="text/javascript" src="./dist/js/app.min.js"></script>
-    <!-- LiveReload functionnality (dev only) -->
-    <script src="//localhost:35729/livereload.js"></script>
 
-    <!-- Importing Material Design lite assets -->
+    <!-- LiveReload functionnality (dev only)
+    <script src="//localhost:35729/livereload.js"></script> -->
 
+
+    <!-- Script to refresh Material Components on template rendering -->
     <script src="./js/DomtriggerMDL.js"></script>
 
 </html>

@@ -14,7 +14,7 @@ html {
   min-width: 298px; }
 
 body {
-  height: 50px;
+  max-height: calc(100% - 60px);
   background-image: url("/img/bg.png"); }
 
 .wrap {
@@ -26,6 +26,49 @@ body {
     content: " ";
     display: block;
     clear: both; }
+
+/*****************************************
+ *           Home
+ **************************************** */
+#homeWrapper {
+  position: relative;
+  height: calc(100% - 60px); }
+
+#homeBackground {
+  position: absolute;
+  width: 100%;
+  height: calc(100vh + 60px);
+  background-image: url("/img/homebg.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4; }
+
+#homeContent {
+  position: relative;
+  background-color: #ac9494;
+  height: 45%;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 20%;
+  padding: 40px;
+  border-style: ridge;
+  border-width: thick;
+  border-right-color: black;
+  border-left-color: black;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px; }
+  #homeContent #welcome {
+    color: white;
+    font-weight: bolder;
+    font-size: 25px;
+    margin-bottom: 20px;
+    text-align: center; }
+  #homeContent #intro {
+    color: white;
+    font-weight: bold;
+    margin: 0 auto;
+    max-width: 500px;
+    text-align: center; }
 
 /*****************************************
  *           Responsive Header
@@ -126,7 +169,7 @@ body {
   left: -200px;
   transition: left 0.1s linear;
   background-color: #0ba2bd;
-  height: 100%;
+  height: calc(100% - 60px);
   width: 200px; }
   #sidebar-menu #searchBar {
     width: 150px;
@@ -181,8 +224,11 @@ body {
 #sidebar-menu.visible {
   z-index: 1;
   left: 0px;
-  width: 200px;
+  width: 250px;
   transition: left 0.1s linear; }
+
+#deleteCategory {
+  float: right; }
 
 /*****************************************
  *           Big container
@@ -283,7 +329,6 @@ body {
     height: 134px;
     width: 160px; }
   .item .editItem, .item .selectProduct {
-    z-index: 1;
     position: absolute;
     top: 13px;
     right: 14px; }
@@ -609,7 +654,7 @@ body {
   color: #f53c3c; }
 
 #stockSettings.active {
-  max-height: 340px;
+  max-height: 450;
   transition: max-height 0.5s;
   padding: 10px; }
 
@@ -620,6 +665,11 @@ body {
   font-size: 40px;
   line-height: 60px;
   text-align: center; }
+
+footer {
+  position: relative;
+  display: block;
+  bottom: 0; }
 
 #copyrights {
   color: #939393;
@@ -633,9 +683,15 @@ body {
 /*****************************************
  *           Breakpoints
  **************************************** */
+@media (min-width: 340px) {
+  #homeContent {
+    height: 35%; } }
 @media (min-width: 500px) {
   .flex-container {
-    max-width: 400px; } }
+    max-width: 400px; }
+
+  #homeContent {
+    height: 30%; } }
 /*****************************************
  *           Tablets
  **************************************** */

@@ -23,7 +23,12 @@ var users = {
       if (err)
         errorHandler(err, res);
       else{
-              res.status(200).send(user[0]);
+          if (user[0] == undefined){
+            var err = new Error("Not found");
+            err.http_code = 404;
+            return errorHandler(err, res);
+          }else
+              return res.status(200).send(user[0]);
       }
       });
   },

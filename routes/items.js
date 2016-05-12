@@ -10,18 +10,13 @@ var items = {
   getItems: function(req,res) {
     // Filters List, Category,
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
-    var id = req.query.id;
-    var product_id = req.query.product_id;
+    var product_id = req.params.product_id;
     var max_result = req.query.max_result;
     if (user_id !== undefined){
         var query = "SELECT * FROM ITEMS \
         LEFT JOIN PRODUCTS ON PRODUCTS.IDPRODUCT = ITEMS.IDPRODUCT \
-        WHERE ITEMS.IDUSER = '"+user_id+"'";
+        WHERE PRODUCTS.IDPRODUCT = '"+product_id+"' AND ITEMS.IDUSER = '"+user_id+"'";
 
-        if (product_id !== undefined)
-            var query = query + " AND PRODUCTS.IDPRODUCT = '"+product_id+"'";
-        if (id !== undefined)
-            var query = query + " AND ITEMS.IDITEM = '"+id+"'";
         if (max_result !== undefined)
             var query = query + " LIMIT "+max_result;
         db.query(query, function(err,items){
@@ -56,7 +51,7 @@ var items = {
 
   addItem: function(req,res) {
     // Parse args
-    var idProduct = req.body.idProduct;
+    var idProduct = req.params.product_id;
     var qty = req.body.quantity;
     var max = req.body.max;
     var unit = req.body.unit;
@@ -93,12 +88,13 @@ var items = {
     // ADD FILTERS HERE
     var idItem = req.params.id
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
+    var idProduct = req.params.product_id;
 
     if (user_id !== undefined){
         var query = "SELECT * FROM ITEMS \
         LEFT JOIN PRODUCTS ON PRODUCTS.IDPRODUCT = ITEMS.IDPRODUCT \
         LEFT JOIN CATEGORIES ON CATEGORIES.idCategory = PRODUCTS.IDCATEGORY \
-        WHERE ITEMS.IDUSER = '"+user_id+"' AND ITEMS.IDITEM = '"+idItem+"'";
+        WHERE PRODUCTS.IDPRODUCT = '"+idProduct+"' AND ITEMS.IDUSER = '"+user_id+"' AND ITEMS.IDITEM = '"+idItem+"'";
 
         db.query(query, function(err,item){
           if (err) // Error during query (raising)
@@ -127,6 +123,7 @@ var items = {
 
   modifyItem: function(req,res) {
         var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
+        var idProduct = req.params.product_id;
           if (req.params.id !== undefined){
               var params = [];
               var values = [];
@@ -139,7 +136,7 @@ var items = {
                 values.push("'"+req.body.max+"'");
               }
               var query = "UPDATE ITEMS SET ("+params.toString()+") = ("+values.toString()+") \
-              WHERE idUser = '"+user_id+"' AND idItem = '"+req.params.id+"' RETURNING \
+              WHERE idUser = '"+user_id+"' AND idItem = '"+req.params.id+"' AND idProduct = '"+idProduct+"' RETURNING \
               idItem, idUser, idProduct, quantity, unit, max, created_at";
           }else{
               // Error missing idProduct or Owner (raising 400)
@@ -171,9 +168,10 @@ var items = {
   deleteItem: function(req,res){
     // Parse request
     var id = req.params.id;
+    var idProduct = req.params.product_id;
     var user_id = tokenAnalyzer.getUserId(tokenAnalyzer.grabToken(req));
     // Delete
-        var query = "DELETE FROM Items WHERE idItem = '"+id+"' AND idUser = '"+user_id+"' RETURNING idItem";
+        var query = "DELETE FROM Items WHERE idItem = '"+id+"' AND idProduct = '"+idProduct+"' AND idUser = '"+user_id+"' RETURNING idItem";
         // Query database
         db.query(query, function(err,item){
           if (err) // Error during query (raising)

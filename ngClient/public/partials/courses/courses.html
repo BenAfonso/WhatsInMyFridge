@@ -2,6 +2,10 @@
 
     <div id="pull-button" class="material-icons" ng-click="toggleSettings()">settings</div>
     <div id="stockSettings" ng-class="{'active' : settingsDisplayed }">
+      <div id="searchBar" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" ng-model="search.productName">
+        <label class="mdl-textfield__label" for="searchBar">Rechercher...</label>
+      </div>
       <div id="seuils">
         <div class="secTitle">Seuils</div>
         <span class="indicator">Seuil d'avertissement: {{(alertLevel1 * 100) | number: 0}}%</span>
@@ -34,7 +38,7 @@
 
   <section id="lowStocks">
     <div class="flex-container">
-    <div class="product" ng-show="isShown(product)" ng-click="go('/product/'+product.idProduct)" ng-class="alertLevel(product)" ng-repeat="product in products">
+    <div class="product" ng-show="isShown(product)" ng-click="go('/product/'+product.idProduct)" ng-class="alertLevel(product)" ng-repeat="product in products | filter:search">
       <div id="quantity-display">{{product.quantity}}</div>
       <img class="productImg" ng-src="{{product.img}}"/>
       <div id="placeholder">{{product.productName}}</div>

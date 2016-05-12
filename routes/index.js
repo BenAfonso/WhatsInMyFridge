@@ -16,11 +16,11 @@ var ingredients = require('./ingredients');
 */
 
 // Items TODO Security check user_id using product
-router.get('/api/v2/items', items.getItems);
-router.post('/api/v2/items', items.addItem);
-router.get('/api/v2/items/:id', items.getItem);
-router.put('/api/v2/items/:id', items.modifyItem);
-router.delete('/api/v2/items/:id', items.deleteItem);
+router.get('/api/v2/products/:product_id/items', items.getItems);
+router.post('/api/v2/products/:product_id/items', items.addItem);
+router.get('/api/v2/products/:product_id/items/:id', items.getItem);
+router.put('/api/v2/products/:product_id/items/:id', items.modifyItem);
+router.delete('/api/v2/products/:product_id/items/:id', items.deleteItem);
 
 
 // Categories
