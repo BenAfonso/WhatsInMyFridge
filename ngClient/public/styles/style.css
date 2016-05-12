@@ -15,7 +15,8 @@ html {
 
 body {
   max-height: calc(100% - 60px);
-  background-image: url("/img/bg.png"); }
+  background-image: url("/img/bg.png");
+  font-family: "Acme", sans-serif; }
 
 .wrap {
   max-width: 100%;

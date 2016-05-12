@@ -8,6 +8,8 @@ var app = express();
 /*
 ## REST Mecanisms sources
  http://thejackalofjavascript.com/architecting-a-restful-node-js-app/
+## IMG Compression API reSmushit
+ http://resmush.it/api
 */
 
 // Middleware

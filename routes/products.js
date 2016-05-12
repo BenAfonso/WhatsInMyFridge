@@ -3,6 +3,7 @@ var db = require('../models/db');
 var errorHandler = require('../lib/errorHandler').handler;
 var queryBuilder = require('../lib/queryBuilder').queryBuilder;
 var tokenAnalyzer = require('../lib/TokenAnalyzer');
+var compressImage = require('../lib/compressImage').compress;
 var Item = require('../models/Item');
 var Category = require('../models/Category');
 var Product = require('../models/Product');
@@ -69,28 +70,31 @@ var products = {
                 params.push('idCategory');
                 values.push("'"+req.body.idCategory+"'");
             }
-            if (req.body.img !== undefined){
-                params.push('img');
-                values.push("'"+req.body.img+"'");
-            }
-            var query = "INSERT INTO PRODUCTS ("+params.toString()+") VALUES ("+values.toString()+") RETURNING idProduct, productName, img, idCategory, \
-            (SELECT categoryName FROM CATEGORIES WHERE CATEGORIES.IDCATEGORY = PRODUCTS.IDCATEGORY)";
-            db.query(query, function(err,product){
-              if (err) // Error during query (raising)
-                 errorHandler(err,res)
-              else{
-                  if (product[0] !== undefined){
-                          var category = new Category(product[0].idcategory, product[0].categoryname);
-                          var product = new Product(product[0].idproduct, product[0].productname, product[0].img, category);
-                          res.status(201).send(product);
-                  }else { // Not found
-                      var err = new Error("Product not found");
-                      err.http_code = 404;
-                      errorHandler(err,res);
-                  }
+            // If no image is passed, compress image returns undefined
+              compressImage(req.body.img, function(err,result){
+                if (!err){
+                  params.push('img');
+                  values.push("'"+result+"'");
+                }
+                var query = "INSERT INTO PRODUCTS ("+params.toString()+") VALUES ("+values.toString()+") RETURNING idProduct, productName, img, idCategory, \
+                (SELECT categoryName FROM CATEGORIES WHERE CATEGORIES.IDCATEGORY = PRODUCTS.IDCATEGORY)";
+                db.query(query, function(err,product){
+                  if (err) // Error during query (raising)
+                     errorHandler(err,res)
+                  else{
+                      if (product[0] !== undefined){
+                              var category = new Category(product[0].idcategory, product[0].categoryname);
+                              var product = new Product(product[0].idproduct, product[0].productname, product[0].img, category);
+                              res.status(201).send(product);
+                      }else { // Not found
+                          var err = new Error("Product not found");
+                          err.http_code = 404;
+                          errorHandler(err,res);
+                      }
 
-              }
-            });
+                  }// No error during query
+                });// query
+              });
         }else{ // Missing parameters
             var err = new Error("Bad query");
             err.http_code = 400;
