@@ -6,7 +6,7 @@
           <label class="mdl-textfield__label" for="searchBar">Rechercher...</label>
         </div>
       </li>
-
+      <li><a ng-click="selectCategory()">Toutes les catégories</a></li>
       <li ng-repeat="category in categories"><a ng-class="{'selected' : isSelectedCategory(category)}" ng-click="selectCategory(category)">{{category.categoryName}}
         <span ng-show="isSelectedCategory(category)" confirmed-click="deleteCategory(category)"
         ng-confirm-click="Êtes vous sur de vouloir supprimer cette catégorie ?" id="deleteCategory" class="material-icons">delete</span></a></li>

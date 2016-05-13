@@ -24,7 +24,7 @@ myApp.controller("FrigoCtrl", ['$scope','Products','Categories',
 
       $scope.selectCategory = function(category){
         // Unselect the category (Toggle)
-        if ($scope.selectedCategory == category)
+        if ($scope.selectedCategory == category || category === undefined)
           $scope.selectedCategory = false;
         else
           $scope.selectedCategory = category;
@@ -32,7 +32,7 @@ myApp.controller("FrigoCtrl", ['$scope','Products','Categories',
 
       // Returns true if it's the selected category
       $scope.isSelectedCategory = function(category){
-        return ($scope.selectedCategory.idCategory == category.idCategory || !$scope.selectedCategory );
+        return ($scope.selectedCategory.idCategory == category.idCategory);
       };
 
       // Toggle the new Product form
