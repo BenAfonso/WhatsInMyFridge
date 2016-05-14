@@ -21,8 +21,8 @@ CREATE TABLE Categories (
 
 CREATE TABLE Products (
   idProduct SERIAL PRIMARY KEY,
-  idCategory INT references Categories(idCategory) ON DELETE CASCADE,
-  productName VARCHAR(50) NOT NULL CONSTRAINT unique_productname UNIQUE,
+  idCategory INT references Categories(idCategory) ON DELETE SET NULL,
+  productName VARCHAR(50) NOT NULL,
   img TEXT,
   idUser INT references Users(idUser) ON DELETE CASCADE
 );
