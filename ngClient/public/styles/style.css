@@ -146,7 +146,7 @@ body {
     #header #nav.open ul {
       transform: translateY(0px);
       -moz-transform: perspective(600px) rotate3d(0, 0, 0, 0);
-      -webkit-transform: perspective(600) rotate3d(0, 0, 0, 0); }
+      -webkit-transform: perspective(600px) rotate3d(0, 0, 0, 0); }
 
 /*****************************************
  *           Page content
