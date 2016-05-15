@@ -56,15 +56,8 @@ CREATE TABLE Logs (
   quantity NUMERIC NOT NULL,
   recorded_on DATE DEFAULT CURRENT_DATE
 );
-----------------
-------- TRIGGERS
-----------------
 
-CREATE TABLE Logs (
-  idProduct INT references Products(idProduct) ON DELETE CASCADE,
-  quantity NUMERIC NOT NULL,
-  recorded_on DATE DEFAULT CURRENT_DATE
-);
+
 ----------------
 ------- TRIGGERS
 ----------------

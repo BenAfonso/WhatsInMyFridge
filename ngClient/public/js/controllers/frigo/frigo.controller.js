@@ -32,7 +32,7 @@ myApp.controller("FrigoCtrl", ['$scope','Products','Categories',
 
       // Returns true if it's the selected category
       $scope.isSelectedCategory = function(category){
-        return ($scope.selectedCategory.idCategory == category.idCategory);
+        return ($scope.selectedCategory.idCategory == category.idCategory || !$scope.selectedCategory);
       };
 
       // Toggle the new Product form

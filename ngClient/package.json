@@ -4,7 +4,7 @@
   "description": "Angular client for What's in my Fridge Application (Interacting with REST Api)",
   "main": "index.js",
   "scripts": {
-    "postinstall": "bower install && bower-installer",
+    "postinstall": "bower install && bower-installer && grunt uglify",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "grunt deploy"
   },

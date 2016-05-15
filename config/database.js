@@ -1,4 +1,4 @@
 module.exports = {
-  url: "postgres://fridge:fridge123@31.32.127.70:5432/whatsinmyfridge",
-  url2: "postgres://gjagjbkwqkskhw:8GPqh_GdMNVTQxxBqWYhPhX9Ok@ec2-54-228-219-2.eu-west-1.compute.amazonaws.com:5432/dcigkjhcoqg6nn"
+  //url: "postgres://fridge:fridge123@31.32.127.70:5432/whatsinmyfridge",
+  url: "postgres://jxazuifjtyydci:NdmQ9TJBxGiP7tonObpdhE2FK5@ec2-54-225-64-254.compute-1.amazonaws.com:5432/d9ge87ltdpje2e"
 }

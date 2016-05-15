@@ -69,7 +69,7 @@
           <label class="mdl-textfield__label" for="itemName">Nom de l'item</label>
         </div>
         <div class="mdl-textfield mdl-js-textfield" id="imgInput">
-          <input class="mdl-textfield__input" type="text" id="img" ng-model="newProduct.img">
+          <input class="mdl-textfield__input" type="text" id="img" ng-model="newProduct.img" pattern="(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?">
           <label class="mdl-textfield__label" for="img">Image</label>
           <span class="mdl-textfield__error">Ceci n'est pas une URL valide</span>
         </div>

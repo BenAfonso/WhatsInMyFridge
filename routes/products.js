@@ -72,10 +72,11 @@ var products = {
             }
             // If no image is passed, compress image returns undefined
               compressImage(req.body.img, function(err,result){
-                if (!err){
-                  params.push('img');
-                  values.push("'"+result+"'");
+                if (err){
+                  console.log(err);
                 }
+                params.push('img');
+                values.push("'"+result+"'");
                 var query = "INSERT INTO PRODUCTS ("+params.toString()+") VALUES ("+values.toString()+") RETURNING idProduct, productName, img, idCategory, \
                 (SELECT categoryName FROM CATEGORIES WHERE CATEGORIES.IDCATEGORY = PRODUCTS.IDCATEGORY)";
                 db.query(query, function(err,product){
@@ -147,10 +148,6 @@ var products = {
               if ((req.body.img !== undefined || req.body.productName !== undefined || req.body.idCategory !== undefined) && req.params.id !== undefined){
                   var values = [];
                   var params = [];
-                  if (req.body.img){
-                      params.push('img');
-                      values.push("'"+req.body.img+"'");
-                  }
                   if (req.body.idCategory !== undefined){
                       console.log(req.body.idCategory);
                       params.push('idCategory');
@@ -160,31 +157,41 @@ var products = {
                       params.push('productName');
                       values.push("'"+req.body.productName+"'");
                   }
-                  var query = "UPDATE PRODUCTS AS P SET ("+params.toString()+") = ("+values.toString()+") \
-                  WHERE idProduct = '"+req.params.id+"' AND idUser = '"+user_id+"' RETURNING \
-                  idProduct, idcategory, productName, img, (SELECT categoryName FROM Categories WHERE idCategory = P.idcategory)";
+
               }else{
                   // Error missing idProduct or Owner (raising 400)
                   var err = new Error("Bad query !");
                   err.http_code = 400;
                   return errorHandler(err,res);
               }
-              // Query database
-              db.query(query, function(err,product){
-                if (err) // Error during query (raising)
-                  return errorHandler(err,res);
-                else{
-                    if (product[0]){
-                        var category = new Category(product[0].idcategory, product[0].categoryname);
-                        var product = new Product(product[0].idproduct, product[0].productname, product[0].img, category);
-                        res.status(200).send(product);
-                    }else { // Not found
-                        var err = new Error("Product not found");
-                        err.http_code = 404;
-                        return errorHandler(err,res);
-                    }
+                // If no image is passed, compress image returns undefined
+              compressImage(req.body.img, function(err,result){
+              if (err){
+                  console.log(err);
+              }
+              params.push('img');
+              values.push("'"+result+"'");
+                var query = "UPDATE PRODUCTS AS P SET ("+params.toString()+") = ("+values.toString()+") \
+                WHERE idProduct = '"+req.params.id+"' AND idUser = '"+user_id+"' RETURNING \
+                idProduct, idcategory, productName, img, (SELECT categoryName FROM Categories WHERE idCategory = P.idcategory)";
 
-                }
+                // Query database
+                db.query(query, function(err,product){
+                  if (err) // Error during query (raising)
+                    return errorHandler(err,res);
+                  else{
+                      if (product[0]){
+                          var category = new Category(product[0].idcategory, product[0].categoryname);
+                          var product = new Product(product[0].idproduct, product[0].productname, product[0].img, category);
+                          res.status(200).send(product);
+                      }else { // Not found
+                          var err = new Error("Product not found");
+                          err.http_code = 404;
+                          return errorHandler(err,res);
+                      }
+
+                  }
+                });
               });
 
       },
