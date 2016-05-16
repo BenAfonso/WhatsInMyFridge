@@ -15,8 +15,6 @@ myApp.controller('LoginCtrl', ['$scope', '$window', '$location', 'UserAuthFactor
 
 
           $location.path("/home");
-
-
         }).error(function(response) {
           if (response.status == 401)
             alert("Mot de passe incorrect.");
@@ -39,13 +37,8 @@ myApp.controller("RegisterCtrl", ['$scope','$window','$location','UserAuthFactor
         $scope.register = function(){
             if ($scope.password==$scope.password2){
                 UserAuthFactory.register($scope.username, $scope.password).success(function(){
-                  alert("Votre compte a bien été créé, vous allez être redirigé !");
-
+                  alert("Votre compte a bien été créé, merci de vous connecter !");
                 });
-
-
-                // Errors handling TODO
-
             }
             else{
                 alert("Les deux mots de passes ne sont pas identiques !");
