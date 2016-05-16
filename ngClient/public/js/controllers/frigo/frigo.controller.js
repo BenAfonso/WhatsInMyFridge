@@ -137,9 +137,6 @@ myApp.controller("FrigoCtrl", ['$scope','Products','Categories',
       };
 
 
-      // TODO Modify category
-
-
 
     }
 ]);
